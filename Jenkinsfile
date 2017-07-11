@@ -2,6 +2,6 @@
 
 @Library('SovrinHelpers') _
 
-def name = 'sovrin-genesis'
+def name = 'sovrin'
 
 testAndPublish(name, [:])
