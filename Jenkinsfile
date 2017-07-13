@@ -4,4 +4,4 @@
 
 def name = 'sovrin'
 
-testAndPublish(name, [:])
+testAndPublish(name, [ubuntu: [:]])
