@@ -30,10 +30,10 @@ setup(
     author_email='dev@evernym.us',
     license=__license__,
     keywords='Sovrin Genesis Transactions',
-    packages=find_packages(exclude=['docs', 'docs*']) + [
-        'data'],
+    packages=find_packages(exclude=['docs', 'docs*']),
     package_data={
         '': ['*.txt', '*.md', '*.rst', '*.json', '*.conf', '*.html',
              '*.css', '*.ico', '*.png', 'LICENSE', 'LEGAL', '*.sovrin']},
     include_package_data=True,
+    install_requires=['indy-node-dev'],
 )
