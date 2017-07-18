@@ -22,7 +22,7 @@ METADATA = os.path.join(SETUP_DIRNAME, 'sovrin', '__metadata__.py')
 exec(compile(open(METADATA).read(), METADATA, 'exec'))
 
 setup(
-    name='sovrin-dev',
+    name='sovrin',
     version=__version__,
     description='Sovrin node',
     url='https://github.com/hyperledger/indy-node',
@@ -35,5 +35,5 @@ setup(
         '': ['*.txt', '*.md', '*.rst', '*.json', '*.conf', '*.html',
              '*.css', '*.ico', '*.png', 'LICENSE', 'LEGAL', '*.sovrin']},
     include_package_data=True,
-    install_requires=['indy-node-dev'],
+    install_requires=['indy-node'],
 )
