@@ -20,8 +20,8 @@ utilities for those who run Sovrin.
 To interact with the Sovrin community, visit us at [sovrin.slack.com](https://sovrin.slack.com),
 or at [forum.sovrin.org](https://forum.sovrin.org).
 
-To report vulnerabilities against Sovrin, email security@sovrin.org or visit
-[https://hackerone.com/sovrin-foundation].
+To report vulnerabilities against Sovrin, email security@sovrin.org or visit us at
+[https://hackerone.com/sovrin-foundation](https://hackerone.com/sovrin-foundation).
 
 If you'd like to write code against Sovrin, we recommend that you check out 
 [indy-sdk](https://github.com/hyperledger/indy-sdk); it offers a C-callable library
