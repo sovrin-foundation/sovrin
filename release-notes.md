@@ -56,3 +56,41 @@ Although every attempt has been made to make this information as accurate as pos
 | **Timezones not matching:** If a system timezone of the primary does not match that of the other nodes the pool cannot function. | **1.** Shut down the sovrin-node service.        **2.** Use "sudo dpkg-reconfigure tzdata" to change your timezone to UTC. (Select "None of the Above" and then "UTC".) | [INDY-466](https://jira.hyperledger.org/browse/INDY-466) |
 | **Installing client as root:** Installing the client as root does not allow users to access the transaction files and they are not able to connect to the pool. |   | [INDY-24](https://jira.hyperledger.org/browse/INDY-24) |
 |   |   |   |   |
+
+### New Terminology Changes to the CLI
+
+Please be aware that the following terminology has changed:
+
+- . **keyring** is now &quot;wallet&quot;
+- . **link** is now &quot;connection&quot;
+- . **invitation** is now &quot;request&quot;
+- . **identifier** is now &quot;DID&quot;
+
+### Emergencies
+
+For emergencies where the Network is under a DOS attack, there is a new command for Trustees only that will put the Pool into a read-only mode.
+
+    send POOL\_CONFIG writes=False
+
+or optional
+
+    send POOL\_CONFIG writes=False force=False
+
+The following are bool parameters: writes and force. Writes is required. Force is not required. The default for force is False.
+
+### Other Important Information
+
+#### Keyrings to Wallets Directory
+
+With the terminology change from &quot;keyring&quot; to &quot;wallet,&quot; the wallets that have already been created will be the client in the *.sovrin/keyrings/live* directory. When you upgrade, you&#39;ll have to start the CLI and connect to live just once for the wallet directory to be created. The new directory is *.sovrin/wallets/live*. The upgrade **does not** move your existing wallets from */keyrings/live* to */wallets/live* since the wallet directory does not exist until you connect for the first time. You will need to move the existing wallets from */keyrings/live* to */wallets/live* and they will be ready for use.
+
+#### Time Stamps
+
+With the latest builds (which will be on your new stable) you will start to see a time stamp in the ledger for the transactions. It will look like the following:
+
+    V4SGRU86Z58d6TV7PBUe6f|1500090331922505|5iBLSL3iujkNsX4RiGN7RjDk5UVtE8GHsn8XHsRsmhUUN9Jz8GEmYtpPrso8e96jo3YafhYSwPkd9QXYA3wYyst4|1500090332|1|Pqs6Tyj1huDsjKYsiF8w4f|~WwZD24Fk4ka7ZY47MPopoo||||||2||
+
+
+The time stamp is the entry that shows *1500090332*.
+
+The *1500090332* is the utc epoch and a converter can be found at this site [https://www.epochconverter.com/](https://www.epochconverter.com/) so you can see the human readable version of the time.
