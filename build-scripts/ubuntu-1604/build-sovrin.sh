@@ -1,12 +1,18 @@
-#!/usr/bin/env bash
-
-set -x
-set -e
+#!/bin/bash -xe
 
 INPUT_PATH=$1
-OUTPUT_PATH=${2:-.}
+VERSION=$2
+OUTPUT_PATH=${3:-.}
 
 PACKAGE_NAME=sovrin
+
+# copy the sources to a temporary folder
+TMP_DIR=$(mktemp -d)
+cp -r ${INPUT_PATH}/. ${TMP_DIR}
+
+# prepare the sources
+cd ${TMP_DIR}/build-scripts/ubuntu-1604
+./prepare-package.sh ${TMP_DIR} ${VERSION}
 
 fpm --input-type "python" \
     --output-type "deb" \
@@ -23,4 +29,6 @@ fpm --input-type "python" \
     --no-python-fix-dependencies \
     --name ${PACKAGE_NAME} \
     --package ${OUTPUT_PATH} \
-    ${INPUT_PATH}
+    ${TMP_DIR}
+
+rm -rf ${TMP_DIR}
