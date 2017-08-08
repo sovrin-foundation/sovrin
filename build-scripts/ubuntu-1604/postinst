@@ -28,6 +28,9 @@ cp -nr /usr/local/lib/python3.5/dist-packages/sovrin/pool_transactions_live /hom
 
 chown -R sovrin:sovrin /home/sovrin/.sovrin
 
+# disabling auto update for sovrin package
+apt-mark hold sovrin
+
 # Automatically added from template:
 if which py3compile >/dev/null 2>&1; then
 	py3compile -O -p sovrin /usr/local/lib/python3.5/dist-packages/
