@@ -28,6 +28,12 @@ cp -nr /usr/local/lib/python3.5/dist-packages/sovrin/pool_transactions_live /hom
 
 chown -R sovrin:sovrin /home/sovrin/.sovrin
 
+# adding sovrin package to packages to hold
+SOVRIN_IS_HELD=$(grep HOLD_EXT=.*sovrin.* /etc/sovrin/node_control.conf)
+if [ -z $SOVRIN_IS_HELD ]; then
+    sed -ie 's|HOLD_EXT=\(.*\)|HOLD_EXT=sovrin \1|' /etc/sovrin/node_control.conf
+fi
+
 # Automatically added from template:
 if which py3compile >/dev/null 2>&1; then
 	py3compile -O -p sovrin /usr/local/lib/python3.5/dist-packages/
