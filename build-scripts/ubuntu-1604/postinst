@@ -31,7 +31,7 @@ chown -R sovrin:sovrin /home/sovrin/.sovrin
 # adding sovrin package to packages to hold
 SOVRIN_IS_HELD=$(grep HOLD_EXT=.*sovrin.* /etc/sovrin/node_control.conf)
 if [ -z $SOVRIN_IS_HELD ]; then
-    sed -ie 's|HOLD_EXT=\(.*\)|HOLD_EXT=sovrin \1|' /etc/sovrin/node_control.conf
+    sed -ie 's|HOLD_EXT=\\"\(.*\)|HOLD_EXT=\\"sovrin \1|' /etc/sovrin/node_control.conf
 fi
 
 # Automatically added from template:
