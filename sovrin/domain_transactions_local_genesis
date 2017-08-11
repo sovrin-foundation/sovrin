@@ -1,0 +1,15 @@
+{"alias":"Trustee1","dest":"9XNVHKtucEZWh7GrS9S8nRWtVuFQwYLfzGD7pQ7Scjtc","reqId":1,"role":"0","signature":"6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4a","type":"1"}
+{"alias":"Steward1","dest":"5rArie7XKukPCaEwq5XGQJnM9Fc5aZE3M9HAPVfMU2xC","reqId":2,"role":"2","signature":"6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b","type":"1"}
+{"alias":"Steward2","dest":"2btLJAAb1S3x6hZYdVyAePjqtQYi2ZBSRGy4569RZu8h","reqId":3,"role":"2","signature":"6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4c","type":"1"}
+{"alias":"Steward3","dest":"CECeGXDi6EHuhpwz19uyjjEnsRGNXodFYqCRgdLmLRkt","reqId":4,"role":"2","signature":"6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4d","type":"1"}
+{"alias":"Steward4","dest":"3znAGhp6Tk4kmebhXnk9K3jaTMffu82PJfEG91AeRkq2","reqId":5,"role":"2","signature":"6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4e","type":"1"}
+{"alias":"Steward5","dest":"4AdS22kC7xzb4bcqg9JATuCfAMNcQYcZa1u5eWzs6cSJ","reqId":6,"role":"2","signature":"6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4f","type":"1"}
+{"alias":"Steward6","dest":"4Yk9HoDSfJv9QcmJbLcXdWVgS7nfvdUqiVcvbSu8VBru","reqId":7,"role":"2","signature":"6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b50","type":"1"}
+{"alias":"Steward7","dest":"FR5pWwinRBn35GNhg7bsvw8Q13kRept2pm561DwZCQzT","reqId":8,"role":"2","signature":"6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b51","type":"1"}
+{"dest":"EGRf6ho37aqg5ZZpAyD2mesS6XrNUeSkoVUAbpL6bmJ9","reqId":9,"role":"2","signature":"6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b","type":"1"}
+{"dest":"C2AafyXuDBbcdiHJ8pdJ14PJ17X5KEBjbyfPPJWZFA4b","identifier":"EGRf6ho37aqg5ZZpAyD2mesS6XrNUeSkoVUAbpL6bmJ9","reqId":1,"role":"101","signature":"6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4c","type":"1"}
+{"dest":"4qU9QRZ79CbWuDKUtTvpDUnUiDnkLkwd1i8p2B3gJNU3","identifier":"EGRf6ho37aqg5ZZpAyD2mesS6XrNUeSkoVUAbpL6bmJ9","reqId":2,"role":"101","signature":"50c2f66f7fda2ece684d1befc667e894b4460cb782f5387d864fa7d5f14c4066","type":"1"}
+{"dest":"adityastaging","identifier":"4qU9QRZ79CbWuDKUtTvpDUnUiDnkLkwd1i8p2B3gJNU3","reqId":1,"signature":"77c2f66f7fda2ece684d1befc667e894b4460cb782f5387d864fa7d5f14c4066","type":"1"}
+{"dest":"iosstaging","identifier":"4qU9QRZ79CbWuDKUtTvpDUnUiDnkLkwd1i8p2B3gJNU3","reqId":2,"signature":"91c2f66f7fda2ece684d1befc667e894b4460cb782f5387d864fa7d5f14c4066","type":"1"}
+{"alias":"Steward8","dest":"6vAQkuCgTm7Jeki3vVhZm1FTAQYCeLE5mSvVRQdiwt1w","reqId":10,"role":"2","signature":"4770beb7e45bf623bd9987af4bd6d6d8eb8b68a4d00fa2a4c6b6f3f0c1c036f8","type":"1"}
+{"alias":"Steward9","dest":"6hbecbh36EMK6yAi5NZ9bLZEuRsWFt6qLa2SyMQGXs7H","reqId":11,"role":"2","signature":"4770beb7e45bf623bd9987af4bd6d6d8eb8b68a4d00fa2a4c6b6f3f0c1c036f9","type":"1"}
