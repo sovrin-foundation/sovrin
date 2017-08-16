@@ -7,9 +7,9 @@ if [ -f /home/${SUDO_USER}/.sovrin ]; then
     rm /home/${SUDO_USER}/.sovrin
 fi
 mkdir -p /home/${SUDO_USER}/.sovrin
-cp -nr /usr/local/lib/python3.5/dist-packages/sovrin/pool_transactions_local /home/${SUDO_USER}/.sovrin 2>/dev/null
-cp -nr /usr/local/lib/python3.5/dist-packages/sovrin/pool_transactions_sandbox /home/${SUDO_USER}/.sovrin 2>/dev/null
-cp -nr /usr/local/lib/python3.5/dist-packages/sovrin/pool_transactions_live /home/${SUDO_USER}/.sovrin 2>/dev/null
+cp -nr /usr/local/lib/python3.5/dist-packages/sovrin/pool_transactions_local_genesis /home/${SUDO_USER}/.sovrin 2>/dev/null
+cp -nr /usr/local/lib/python3.5/dist-packages/sovrin/pool_transactions_sandbox_genesis /home/${SUDO_USER}/.sovrin 2>/dev/null
+cp -nr /usr/local/lib/python3.5/dist-packages/sovrin/pool_transactions_live_genesis /home/${SUDO_USER}/.sovrin 2>/dev/null
 
 chown -R ${SUDO_USER}:${SUDO_USER} /home/${SUDO_USER}/.sovrin
 
@@ -19,14 +19,20 @@ if [ -f /home/sovrin/.sovrin ]; then
 fi
 mkdir -p /home/sovrin/.sovrin
 
-cp -nr /usr/local/lib/python3.5/dist-packages/sovrin/transactions_local /home/sovrin/.sovrin 2>/dev/null
-cp -nr /usr/local/lib/python3.5/dist-packages/sovrin/transactions_sandbox /home/sovrin/.sovrin 2>/dev/null
-cp -nr /usr/local/lib/python3.5/dist-packages/sovrin/transactions_live /home/sovrin/.sovrin 2>/dev/null
-cp -nr /usr/local/lib/python3.5/dist-packages/sovrin/pool_transactions_local /home/sovrin/.sovrin 2>/dev/null
-cp -nr /usr/local/lib/python3.5/dist-packages/sovrin/pool_transactions_sandbox /home/sovrin/.sovrin 2>/dev/null
-cp -nr /usr/local/lib/python3.5/dist-packages/sovrin/pool_transactions_live /home/sovrin/.sovrin 2>/dev/null
+cp -nr /usr/local/lib/python3.5/dist-packages/sovrin/domain_transactions_local_genesis /home/sovrin/.sovrin 2>/dev/null
+cp -nr /usr/local/lib/python3.5/dist-packages/sovrin/domain_transactions_sandbox_genesis /home/sovrin/.sovrin 2>/dev/null
+cp -nr /usr/local/lib/python3.5/dist-packages/sovrin/domain_transactions_live_genesis /home/sovrin/.sovrin 2>/dev/null
+cp -nr /usr/local/lib/python3.5/dist-packages/sovrin/pool_transactions_local_genesis /home/sovrin/.sovrin 2>/dev/null
+cp -nr /usr/local/lib/python3.5/dist-packages/sovrin/pool_transactions_sandbox_genesis /home/sovrin/.sovrin 2>/dev/null
+cp -nr /usr/local/lib/python3.5/dist-packages/sovrin/pool_transactions_live_genesis /home/sovrin/.sovrin 2>/dev/null
 
 chown -R sovrin:sovrin /home/sovrin/.sovrin
+
+# adding sovrin package to packages to hold
+SOVRIN_IS_HELD=$(grep HOLD_EXT=.*sovrin.* /etc/sovrin/node_control.conf)
+if [ -z "${SOVRIN_IS_HELD}" ]; then
+    sed -ie 's|HOLD_EXT=\\"\(.*\)|HOLD_EXT=\\"sovrin \1|' /etc/sovrin/node_control.conf
+fi
 
 # Automatically added from template:
 if which py3compile >/dev/null 2>&1; then
