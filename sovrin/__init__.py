@@ -1,1 +1,1 @@
-from .__metadata__ import *
+from .__metadata__ import *  # noqa

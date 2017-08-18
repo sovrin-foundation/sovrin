@@ -1,0 +1,8 @@
+[flake8]
+ignore = E501
+exclude =
+    # common places
+    .git,__pycache__,docs/source/conf.py,old,build,dist,
+    # have to skip because the file should be fixed
+    setup.py
+max-complexity = 10
