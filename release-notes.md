@@ -11,12 +11,22 @@
 
 
 
+
+* [Aries 1.1.6](#aries-1.1.6)
+
+* [Aries 1.0](#aries-1.0)
+
+
+
+
+
+
 #### Disclosure
 
 Although every attempt has been made to make this information as accurate as possible, please know there may be things that are omitted, not fully developed yet, or updates since this publication that were not included in the information below. Only the most pressing or significant items have been listed. For the entire list of tickets and or specific information about any given item, please visit the list at [Hyperleder Indy's Jira](https://jira.hyperledger.org/). Once logged in, simply navigate to Projects > Indy.
 
 
-## Aries 1.0.4
+## Aries 1.1.6
 
 
 Component Version Information
@@ -24,9 +34,9 @@ Component Version Information
 | Components | Version Numbers |
 | --- | --- |
 | indy-plenum | 1.1.24 |
-| indy-anoncreds | 1.0.9 |
-| indy-node | 1.1.31 |
-| sovrin | 1.0.4 |
+| indy-anoncreds | 1.0.10 |
+| indy-node | 1.1.33 |
+| sovrin | 1.1.6 |
 |   |   | |
 
 ### Major Fixes
