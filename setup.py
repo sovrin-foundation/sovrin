@@ -27,7 +27,7 @@ setup(
     name='sovrin-dev',
     version=__version__,
     description='Sovrin node',
-    url='https://github.com/hyperledger/indy-node',
+    url='https://github.com/sovrin-foundation/sovrin',
     author=__author__,
     author_email='dev@evernym.us',
     license=__license__,
