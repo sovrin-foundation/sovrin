@@ -23,9 +23,9 @@ docker volume create --name ${OUTPUT_VOLUME_NAME}
 docker run \
     -i \
     --rm \
-    -v ${PKG_SOURCE_PATH}:/input \
-    -v ${OUTPUT_VOLUME_NAME}:/output \
-    -e PKG_NAME=${PKG_NAME} \
-    ${IMAGE_NAME} \
+    -v "${PKG_SOURCE_PATH}:/input" \
+    -v "${OUTPUT_VOLUME_NAME}:/output" \
+    -e PKG_NAME="${PKG_NAME}" \
+    "${IMAGE_NAME}" \
     $CMD
 
