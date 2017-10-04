@@ -27,7 +27,7 @@ setup(
     name='sovrin-dev',
     version=__version__,
     description='Sovrin node',
-    url='https://github.com/hyperledger/indy-node',
+    url='https://github.com/sovrin-foundation/sovrin',
     author=__author__,
     author_email='dev@evernym.us',
     license=__license__,
@@ -35,7 +35,7 @@ setup(
     packages=find_packages(exclude=['docs', 'docs*']),
     package_data={
         '': ['*.txt', '*.md', '*.rst', '*.json', '*.conf', '*.html',
-             '*.css', '*.ico', '*.png', 'LICENSE', 'LEGAL', '*.sovrin']},
+             '*.css', '*.ico', '*.png', 'LICENSE', 'LEGAL', '*.indy']},
     include_package_data=True,
     install_requires=['indy-node-dev'],
 )
