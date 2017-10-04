@@ -33,9 +33,9 @@ Component Version Information
 
 | Components | Version Numbers |
 | --- | --- |
-| indy-plenum | 1.1.24 |
+| indy-plenum | 1.1.27 |
 | indy-anoncreds | 1.0.10 |
-| indy-node | 1.1.33 |
+| indy-node | 1.1.37 |
 | sovrin | 1.1.6 |
 |   |   | |
 
@@ -52,7 +52,13 @@ Component Version Information
 | Python interpreter is executed in optimized mode. |   | [INDY-211](https://jira.hyperledger.org/browse/INDY-211) |
 | Memory leak fixes. |   | [INDY-223](https://jira.hyperledger.org/browse/INDY-223) |
 | Some minor stability fixes. |   |   |
-|   |   |   |   |
+| Fixed a problem with migration during manual upgrades. |   | [INDY-808](https://jira.hyperledger.org/browse/INDY-808) |
+| Fixed a problem with the message length limitation. This was a permanent solution of [INDY-25](https://jira.hyperledger.org/browse/INDY-25). |   | [INDY-765](https://jira.hyperledger.org/browse/INDY-765) |
+| Fixed a problem when the pool was writing transactions when more than F nodes were stopped. |   | [INDY -786](https://jira.hyperledger.org/browse/INDY-786) |
+| Fixed a problem when the pool was broken after processing lots of transactions at once. |   | [INDY-760](https://jira.hyperledger.org/browse/INDY-760) |
+| Fixed a problem when the pool doesn&#39;t come back to consensus in cases when less than n-f nodes are alive. |   | [INDY-804](https://jira.hyperledger.org/browse/INDY-804) |
+| Partially fixed a problem when the pool responded with outdated data. |   | [INDY-761](https://jira.hyperledger.org/browse/INDY-761) |
+|   |   |   | |
 
 ### Changes - Additions - Known Issues
 
@@ -67,7 +73,10 @@ Component Version Information
 | **Improvements to log messages.** |   |   |
 | **Publishing only to repo.sovrin.org** |   |   |
 |  In your sources.list you only need the entry &quot;deb https://repo.evernym.com/deb xenial stable&quot;. |   |   |
-|   |   |   |
+| **Implemented a command line tool to provide validator status.** |   | [INDY-715](https://jira.hyperledger.org/browse/INDY-715) |
+| **&quot;Debug&quot; mode for tests was moved to parameter.** |   | [INDY-716](https://jira.hyperledger.org/browse/INDY-716) |
+| **Log levels were changed on some debug level messages to an info level.** |   | [INDY-800](https://jira.hyperledger.org/browse/INDY-800) |
+| **If the pool loses enough nodes and cannot reach consensus when enough nodes become available, the pool will still not reach consensus.** | If you restart all the nodes in the pool, it will start reaching consensus again. | [INDY-849](https://jira.hyperledger.org/browse/INDY-849) |
 
 
 ## Aries 1.0
