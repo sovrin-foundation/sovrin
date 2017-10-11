@@ -193,7 +193,10 @@
                     idenifier: &lt;DID of the author of this query&gt;, 
                     signature: [&lt;signature over this transaction from the author&gt;,] 
                     reqId: &lt;a nonce for this query&gt;, 
-                    operation: {type: GET_NYM, dest: &lt;DID whose record needs to be queried&gt;}
+                    operation: {
+                        type: GET_NYM, 
+                        dest: &lt;DID whose record needs to be queried&gt;
+                    }
                 }
         </pre>
         <p class="replace-me">Anyone can query a DID record, by sending the above request. The response contains the details of DID, it's role
