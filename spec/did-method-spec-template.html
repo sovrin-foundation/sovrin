@@ -23,6 +23,9 @@
         editors: [{
             name: "Michael Lodder",
             url: "https://evernym.com",
+          }, {
+            name: "Daniel Hardman",
+            url: "https://github.com/dhh1128"
           }
         ],
         processVersion: 2017,
@@ -42,13 +45,13 @@
     </section>
     <section id='abstract'>
       <p>
-        The Sovrin Ledger is a permissioned public ledger designed for privacy
-        preserving self-sovereign identity. The Sovrin Ledger is governed by the
+        Sovrin is a public ledger designed specifically and only for privacy-preserving
+          self-sovereign identity. The Sovrin Ledger is governed by the
         international non-profit <a href="https://www.sovrin.org" target="_blank">Sovrin Foundation</a>.
         As the only public ledger designed exclusively for self-sovereign identity,
         Sovrin is optimized for DIDs and DID Documents. DIDs are created, stored,
         and used with verifiable claims. This specification covers how these DIDs are
-        managed, the Sovrin DID methods, and related features of Sovrin of
+        managed. It also describes related features of Sovrin of
         particular interest to DID owners, guardians, and developers.
       </p>
     </section>
@@ -65,40 +68,8 @@
     </section>
     <section>
         <h2>Target System(s)</h2>
-        <p>The Sovrin Ledger uses the Hyperledger Indy code base combined with
-           a trusted network of anchor nodes (Trust Anchors) that implement the
-           Sovrin trust framework. The Sovrin Ledger is a global public utility
-           for decentralized identity. The data records on the Sovrin Ledger contain
-           information about the entity they describe e.g. Public Keys, Service
-           Endpoints, Claim Schemas, Claim Definitions, and Revocation Registries.
-           A Sovrin Identity is never fully defined on the Sovrin Ledger. Sovrin
-           DIDs should not reveal any Private Data. Every Sovrin Identity has one
-           or more DIDs. DIDs support the full spectrum of identity from
-           anonymity to verinymity.
-
-           DIDs that are authorized to be written using Zero-Knowledge Proof so
-           they are blinded as to the Legal Identity of the authorizing Identity
-           Owner are known as Anonyms. Anonyms can be either Single-Use a.k.a.
-           Pairwise-Unique Identifiers that are used for only a single digital
-           relationship, or Multi-Use Identifiers that are used for more than one
-           digital relationship--better known as Pseudonyms.
-
-           DIDs that are authorized to be written using the digital signature of
-           a Trust Anchor so that they may be directly or indirectly associated
-           with the Legal Identity of the Identity Owner are called Verinyms.
-           Verinyms are needed for the legal accoutability of Trust Anchors.
-           Verinyms on Sovrin are one of two types:
-           <ul>
-             <li>A Trust Anchor Verinym is the DID of a Trust Anchor itself.
-                  This DID is required to have at least one Public Claim asserting
-                  the Trust Anchor's Legal Identity.</li>
-             <li>An Anchored Verinym is the DID for an Identity Owner for whom
-                 the Trust Anchor can confirm consent to the Sovrin Identity
-                 Owner Agreement.
-             </li>
-           </ul>
-         </p>
-         <p>This targets currently deployed Sovrin plenum consensus rules.</p>
+        <p>This DID method applies to the Sovrin network in all its incarnations, beginning with Sovrin's
+        provisional launch on 31 July 2017.</p>
     </section>
     <section>
         <h2>Namespace Specific Identifier (NSI)</h2>
@@ -106,33 +77,33 @@
           The Sovrin DID scheme is defined by the following ABNF:<br><br>
           <code>
             sovrin-did = "did:sov:{idstring}"<br>
-            idstring   = 22/23 char<br>
-            char       = ALPHA / DIGIT<br>
+            idstring   = 22*23 char<br>
+            char       = "1" / "2" / "3" / "4" / "5" / "6" / "7" / "8" / "9" / "A" / "B" / "C"<br/>
+              &nbsp;&nbsp;&nbsp;&nbsp;/ "D" / "E" / "F" / "G" / "H" / "J" / "K" / "L" / "M" / "N" / "P" / "Q"<br/>
+              &nbsp;&nbsp;&nbsp;&nbsp;/ "R" / "S" / "T" / "U" / "V" / "W" / "X" / "Y" / "Z" / "a" / "b" / "c"<br/>
+              &nbsp;&nbsp;&nbsp;&nbsp;/ "d" / "e" / "f" / "g" / "h" / "i" / "j" / "k" / "m" / "n" / "o" / "p"<br/>
+              &nbsp;&nbsp;&nbsp;&nbsp;/ "q" / "r" / "s" / "t" / "u" / "v" / "w" / "x" / "y" / "z"<br>
           </code><br>
-          All Sovrin DIDs are exactly 22 or 23 characters representing a <a href="https://en.bitcoin.it/wiki/Base58Check_encoding" target="_blank">base58Check encoding</a>
-          of the first 16 bytes of a 256 bit Ed25519 verification key (the public
-          portion of the key pair). This may or may not be an active verification
-          key for the identity owner; that information is only available in the
-          key descriptions in the owner section of the DID Document.
+          All Sovrin DIDs are <a href="https://en.bitcoin.it/wiki/Base58Check_encoding" target="_blank">base58Check encoding</a>s
+          of a 16-byte uuid. The encoding uses most alphas and digits, omitting 0OIl to avoid readability problems. This
+            gives an NSI length of either 22 or 23 characters, and it means that DIDs are case-sensitive and may not
+            be case-normalized, even though the prefix is always lower-case.
           </p>
         <h3>Namestring Generation Method</h3>
-        <p>The <code>sov</code> DID method generates NSIs using <a href="https://en.bitcoin.it/wiki/Base58Check_encoding" target="_blank">base58Check encoding</a>
-          of the first 16 bytes of a 256 bit Ed25519 public key.
+        <p>The 16-byte uuid underlying a Sovrin DID can be generated in various ways--using standard uuid methods, for example, or
+            by selecting the first 16 bytes of a 256 bit Ed25519 verification key (the public
+          portion of the key pair). In the latter case, there may or may not be an active verification
+          key for the identity owner; that information is only available in the
+          key descriptions in the owner section of the DID Document.
         </p>
-        <h3>ABNF Definition</h3>
-        <pre>
-            DIGIT = "0".."9"
-            ALPHA = "A".."Z"
-        </pre>
         <p>A convenient regex to match <code>sov</code> DIDs is: <br><br>
-            <code>^[0-9a-z]{22,23}$</code></p>
+            <code>^[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{22,23}$</code></p>
         <h3>Examples</h3>
-        <p>A valid <code>sov</code> DID might be: <code>did:sov:sm3n9jakencue7635xgqc8x9</code>.
-            Valid values only include lowercase chars</p>
+        <p>A valid <code>sov</code> DID might be: <code>did:sov:2wJPyULfLLnYTEFYzByfUR</code>.</p>
     </section>
     <section>
       <h2>JSON-LD Context Definition</h2>
-        <p class="replace-me">If your method involves storing any state in a DID document for purposes of controlling updates to the DID document, you MUST define a JSON-LD context in this section.)</p>
+        <p>Sovrin DDOs are stored on the ledger and use a small subset of valid DDO constructs from the spec.</p>
         <p>The official definition of the <code>htcr</code> JSON-LD context is:</p>
       <pre class="replace-me json" style="color:magenta">
       {
@@ -251,7 +222,7 @@
                     }
                 }
         </pre>
-        <p>Anyone can query a DID record, by sending the above request. The response contains the details of DID, it's role
+        <p>Anyone can query a DID record, by sending the above request. The response contains the details of DID, its role
             and verification key.
         </p>
         <pre>
@@ -324,14 +295,17 @@
         </p>
 
         <h3>Delete (Revoke)</h3>
-        <p>The method spec MUST define how a DID can revoke it's verification key.  Although a core feature of distributed ledgers is immutability, a DID method must specify
-            how a client can revoke a DID record on the target system, including all cryptographic operations necessary to
-            establish proof of revocation. Revocation is the one way final operation for a DID.
-        </p>
-        <p> NOTE: Revocation is non-reversible--do not confuse it with key rotation.
-            No use after revocation is an equivalent problem to the double-spend problem,
-            which is what motivates the use of blockchains and other distributed
-            ledger technologies. To revoke the document of the DID, the owner of
+        <p>Deleting or revoking a verification key is not to be confused with temporary suspension or rotation. Deletion
+            sets an identity's verification key to null; this permanently terminates the identity's ability to operate
+            on the network because there is no key that the identity can use to authenticate itself--even to submit a
+            new key rotation request. It is irreversible.</p>
+         <p>Revocation may be appropriate
+            when a person dies or a business is legally dissolved. It does not remove any record or history of the
+            identity--it simply prevents any new history from accruing. This guarantees that
+            no malicious actor can recover and reactivate an identity that's dead.</p>
+        <p>The scope of deletion in Sovrin is one DID only. This does not prevent an entity from creating new DIDs;
+        it simply prevents an entity from reusing the old DID that has been terminated.</p>
+        <p> To revoke the document of the DID, the owner of
             the DID should send the following transaction.
             <pre>
                 {
@@ -393,13 +367,16 @@
 
     <section>
         <h2>Reference Implementations</h2>
-        <p class="replace-me">The code at https://github.com/myaccount/myrepo is intended to be the preferred embodiment of this DID method. Commit hash 4fc87fc5e85b2a071abfa7d8dfb15c06cd266dd5 is the version that officially aligns with this version of the spec.</p>
-        <p class="replace-me">Note that the code includes a test suite (see tests/compliance_suite); any other implementations should ensure that all tests pass before they claim compatibility.</p>
+        The code at <a href="https://github.com/hyperledger/indy-node/commit/16d55bf69beeb9579d77a70282e8563dc918b181" target="_blank">https://github.com/hyperledger/indy-node, commit 16d55bf69beeb9579d77a70282e8563dc918b181</a>
+        and <a href="https://github.com/hyperledger/indy-sdk/commit/9aa80828f6b0c769acb7fed7ac4b6342b8308b98" target="_blank">https://github.com/hyperledger/indy-sdk, commit 9aa80828f6b0c769acb7fed7ac4b6342b8308b98</a>
+        constitute a canonical implementation of Sovrin DIDs, and should be treated like an oracle.
+        <p class="replace-me">Note that the code includes a test suite; any other implementations should ensure that all tests pass before they claim compatibility.</p>
     </section>
 
     <section>
         <h2>Resources</h2>
-        <p class="replace-me">Many developers maintaining the code and spec tend to hang out in RocketChat at chat.myorg.org, #btcrimpl. You might also connect with us in W3C working groups or at the semi-annual Rebooting Web of Trust conferences</p>
+        <p class="replace-me">Many developers maintaining the code and spec tend to hang out in RocketChat at chat.hyperledger.org, #indy and #indy-sdk.
+            You might also connect with us in Hyperledger and W3C working groups or at the semi-annual Internet Identity Workshop conferences.</p>
     </section>
 
   </body>
