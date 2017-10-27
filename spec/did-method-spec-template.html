@@ -97,13 +97,13 @@
           key descriptions in the owner section of the DID Document.
         </p>
         <p>A convenient regex to match <code>sov</code> DIDs is: <br><br>
-            <code>^[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{22,23}$</code></p>
+            <code>^[1-9A-HJ-NP-Za-km-z]{22,23}$</code></p>
         <h3>Examples</h3>
         <p>A valid <code>sov</code> DID might be: <code>did:sov:2wJPyULfLLnYTEFYzByfUR</code>.</p>
     </section>
     <section>
       <h2>JSON-LD Context Definition</h2>
-        <p>Sovrin DDOs are stored on the ledger and use a small subset of valid DDO constructs from the spec.</p>
+        <p>Sovrin Documents are stored on the ledger and use a small subset of valid document constructs from the spec.</p>
         <p>The official definition of the <code>htcr</code> JSON-LD context is:</p>
       <pre class="replace-me json" style="color:magenta">
       {
@@ -133,7 +133,7 @@
         <h2>CRUD Operation Definitions</h2>
 
         <h3>Create (Register)</h3>
-        <p>The DID method specification must specify how a client creates a DID record—the combination of a DID and its associated DDO—on the target system, including all cryptographic operations necessary to establish proof of ownership.</p>
+        <p>The DID method specification must specify how a client creates a DID record—the combination of a DID and its associated document—on the target system, including all cryptographic operations necessary to establish proof of ownership.</p>
         <p>For example:</p>
         <p>To create a DID, you must submit a transaction that looks like this: <br>
           <pre>
@@ -146,7 +146,7 @@
                         "type": "NYM",
                         "dest": &lt;new DID that is being registered&gt;,
                         ["verkey": &lt;verification key of the new DID&gt;],
-                        ["role": &lt; TrustAnchor, TGB, STEWARD or TRUSTEE&gt;]
+                        ["role": &lt; TrustAnchor, TGB, STEWARD TRUSTEE, null&gt;]
                     }
                 }
 
@@ -159,16 +159,19 @@
                         "type": "NYM",
                         "dest": &lt;new DID that is being registered&gt;,
                         "document": {
-                            "key": {
-                                "type": &lt;Ed25519, Ed41417, P-256, P-384, P-512, RSA&gt;
-                                "use": &lt;verification&gt;
-                                "format": &lt;base64, base58, hex, pem&gt;
-                                "value": &lt;Key material encoded in format&gt;
-                            },
-                            "guardian": &lt;DID of the guardian&gt;, //OPTIONAL
-                            "service": [ //OPTIONAL
-                              &lt;A URI for the endpoint&gt;
-                            ]
+                            "keys": [{
+                                "id": &lt;a valid unique identifier&gt;
+                                "type": &lt;ed25519, ed41417, p-256, p-384, p-512, rsa, defined in appendix&gt;
+                                "usage": [&lt;verification&gt;],
+                                "encoding": &lt;base64, base58, hex, pem&gt;
+                                "value": &lt;Key material encoded&gt;
+                            }],
+                            "services": [{
+                              "id": &lt;a valid unique identifier&gt;,
+                              "type": &lt;agent, email, api, dns, etc&gt;,
+                              "path": &lt;path to reach DID at this service&gt;,
+                              "endpoints": [&lt;A URI for the endpoint&gt;]
+                            }]
                         }
                     }
                 }
@@ -182,16 +185,18 @@
                         "type": "NYM",
                         "dest": "did:sov:mnjkl98uipsndg2hdjdjuf7",
                         "document": {
-                            "key": {
-                                "type": "Ed25519",
-                                "use": "verification",
-                                "format": "pem"
+                            "keys": [{
+                                "type": "ed25519",
+                                "usage": ["verification"],
+                                "encoding": "pem"
                                 "value": "-----BEGIN PUBLIC KEY...END PUBLIC KEY-----\r\n"
-                            },
-                            "guardian": "did:sov:1xw3ecg56ubjgfdqaz87uok9",
-                            "service": [
-                              "https://www.sovrin.org/agents"
-                            ]
+                            }],
+                            "services": [{
+                              "id": "#agent1",
+                              "type": "agent",
+                              "path": "/did/did:sov:29wksjcn38djfh47ruqrtcd5",
+                              "endpoints":["https://www.sovrin.org/agents"]
+                            }]
                         }
                     }
                 }
@@ -201,6 +206,25 @@
             <br/> REJECT: “DID already rejistered or non Trust Anchor authored the transaction or signature did not match”
             <br/> REPLY: "Contains the sequence number of the transaction and the merkle proof"
             <br/>
+        </p>
+        <p>The DID document stored on the ledger as follows
+          <pre>
+            {
+              "id": "did:sov:mnjkl98uipsndg2hdjdjuf7",
+              "keys": [{
+                  "type": "ed25519",
+                  "usage": ["verification"],
+                  "encoding": "pem"
+                  "value": "-----BEGIN PUBLIC KEY...END PUBLIC KEY-----\r\n"
+              }],
+              "services": [{
+                "id": "#agent1",
+                "type": "agent",
+                "path": "/did/did:sov:29wksjcn38djfh47ruqrtcd5",
+                "endpoints":["https://www.sovrin.org/agents"]
+              }]
+            }
+          </pre>
         </p>
 
         <h3>Read (Resolve)</h3>
@@ -246,9 +270,9 @@
                     "dest": &lt;DID whose record needs to be queried&gt;,
                     "key": {
                         "type": &lt;Ed25519, Ed41417, P-256, P-384, P-512, RSA&gt;
-                        "use": &lt;verification&gt;
-                        "format": &lt;base64, base58, hex, pem&gt;
-                        "value": &lt;Key material encoded in format&gt;
+                        "usage": [&lt;verification&gt;]
+                        "encoding": &lt;base64, base58, hex, pem&gt;
+                        "value": &lt;Key material encoded&gt;
                     }
                 }
         </pre>
@@ -278,16 +302,18 @@
                         "type": "NYM",
                         "dest": &lt;DID whose record needs to be queried&gt;,
                         "document": {
-                            "key": {
+                            "keys": [{
                                 "type": &lt;Ed25519, Ed41417, P-256, P-384, P-512, RSA&gt;
-                                "use": &lt;verification&gt;
-                                "format": &lt;base64, base58, hex, pem&gt;
+                                "usage": [&lt;verification&gt;]
+                                "encoding": &lt;base64, base58, hex, pem&gt;
                                 "value": &lt;Key material encoded in format&gt;
-                            },
-                            "guardian": &lt;DID of the guardian&gt;, //OPTIONAL
-                            "service": [ //OPTIONAL
-                              &lt;A URI for the endpoint&gt;
-                            ]
+                            }],
+                            "services": [{
+                              "id": &lt;a valid unique identifier&gt;,
+                              "type": &lt;agent, email, api, dns, etc&gt;,
+                              "path": &lt;path to reach DID at this service&gt;,
+                              "endpoints": [&lt;A URI for the endpoint&gt;]
+                            }]
                         }
                       }
                   }
@@ -329,7 +355,7 @@
             <p>At least the following forms of attack MUST be considered: eavesdropping, replay, message insertion, deletion, modification, impersonation, and man-in-the-middle. Potential denial of service attacks MUST be identified as well. If the protocol incorporates cryptographic protection mechanisms, it should be clearly indicated which portions of the data are protected and what the protections are (i.e., integrity only, confidentiality, and/or endpoint authentication, etc.). Some indication should also be given to what sorts of attacks the cryptographic protection is susceptible. Data which should be held secret (keying material, random seeds, etc.) should be clearly labeled. If the technology involves authentication, particularly user-host authentication, the security of the authentication method MUST be clearly specified.</p>
 
         <h3>Residual Risks</h3>
-            <p>Discuss risks such as from compromise in a related protocol, incorrect implementation, or cipher) after threat mitigation has been deployed.
+            <p>We don't believe to have any residual risks at this time.</p>
 
             <h3>Recovery From Key Compromise</h3>
 
@@ -337,20 +363,13 @@
 
             <p><a href="https://en.wikipedia.org/wiki/Confused_deputy_problem" target="_blank">Confused Deputy Problem</a> when attempting separation of writeAuthorization from authenticationCredential.</p>
             <p>Other sections from DID spec to incorporate into the outline:</p>
-
-            <pre style="color:magenta">
-            9.3 Authentication Service Endpoints
-            9.4 Non-Repudiation
-            9.5 Notification of DDO Changes
-            9.6 Key and Signature Expiration
-            9.7 Key Revocation and Recovery *
-            </pre>
         </div>
     </section>
 
     <section>
         <h2>Privacy Considerations</h2>
         <div class="replace-me">
+          Assume psuedonymous DID. What Sovrin is doing about privacy and addresses each of these.
             <p>Considering <a href="http://www.lifewithalacrity.com/2015/04/the-four-kinds-of-privacy.html" target="_blank">all
                 four types of privacy</a>, explore issues from these sections of the DID spec:</p>
 
@@ -359,7 +378,7 @@
             10.1 Requirements of DID Method Specifications
             10.2 Keep Personally-Identifiable Information (PII) Off-Ledger
             10.3 DID Correlation Risks and Pseudonymous DIDs
-            10.4 DDO Correlation Risks
+            10.4 Document Correlation Risks
             10.5 Herd Privacy
             </pre>
         </div>
@@ -378,6 +397,16 @@
         <p class="replace-me">Many developers maintaining the code and spec tend to hang out in RocketChat at chat.hyperledger.org, #indy and #indy-sdk.
             You might also connect with us in Hyperledger and W3C working groups or at the semi-annual Internet Identity Workshop conferences.</p>
     </section>
-
+    <section>
+      <h2>Appendix A: Key Usages Types</h2>
+      The following are valid values for <strong>keys/usages</strong><br><br>
+      <table border="1">
+        <tr><th>Value</th><th>Purpose</th></tr>
+        <tr><td>Encryption</td><td>Confidentiality protection like data or wrapping other keys.<br>Integrity protection like a MAC.</td></tr>
+        <tr><td>Authentication</td><td>Assurance of an entity claim or that the data came from an entity.<br>A signature verification</td></tr>
+        <tr><td>Authorization</td><td>An entity has permisson or delegation rights.<br>A signature verification</td></tr>
+        <tr><td>Agreement</td><td>A static public key for computing secure key agreement schemes.<br>I.E. Diffie-Hellman.</td></tr>
+      </table>
+    </section>
   </body>
 </html>
