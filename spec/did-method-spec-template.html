@@ -408,5 +408,60 @@
         <tr><td>Agreement</td><td>A static public key for computing secure key agreement schemes.<br>I.E. Diffie-Hellman.</td></tr>
       </table>
     </section>
+
+    <section>
+      <h2>Appendix B: Key Algorithm Types</h2>
+      This is extracted from RFC 5480 and 5639:<br>
+      The NIST-named curves are:<br>
+<br>
+         -- Note that in [X9.62] the curves are referred to as 'ansiX9' as<br>
+         -- opposed to 'sec'.  For example, secp192r1 is the same curve as<br>
+         -- ansix9p192r1.<br>
+<br>
+         -- Note that in [PKI-ALG] the secp192r1 curve was referred to as<br>
+         -- prime192v1 and the secp256r1 curve was referred to as<br>
+         -- prime256v1.<br>
+<br>
+         -- Note that [FIPS186-3] refers to secp192r1 as P-192, secp224r1 as<br>
+         -- P-224, secp256r1 as P-256, secp384r1 as P-384, and secp521r1 as<br>
+         -- P-521.<br>
+<br>
+      secp192r1   ... same as nistp192, prime192v1<br>
+      secp224r1   ... same as nistp224, prime224v1<br>
+      secp256k1   ... used by Bitcoin<br>
+      secp256r1   ... same as nistp256, prime256v1<br>
+      secp384r1   ... same as nistp384, prime384v1<br>
+      secp521r1   ... same as nistp521, prime521v1<br>
+      Curves from http://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.186-4.pdf<br>
+      nistp192    ... same as secp192r1, prime192v1<br>
+      nistp224    ... same as secp224r1, prime224v1<br>
+      nistp256    ... same as secp256r1, prime256v1<br>
+      nistp384    ... same as secp384r1, prime384v1<br>
+      nistp521    ... same as secp521r1, prime521v1<br>
+      Curves from ANS X9.62<br>
+      prime192v1   ... same as nistp192, secp192r1<br>
+      prime192v2<br>
+      prime192v3<br>
+      prime224v1   ...same as nistp224, secp224r1<br>
+      prime239v1<br>
+      prime239v2<br>
+      prime239v3<br>
+      prime256v1   ... same as nistp256, secp256r1<br>
+      prime384v1   … same as nistp384, secp384r1<br>
+      prime521v1   ... same as nistp521, secp521r1<br>
+      The following are valid values for <strong>keys/type</strong><br><br><br>
+      <table border="1">
+        <tr><th>Key Type</th></tr>
+        <tr><td>rsa</td></tr>
+        <tr><td>Curves from <a href="https://safecurves.cr.yp.to">SafeCurves</a></td></tr>
+        <tr><td>m-221, e-222, ed1174, ed25519 (x25519), ed383187, ed41417, e-382, m-383, ed448, e-521, m-511</td></tr>
+        <tr><td>Curves from <a href="http://www.ecc-brainpool.org/download/Domain-parameters.pdf">BrainPool</a></td></tr>
+        <tr><td>brainpoolp160r1, brainpoolp192r1, brainpoolp224r1, brainpoolp256r1, brainpoolp320r1, brainpoolp384r1, brainpoolp512r1</td></tr>
+        <tr><td>Curves from <a href="http://www.secg.org/SEC2-Ver-1.0.pdf">SEC2</a></td></tr>
+        <tr><td>secp112r1, secp128r1, secp160r1, secp192r1, secp224r1, secp256r1, secp384r1, secp521r1</td></tr>
+        <tr><td>secp160k1, secp163k1, secp192k1, secp224k1, secp256k1</td></tr>
+        <tr><td>sect163r2, sect233r1, sect239r1, sect283r1, sect409r1, sect571r1</td></tr>
+      </table>
+    </section>
   </body>
 </html>
