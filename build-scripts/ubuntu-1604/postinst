@@ -54,7 +54,7 @@ cp -nr /usr/local/lib/python3.5/dist-packages/sovrin/domain_transactions_live_ge
 
 mkdir -p /etc/indy
 
-echo "NETWORK_NAME = 'local'" >> /etc/indy/indy_config.py
+echo "NETWORK_NAME = 'sandbox'" >> /etc/indy/indy_config.py
 echo "baseDir = '/var/lib/indy'" >> /etc/indy/indy_config.py
 echo "CLI_BASE_DIR = '~/.indy-cli/'" >> /etc/indy/indy_config.py
 echo "CLI_NETWORK_DIR = '~/.indy-cli/networks'" >> /etc/indy/indy_config.py
