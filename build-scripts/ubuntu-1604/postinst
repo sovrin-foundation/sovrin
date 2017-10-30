@@ -11,21 +11,12 @@ mkdir -p /var/lib/indy
 mkdir -p /var/lib/indy/local
 mkdir -p /var/lib/indy/live
 mkdir -p /var/lib/indy/sandbox
-chown -R indy:indy /var/lib/indy
-chown -R indy:indy /var/lib/indy/local
-chown -R indy:indy /var/lib/indy/live
-chown -R indy:indy /var/lib/indy/sandbox
 
 mkdir -p /home/indy/.indy-cli
 mkdir -p /home/indy/.indy-cli/networks
 mkdir -p /home/indy/.indy-cli/networks/local
 mkdir -p /home/indy/.indy-cli/networks/live
 mkdir -p /home/indy/.indy-cli/networks/sandbox
-chown -R indy:indy /home/indy/.indy-cli
-chown -R indy:indy /home/indy/.indy-cli/networks
-chown -R indy:indy /home/indy/.indy-cli/networks/local
-chown -R indy:indy /home/indy/.indy-cli/networks/live
-chown -R indy:indy /home/indy/.indy-cli/networks/sandbox
 
 mkdir -p /home/${SUDO_USER}/.indy-cli
 mkdir -p /home/${SUDO_USER}/.indy-cli/networks
@@ -62,6 +53,15 @@ cp -nr /usr/local/lib/python3.5/dist-packages/sovrin/domain_transactions_live_ge
 
 mkdir -p /etc/indy
 chown -R indy:indy /etc/indy
+chown -R indy:indy /var/lib/indy
+chown -R indy:indy /var/lib/indy/local
+chown -R indy:indy /var/lib/indy/live
+chown -R indy:indy /var/lib/indy/sandbox
+chown -R indy:indy /home/indy/.indy-cli
+chown -R indy:indy /home/indy/.indy-cli/networks
+chown -R indy:indy /home/indy/.indy-cli/networks/local
+chown -R indy:indy /home/indy/.indy-cli/networks/live
+chown -R indy:indy /home/indy/.indy-cli/networks/sandbox
 
 echo "NETWORK_NAME = 'local'" >> /etc/indy/indy_config.py
 echo "baseDir = '/var/lib/indy'" >> /etc/indy/indy_config.py
