@@ -11,6 +11,7 @@ mkdir -p /var/lib/indy
 mkdir -p /var/lib/indy/local
 mkdir -p /var/lib/indy/live
 mkdir -p /var/lib/indy/sandbox
+mkdir -p /var/log/indy
 
 mkdir -p /home/indy/.indy-cli
 mkdir -p /home/indy/.indy-cli/networks
@@ -52,16 +53,6 @@ cp -nr /usr/local/lib/python3.5/dist-packages/sovrin/domain_transactions_live_ge
 
 
 mkdir -p /etc/indy
-chown -R indy:indy /etc/indy
-chown -R indy:indy /var/lib/indy
-chown -R indy:indy /var/lib/indy/local
-chown -R indy:indy /var/lib/indy/live
-chown -R indy:indy /var/lib/indy/sandbox
-chown -R indy:indy /home/indy/.indy-cli
-chown -R indy:indy /home/indy/.indy-cli/networks
-chown -R indy:indy /home/indy/.indy-cli/networks/local
-chown -R indy:indy /home/indy/.indy-cli/networks/live
-chown -R indy:indy /home/indy/.indy-cli/networks/sandbox
 
 echo "NETWORK_NAME = 'local'" >> /etc/indy/indy_config.py
 echo "baseDir = '/var/lib/indy'" >> /etc/indy/indy_config.py
@@ -78,6 +69,22 @@ SOVRIN_IS_HELD=$(grep HOLD_EXT=.*sovrin.* /etc/sovrin/node_control.conf)
 if [ -z "${SOVRIN_IS_HELD}" ]; then
     sed -ie 's|HOLD_EXT=\\"\(.*\)|HOLD_EXT=\\"sovrin \1|' /etc/sovrin/node_control.conf
 fi
+
+chown -R indy:indy /etc/indy
+chown -R indy:indy /var/log/indy
+chown -R indy:indy /var/lib/indy
+chown -R indy:indy /var/lib/indy/local
+chown -R indy:indy /var/lib/indy/live
+chown -R indy:indy /var/lib/indy/sandbox
+chown -R indy:indy /home/indy/.indy-cli
+chown -R indy:indy /home/indy/.indy-cli/networks
+chown -R indy:indy /home/indy/.indy-cli/networks/local
+chown -R indy:indy /home/indy/.indy-cli/networks/live
+chown -R indy:indy /home/indy/.indy-cli/networks/sandbox
+
+chmod -R ug+rwx /etc/indy
+chmod -R ug+rwx /var/lib/indy
+chmod -R ug+rwx /var/log/indy
 
 # Automatically added from template:
 if which py3compile >/dev/null 2>&1; then
