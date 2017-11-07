@@ -7,6 +7,7 @@ if [ -f /home/${SUDO_USER}/.indy ]; then
     rm /home/${SUDO_USER}/.indy
 fi
 
+mkdir -p /etc/indy
 mkdir -p /var/lib/indy
 mkdir -p /var/lib/indy/local
 mkdir -p /var/lib/indy/live
@@ -24,11 +25,13 @@ mkdir -p /home/${SUDO_USER}/.indy-cli/networks
 mkdir -p /home/${SUDO_USER}/.indy-cli/networks/local
 mkdir -p /home/${SUDO_USER}/.indy-cli/networks/live
 mkdir -p /home/${SUDO_USER}/.indy-cli/networks/sandbox
-chown -R ${SUDO_USER}:${SUDO_USER} /home/${SUDO_USER}/.indy-cli
-chown -R ${SUDO_USER}:${SUDO_USER} /home/${SUDO_USER}/.indy-cli/networks
-chown -R ${SUDO_USER}:${SUDO_USER} /home/${SUDO_USER}/.indy-cli/networks/local
-chown -R ${SUDO_USER}:${SUDO_USER} /home/${SUDO_USER}/.indy-cli/networks/live
-chown -R ${SUDO_USER}:${SUDO_USER} /home/${SUDO_USER}/.indy-cli/networks/sandbox
+
+chmod -R ug+rwx /var/lib/indy/local
+chmod -R ug+rwx /var/lib/indy/live
+chmod -R ug+rwx /var/lib/indy/sandbox
+chmod -R ug+rwx /home/indy/.indy-cli
+chmod -R ug+rwx /home/${SUDO_USER}/.indy-cli
+
 
 cp -nr /usr/local/lib/python3.5/dist-packages/sovrin/pool_transactions_local_genesis /var/lib/indy/local/pool_transactions_genesis 2>/dev/null
 cp -nr /usr/local/lib/python3.5/dist-packages/sovrin/pool_transactions_local_genesis /home/indy/.indy-cli/networks/local/pool_transactions_genesis 2>/dev/null
@@ -52,12 +55,14 @@ cp -nr /usr/local/lib/python3.5/dist-packages/sovrin/domain_transactions_live_ge
 cp -nr /usr/local/lib/python3.5/dist-packages/sovrin/domain_transactions_live_genesis /home/${SUDO_USER}/.indy-cli/networks/live/domain_transactions_genesis 2>/dev/null
 
 
-mkdir -p /etc/indy
-
 echo "NETWORK_NAME = 'sandbox'" >> /etc/indy/indy_config.py
 echo "baseDir = '/var/lib/indy'" >> /etc/indy/indy_config.py
 echo "CLI_BASE_DIR = '~/.indy-cli/'" >> /etc/indy/indy_config.py
 echo "CLI_NETWORK_DIR = '~/.indy-cli/networks'" >> /etc/indy/indy_config.py
+echo "enableStdOutLogging=False" >> /etc/indy/indy_config.py
+echo "NODE_BASE_DATA_DIR = baseDir" >> /etc/indy/indy_config.py
+echo "LOG_DIR = '/var/log/indy'" >> /etc/indy/indy_config.py
+echo "BACKUP_DIR = '/var/lib/indy/backup'" >> /etc/indy/indy_config.py
 
 # workaround when .indy become regular file
 if [ -f /home/indy/.indy ]; then
@@ -81,10 +86,17 @@ chown -R indy:indy /home/indy/.indy-cli/networks
 chown -R indy:indy /home/indy/.indy-cli/networks/local
 chown -R indy:indy /home/indy/.indy-cli/networks/live
 chown -R indy:indy /home/indy/.indy-cli/networks/sandbox
+chown -R ${SUDO_USER}:${SUDO_USER} /home/${SUDO_USER}/.indy-cli
+chown -R ${SUDO_USER}:${SUDO_USER} /home/${SUDO_USER}/.indy-cli/networks
+chown -R ${SUDO_USER}:${SUDO_USER} /home/${SUDO_USER}/.indy-cli/networks/local
+chown -R ${SUDO_USER}:${SUDO_USER} /home/${SUDO_USER}/.indy-cli/networks/live
+chown -R ${SUDO_USER}:${SUDO_USER} /home/${SUDO_USER}/.indy-cli/networks/sandbox
 
-chmod -R ug+rwx /etc/indy
-chmod -R ug+rwx /var/lib/indy
-chmod -R ug+rwx /var/log/indy
+chmod -R ug+rw /etc/indy
+chmod -R ug+rw /var/lib/indy
+chmod -R ug+rw /var/log/indy
+chmod -R ug+rw /home/indy/.indy-cli
+chmod -R ug+rw /home/${SUDO_USER}/.indy-cli
 
 # Automatically added from template:
 if which py3compile >/dev/null 2>&1; then
