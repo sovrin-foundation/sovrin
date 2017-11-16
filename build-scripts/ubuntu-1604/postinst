@@ -2,37 +2,109 @@
 
 # it should be fixed
 
-# workaround when .sovrin become regular file
-if [ -f /home/${SUDO_USER}/.sovrin ]; then
-    rm /home/${SUDO_USER}/.sovrin
+# workaround when .indy become regular file
+if [ -f /home/${SUDO_USER}/.indy ]; then
+    rm /home/${SUDO_USER}/.indy
 fi
-mkdir -p /home/${SUDO_USER}/.sovrin
-cp -nr /usr/local/lib/python3.5/dist-packages/sovrin/pool_transactions_local_genesis /home/${SUDO_USER}/.sovrin 2>/dev/null
-cp -nr /usr/local/lib/python3.5/dist-packages/sovrin/pool_transactions_sandbox_genesis /home/${SUDO_USER}/.sovrin 2>/dev/null
-cp -nr /usr/local/lib/python3.5/dist-packages/sovrin/pool_transactions_live_genesis /home/${SUDO_USER}/.sovrin 2>/dev/null
 
-chown -R ${SUDO_USER}:${SUDO_USER} /home/${SUDO_USER}/.sovrin
+mkdir -p /etc/indy
+mkdir -p /var/lib/indy
+mkdir -p /var/lib/indy/local
+mkdir -p /var/lib/indy/live
+mkdir -p /var/lib/indy/sandbox
+mkdir -p /var/log/indy
 
-# workaround when .sovrin become regular file
-if [ -f /home/sovrin/.sovrin ]; then
-    rm /home/sovrin/.sovrin
+mkdir -p /home/indy/.indy-cli
+mkdir -p /home/indy/.indy-cli/networks
+mkdir -p /home/indy/.indy-cli/networks/local
+mkdir -p /home/indy/.indy-cli/networks/live
+mkdir -p /home/indy/.indy-cli/networks/sandbox
+
+mkdir -p /home/${SUDO_USER}/.indy-cli
+mkdir -p /home/${SUDO_USER}/.indy-cli/networks
+mkdir -p /home/${SUDO_USER}/.indy-cli/networks/local
+mkdir -p /home/${SUDO_USER}/.indy-cli/networks/live
+mkdir -p /home/${SUDO_USER}/.indy-cli/networks/sandbox
+
+chmod -R ug+rwx /var/lib/indy/local
+chmod -R ug+rwx /var/lib/indy/live
+chmod -R ug+rwx /var/lib/indy/sandbox
+chmod -R ug+rwx /home/indy/.indy-cli
+chmod -R ug+rwx /home/${SUDO_USER}/.indy-cli
+
+
+cp -nr /usr/local/lib/python3.5/dist-packages/sovrin/pool_transactions_local_genesis /var/lib/indy/local/pool_transactions_genesis 2>/dev/null
+cp -nr /usr/local/lib/python3.5/dist-packages/sovrin/pool_transactions_local_genesis /home/indy/.indy-cli/networks/local/pool_transactions_genesis 2>/dev/null
+cp -nr /usr/local/lib/python3.5/dist-packages/sovrin/pool_transactions_local_genesis /home/${SUDO_USER}/.indy-cli/networks/local/pool_transactions_genesis 2>/dev/null
+cp -nr /usr/local/lib/python3.5/dist-packages/sovrin/domain_transactions_local_genesis /var/lib/indy/local/domain_transactions_genesis 2>/dev/null
+cp -nr /usr/local/lib/python3.5/dist-packages/sovrin/domain_transactions_local_genesis /home/indy/.indy-cli/networks/local/domain_transactions_genesis 2>/dev/null
+cp -nr /usr/local/lib/python3.5/dist-packages/sovrin/domain_transactions_local_genesis /home/${SUDO_USER}/.indy-cli/networks/local/domain_transactions_genesis 2>/dev/null
+
+cp -nr /usr/local/lib/python3.5/dist-packages/sovrin/pool_transactions_sandbox_genesis /var/lib/indy/sandbox/pool_transactions_genesis 2>/dev/null
+cp -nr /usr/local/lib/python3.5/dist-packages/sovrin/pool_transactions_sandbox_genesis /home/indy/.indy-cli/networks/sandbox/pool_transactions_genesis 2>/dev/null
+cp -nr /usr/local/lib/python3.5/dist-packages/sovrin/pool_transactions_sandbox_genesis /home/${SUDO_USER}/.indy-cli/networks/sandbox/pool_transactions_genesis 2>/dev/null
+cp -nr /usr/local/lib/python3.5/dist-packages/sovrin/domain_transactions_sandbox_genesis /var/lib/indy/sandbox/domain_transactions_genesis 2>/dev/null
+cp -nr /usr/local/lib/python3.5/dist-packages/sovrin/domain_transactions_sandbox_genesis /home/indy/.indy-cli/networks/sandbox/domain_transactions_genesis 2>/dev/null
+cp -nr /usr/local/lib/python3.5/dist-packages/sovrin/domain_transactions_sandbox_genesis /home/${SUDO_USER}/.indy-cli/networks/sandbox/domain_transactions_genesis 2>/dev/null
+
+cp -nr /usr/local/lib/python3.5/dist-packages/sovrin/pool_transactions_live_genesis /var/lib/indy/live/pool_transactions_genesis 2>/dev/null
+cp -nr /usr/local/lib/python3.5/dist-packages/sovrin/pool_transactions_live_genesis /home/indy/.indy-cli/networks/live/pool_transactions_genesis 2>/dev/null
+cp -nr /usr/local/lib/python3.5/dist-packages/sovrin/pool_transactions_live_genesis /home/${SUDO_USER}/.indy-cli/networks/live/pool_transactions_genesis 2>/dev/null
+cp -nr /usr/local/lib/python3.5/dist-packages/sovrin/domain_transactions_live_genesis /var/lib/indy/live/domain_transactions_genesis 2>/dev/null
+cp -nr /usr/local/lib/python3.5/dist-packages/sovrin/domain_transactions_live_genesis /home/indy/.indy-cli/networks/live/domain_transactions_genesis 2>/dev/null
+cp -nr /usr/local/lib/python3.5/dist-packages/sovrin/domain_transactions_live_genesis /home/${SUDO_USER}/.indy-cli/networks/live/domain_transactions_genesis 2>/dev/null
+
+if [ ! -f /etc/indy/indy_config.py ]; then
+    touch /etc/indy/indy_config.py
+    echo "enableStdOutLogging=False" >> /etc/indy/indy_config.py
+    echo "baseDir = '/var/lib/indy'" >> /etc/indy/indy_config.py
+    echo "NODE_BASE_DATA_DIR = baseDir" >> /etc/indy/indy_config.py
+    echo "LOG_DIR = '/var/log/indy'" >> /etc/indy/indy_config.py
+    echo "BACKUP_DIR = '/var/lib/indy/backup'" >> /etc/indy/indy_config.py
+    echo "CLI_BASE_DIR = '~/.indy-cli/'" >> /etc/indy/indy_config.py
+    echo "CLI_NETWORK_DIR = '~/.indy-cli/networks'" >> /etc/indy/indy_config.py
+    echo "NODE_BASE_DATA_DIR = baseDir" >> /etc/indy/indy_config.py
+    echo "NETWORK_NAME = 'sandbox'" >> /etc/indy/indy_config.py
 fi
-mkdir -p /home/sovrin/.sovrin
 
-cp -nr /usr/local/lib/python3.5/dist-packages/sovrin/domain_transactions_local_genesis /home/sovrin/.sovrin 2>/dev/null
-cp -nr /usr/local/lib/python3.5/dist-packages/sovrin/domain_transactions_sandbox_genesis /home/sovrin/.sovrin 2>/dev/null
-cp -nr /usr/local/lib/python3.5/dist-packages/sovrin/domain_transactions_live_genesis /home/sovrin/.sovrin 2>/dev/null
-cp -nr /usr/local/lib/python3.5/dist-packages/sovrin/pool_transactions_local_genesis /home/sovrin/.sovrin 2>/dev/null
-cp -nr /usr/local/lib/python3.5/dist-packages/sovrin/pool_transactions_sandbox_genesis /home/sovrin/.sovrin 2>/dev/null
-cp -nr /usr/local/lib/python3.5/dist-packages/sovrin/pool_transactions_live_genesis /home/sovrin/.sovrin 2>/dev/null
+HAS_NETWORK=$(grep ^NETWORK_NAME[[:space:]]*=[[:space:]]* /etc/indy/indy_config.py)
+if [ -z "${HAS_NETWORK}" ]; then
+    echo "NETWORK_NAME = 'sandbox'" >> /etc/indy/indy_config.py
+fi
 
-chown -R sovrin:sovrin /home/sovrin/.sovrin
+# workaround when .indy become regular file
+if [ -f /home/indy/.indy ]; then
+    rm /home/indy/.indy
+fi
 
 # adding sovrin package to packages to hold
-SOVRIN_IS_HELD=$(grep HOLD_EXT=.*sovrin.* /etc/sovrin/node_control.conf)
+SOVRIN_IS_HELD=$(grep HOLD_EXT=.*sovrin.* /etc/indy/node_control.conf)
 if [ -z "${SOVRIN_IS_HELD}" ]; then
-    sed -ie 's|HOLD_EXT=\\"\(.*\)|HOLD_EXT=\\"sovrin \1|' /etc/sovrin/node_control.conf
+    sed -ie 's|HOLD_EXT=\\"\(.*\)|HOLD_EXT=\\"sovrin \1|' /etc/indy/node_control.conf
 fi
+
+chown -R indy:indy /etc/indy
+chown -R indy:indy /var/log/indy
+chown -R indy:indy /var/lib/indy
+chown -R indy:indy /var/lib/indy/local
+chown -R indy:indy /var/lib/indy/live
+chown -R indy:indy /var/lib/indy/sandbox
+chown -R indy:indy /home/indy/.indy-cli
+chown -R indy:indy /home/indy/.indy-cli/networks
+chown -R indy:indy /home/indy/.indy-cli/networks/local
+chown -R indy:indy /home/indy/.indy-cli/networks/live
+chown -R indy:indy /home/indy/.indy-cli/networks/sandbox
+chown -R ${SUDO_USER}:${SUDO_USER} /home/${SUDO_USER}/.indy-cli
+chown -R ${SUDO_USER}:${SUDO_USER} /home/${SUDO_USER}/.indy-cli/networks
+chown -R ${SUDO_USER}:${SUDO_USER} /home/${SUDO_USER}/.indy-cli/networks/local
+chown -R ${SUDO_USER}:${SUDO_USER} /home/${SUDO_USER}/.indy-cli/networks/live
+chown -R ${SUDO_USER}:${SUDO_USER} /home/${SUDO_USER}/.indy-cli/networks/sandbox
+
+chmod -R ug+rw /etc/indy
+chmod -R ug+rw /var/lib/indy
+chmod -R ug+rw /var/log/indy
+chmod -R ug+rw /home/indy/.indy-cli
+chmod -R ug+rw /home/${SUDO_USER}/.indy-cli
 
 # Automatically added from template:
 if which py3compile >/dev/null 2>&1; then
