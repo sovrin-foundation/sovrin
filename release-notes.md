@@ -10,8 +10,9 @@
 
 
 
+* [Aries 1.1.7](aries-1.1.7)
 
-* [Aires 1.1.6 Hot Fix](#aries-1.1.6-hot-fix)
+* [Aries 1.1.6 Hot Fix](#aries-1.1.6-hot-fix)
 
 * [Aries 1.1.6](#aries-1.1.6)
 
@@ -25,6 +26,64 @@
 #### Disclosure
 
 Although every attempt has been made to make this information as accurate as possible, please know there may be things that are omitted, not fully developed yet, or updates since this publication that were not included in the information below. Only the most pressing or significant items have been listed. For the entire list of tickets and or specific information about any given item, please visit the list at [Hyperleder Indy's Jira](https://jira.hyperledger.org/). Once logged in, simply navigate to Projects > Indy.
+
+## Aries 1.1.7
+
+
+Component Version Information
+
+| Components | Version Numbers |
+| --- | --- |
+| indy-plenum | 1.2.29 |
+| indy-anoncreds | 1.0.11 |
+| indy-node | 1.2.49 |
+| sovrin | 1.1.7 |
+|   |   |   |
+
+### Major Fixes
+
+| Description | Additional Information | Ticket Number |
+| --- | --- | --- |
+| A node was maintaining a pace with the network exactly 12 transactions behind. |   | [INDY-759](https://jira.hyperledger.org/browse/INDY-759) |
+| New nodes added to an existing pool were unable to sync ledgers with the pool. |   | [INDY-895](https://jira.hyperledger.org/browse/INDY-895) |
+| Scheduled upgrades were happening at the current time on some of the nodes. |   | [INDY-231](https://jira.hyperledger.org/browse/INDY-231) |
+| Some nodes were not restarting after a canceled pool upgrade. |   | [INDY-157](https://jira.hyperledger.org/browse/INDY-157) |
+| Sovrin logs were insufficient for failed upgrade. |   | [INDY-801](https://jira.hyperledger.org/browse/INDY-801) |
+| A node was getting the wrong `upgrade_log` entries after restarting and was running the wrong upgrade. |   | [INDY-917](https://jira.hyperledger.org/browse/INDY-917) |
+| An earlier `pool_upgrade` was not happening when there was an upgrade to schedule to happen in the future. |   | [INDY-701](https://jira.hyperledger.org/browse/INDY-701) |
+| A validator was running instance change continually on the live pool. |   | [INDY-932](https://jira.hyperledger.org/browse/INDY-932) |
+| New nodes added to an existing pool were unable to participate in consensus after the upgrade. |   | [INDY-909](https://jira.hyperledger.org/browse/INDY-909) |
+| The node logs were repeating the message, &quot;NodeRequestSuspiciousSpike suspicious spike has been noticed.&quot; |   | [INDY-541](https://jira.hyperledger.org/browse/INDY-541) |
+| Unable to catch up the agent if a validator was down. |   | [INDY-941](https://jira.hyperledger.org/browse/INDY-941) |
+| The pool was unable to write nyms after BLS keys enabling. |   | [INDY-958](https://jira.hyperledger.org/browse/INDY-958) |
+| The last pool node is `failed to upgrade`; during a pool upgrade. |   | [INDY-953](https://jira.hyperledger.org/browse/INDY-953) |
+| State Proof creating is fixed. |   | [INDY-954](https://jira.hyperledger.org/browse/INDY-954) |
+| State Proof verifying is fixed. |   | [INDY-949](https://jira.hyperledger.org/browse/INDY-949) |
+|   |   |   |    |
+
+### Changes - Additions - Known Issues
+
+| Description | Workaround | Ticket |
+| --- | --- | --- |
+| Signed State implementation |   | [INDY-670](https://jira.hyperledger.org/browse/INDY-670) |
+| State Proofs implementation |   | [INDY-790](https://jira.hyperledger.org/browse/INDY-790) |
+| Removed all non-Indy branding from the indy-plenum repo. |   | [INDY-829](https://jira.hyperledger.org/browse/INDY-829) |
+| Removed all non-Indy branding from the indy-anoncreds repo. |   | [INDY-855](https://jira.hyperledger.org/browse/INDY-855) |
+| Removed all non-Indy branding from the indy-node repo. |   | [INDY-830](https://jira.hyperledger.org/browse/INDY-830) |
+| Backward compatibility of nodes with state proofs support with old clients. |   | [INDY-877](https://jira.hyperledger.org/browse/INDY-877) |
+| Supported rebranding in sovrin package. |   | [INDY-880](https://jira.hyperledger.org/browse/INDY-880) |
+| Supported rebranding in Docker and Vagrant environments of sovrin-environments. |   | [INDY-891](https://jira.hyperledger.org/browse/INDY-891) |
+| Support of multiple pool networks by Indy Node. |   | [INDY-831](https://jira.hyperledger.org/browse/INDY-831) |
+| Support of multiple pool networks by Indy Client (CLI). |   | [INDY-832](https://jira.hyperledger.org/browse/INDY-832) |
+| Created proper file folder paths for system service. |   | [INDY-833](https://jira.hyperledger.org/browse/INDY-833) |
+| Client needs to be able to send read requests to one Node only. |   | [INDY-927](https://jira.hyperledger.org/browse/INDY-927) |
+| Client needs to be able to make sure that we have the latest State Proof. |   | [INDY-928](https://jira.hyperledger.org/browse/INDY-928) |
+| **Known Issue:** Node is broken after load\_test.py run |   | [INDY-960](https://jira.hyperledger.org/browse/INDY-960) |
+
+### Additional Information:
+
+Mapping of all file/folder changes are located [here](https://docs.google.com/spreadsheets/d/1A84H8knCtn8rrTirzxta8XC1jpHBjvQiqrxquTv6bpc/edit#gid=0).
+
 
 ## Aries 1.1.6 Hot Fix
 
