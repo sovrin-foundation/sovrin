@@ -78,11 +78,70 @@ Component Version Information
 | Created proper file folder paths for system service. |   | [INDY-833](https://jira.hyperledger.org/browse/INDY-833) |
 | Client needs to be able to send read requests to one Node only. |   | [INDY-927](https://jira.hyperledger.org/browse/INDY-927) |
 | Client needs to be able to make sure that we have the latest State Proof. |   | [INDY-928](https://jira.hyperledger.org/browse/INDY-928) |
-| **Known Issue:** Node is broken after load\_test.py run |   | [INDY-960](https://jira.hyperledger.org/browse/INDY-960) |
+| **Known Issue:** Node is broken after `load_test.py` run |   | [INDY-960](https://jira.hyperledger.org/browse/INDY-960) |
+|    |    |    |    |
 
 ### Additional Information:
 
 Mapping of all file/folder changes are located [here](https://docs.google.com/spreadsheets/d/1A84H8knCtn8rrTirzxta8XC1jpHBjvQiqrxquTv6bpc/edit#gid=0).
+
+#### Upgrade Steps
+
+1. Send `Pool Upgrade` command so all nodes upgrade.
+
+2. Sometime later each Steward will need to run the following command line to add their BLS Keys:
+
+Steward should run from `indy` user script `enable_bls` (placed in /usr/local/bin):
+
+`enable_bls --name=<node-name> --node_dest=<node-dest-as-in-node-txn> --steward_seed=<seed-used-to-create-steward-did> --bls_seed=<32 character seed-for-bls-key>`
+
+#### Questions and Answers
+
+##### BLS Keys for State Proofs
+
+
+**What does BLS stand for?**
+
+Boneh-Lynn-Shacham - The BLS signature scheme is used to verify that a signer is authentic.
+
+**How does the CLI use State Proof for confirmation?**
+
+When the CLI requests information about a transaction is checks the BLS signatures to verify the transaction was written by nodes that are part of the validator pool. The CLI sends a request to one node (arbitrary one). If the Reply doesn't have a State Proof, or the reply is incorrect/invalid, then CLI falls back to sending requests to all Nodes and waiting for f+1 equal Replies.
+
+**What if not all nodes in the pool have BLS signing keys for a transaction?**
+
+Transactions only get signed if all nodes reaching consensus can sign it (>= n-f Nodes with correct BLS signatures).
+
+**Can the bls_seed be any 32 character seed like the Steward seed?**
+
+Yes.
+
+**When adding a new node to an existing pool where do I find my BLS key?**
+
+When initializing your node using `init_indy_node` the output will display the keys for the node including the BLS key. It can be found in /var/lib/indy/<network_name>/keys/<node_name>/bls_keys/bls_pk file (e.g.: /var/lib/indy/sandbox/keys/Node1/bls_keys/bls_pk)
+
+When you send the transaction to add the new node to the pool it will also contain the BLS key in the transaction shown in this example.
+
+*Example of send node command with BLS for 5th AWS node:*
+
+`send NODE dest=4Tn3wZMNCvhSTXPcLinQDnHyj56DTLQtL61ki4jo2Loc data=
+{'client_port': 9702, 'client_ip': '10.0.0.105', 'alias': 'Node5', 'node_ip': '10.0.0.105', 'node_port': 9701, 'services': ['VALIDATOR'], 'blskey':'2RdajPq6rCidK5gQbMzSJo1NfBMYiS3e44GxjTqZUk3RhBdtF28qEABHRo4MgHS2hwekoLWRTza9XiGEMRCompeujWpX85MPt87WdbTMysXZfb7J1ZXUEMrtE5aZahfx6p2YdhZdrArFvTmFWdojaD2V5SuvuaQL4G92anZ1yteay3R'}`
+
+**Can I use a seed when generating my BLS keys?**
+
+For a new node when using `init_indy_node` if you specify a seed for this script that same seed is used to generate your BLS keys.
+
+For existing nodes being upgraded to the new version using state proofs you would use the script `enable_bls` where you can specify a seed on the command line.
+
+`enable_bls --name=<node-name> --node_dest=<;node-dest-as-in-node-txn> --steward_seed=<seed-used-to-create-steward-did> --bls_seed=<32 character seed-for-bls-key>
+`
+
+##### Multi-network and indy_config.py
+
+**Where do I find the configuration file settings?**
+
+With file and folder changes the new location for `indy_config.py` is in the directory location /etc/indy/. The configuration file has a new setting called ``"NETWORK_NAME"`` which is used to identify which network and associated genesis transaction files to use like `sandbox` or `live`. If adding a new node to a live pool change this setting before initializing the node.
+The genesis files are now located in their own directory based off the network name "/var/lib/indy/NETWORK_NAME". The defaults are `live`, `local`, and `sandbox`. Setting the ``"NETWORK_NAME"`` in the `indy_config.py` file will determine which network is used. The default setting in the `indy_config.py` file is "``"NETWORK_NAME=sandbox"``.
 
 
 ## Aries 1.1.6 Hot Fix
