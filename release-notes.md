@@ -36,7 +36,7 @@ Component Version Information
 | --- | --- |
 | indy-plenum | 1.2.29 |
 | indy-anoncreds | 1.0.11 |
-| indy-node | 1.2.49 |
+| indy-node | 1.2.50 |
 | sovrin | 1.1.7 |
 |   |   |   |
 
