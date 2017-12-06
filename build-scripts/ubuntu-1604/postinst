@@ -7,7 +7,11 @@ if [ -f /home/${SUDO_USER}/.indy ]; then
     rm /home/${SUDO_USER}/.indy
 fi
 
-mkdir -p /etc/indy
+GENERAL_CONFIG_DIR="/etc/indy"
+GENERAL_CONFIG_NAME="indy_config.py"
+GENERAL_CONFIG_PATH=$GENERAL_CONFIG_DIR/$GENERAL_CONFIG_NAME
+
+mkdir -p $GENERAL_CONFIG_DIR
 mkdir -p /var/lib/indy
 mkdir -p /var/lib/indy/local
 mkdir -p /var/lib/indy/live
@@ -54,22 +58,26 @@ cp -nr /usr/local/lib/python3.5/dist-packages/sovrin/domain_transactions_live_ge
 cp -nr /usr/local/lib/python3.5/dist-packages/sovrin/domain_transactions_live_genesis /home/indy/.indy-cli/networks/live/domain_transactions_genesis 2>/dev/null
 cp -nr /usr/local/lib/python3.5/dist-packages/sovrin/domain_transactions_live_genesis /home/${SUDO_USER}/.indy-cli/networks/live/domain_transactions_genesis 2>/dev/null
 
-if [ ! -f /etc/indy/indy_config.py ]; then
-    touch /etc/indy/indy_config.py
-    echo "enableStdOutLogging=False" >> /etc/indy/indy_config.py
-    echo "baseDir = '/var/lib/indy'" >> /etc/indy/indy_config.py
-    echo "NODE_BASE_DATA_DIR = baseDir" >> /etc/indy/indy_config.py
-    echo "LOG_DIR = '/var/log/indy'" >> /etc/indy/indy_config.py
-    echo "BACKUP_DIR = '/var/lib/indy/backup'" >> /etc/indy/indy_config.py
-    echo "CLI_BASE_DIR = '~/.indy-cli/'" >> /etc/indy/indy_config.py
-    echo "CLI_NETWORK_DIR = '~/.indy-cli/networks'" >> /etc/indy/indy_config.py
-    echo "NODE_BASE_DATA_DIR = baseDir" >> /etc/indy/indy_config.py
-    echo "NETWORK_NAME = 'sandbox'" >> /etc/indy/indy_config.py
+if [ ! -f $GENERAL_CONFIG_PATH ]; then
+    touch $GENERAL_CONFIG_PATH
+    echo "enableStdOutLogging=False" >> $GENERAL_CONFIG_PATH
+    echo "LEDGER_DIR = '/var/lib/indy'" >> $GENERAL_CONFIG_PATH
+    echo "LOG_DIR = '/var/log/indy'" >> $GENERAL_CONFIG_PATH
+    echo "KEYS_DIR = '/var/lib/indy'" >> $GENERAL_CONFIG_PATH
+    echo "GENESIS_DIR = '/var/lib/indy'" >> $GENERAL_CONFIG_PATH
+    echo "BACKUP_DIR = '/var/lib/indy/backup'" >> $GENERAL_CONFIG_PATH
+    echo "PLUGINS_DIR = '/var/lib/indy/plugins'" >> $GENERAL_CONFIG_PATH
+    echo "CLI_BASE_DIR = '~/.indy-cli/'" >> $GENERAL_CONFIG_PATH
+    echo "CLI_NETWORK_DIR = '~/.indy-cli/networks'" >> $GENERAL_CONFIG_PATH
+    echo "NETWORK_NAME = 'sandbox'" >> $GENERAL_CONFIG_PATH
 fi
 
-HAS_NETWORK=$(grep ^NETWORK_NAME[[:space:]]*=[[:space:]]* /etc/indy/indy_config.py)
-if [ -z "${HAS_NETWORK}" ]; then
-    echo "NETWORK_NAME = 'sandbox'" >> /etc/indy/indy_config.py
+
+NETWORK_LINE=$(grep ^NETWORK_NAME[[:space:]]*=[[:space:]]* $GENERAL_CONFIG_PATH)
+if [ -z "${NETWORK_LINE}" ]; then
+    echo "NETWORK_NAME = 'sandbox'" >> $GENERAL_CONFIG_PATH
+elif [[ $NETWORK_LINE =~ ^NETWORK_NAME[[:space:]]*=[[:space:]]*None[[:space:]]*$ ]]; then
+    sed -i "s/^\(NETWORK_NAME\s*=\s*\).*\$/\1\"sandbox\"/" $GENERAL_CONFIG_PATH
 fi
 
 # workaround when .indy become regular file
@@ -83,7 +91,7 @@ if [ -z "${SOVRIN_IS_HELD}" ]; then
     sed -ie 's|HOLD_EXT=\\"\(.*\)|HOLD_EXT=\\"sovrin \1|' /etc/indy/node_control.conf
 fi
 
-chown -R indy:indy /etc/indy
+chown -R indy:indy $GENERAL_CONFIG_DIR
 chown -R indy:indy /var/log/indy
 chown -R indy:indy /var/lib/indy
 chown -R indy:indy /var/lib/indy/local
@@ -100,7 +108,7 @@ chown -R ${SUDO_USER}:${SUDO_USER} /home/${SUDO_USER}/.indy-cli/networks/local
 chown -R ${SUDO_USER}:${SUDO_USER} /home/${SUDO_USER}/.indy-cli/networks/live
 chown -R ${SUDO_USER}:${SUDO_USER} /home/${SUDO_USER}/.indy-cli/networks/sandbox
 
-chmod -R ug+rw /etc/indy
+chmod -R ug+rw $GENERAL_CONFIG_DIR
 chmod -R ug+rw /var/lib/indy
 chmod -R ug+rw /var/log/indy
 chmod -R ug+rw /home/indy/.indy-cli
