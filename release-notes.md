@@ -87,13 +87,82 @@ Mapping of all file/folder changes are located [here](https://docs.google.com/sp
 
 #### Upgrade Steps
 
-1. Send `Pool Upgrade` command so all nodes upgrade.
+
+1. Send Pool Upgrade command so all nodes upgrade.
 
 2. Sometime later each Steward will need to run the following command line to add their BLS Keys:
 
-Steward should run from `indy` user script `enable_bls` (placed in /usr/local/bin):
+##### Steps to Add BLS Keys
 
-`enable_bls --name=<node-name> --node_dest=<node-dest-as-in-node-txn> --steward_seed=<seed-used-to-create-steward-did> --bls_seed=<32 character seed-for-bls-key>`
+**_From the Validator Node:_**
+
+1. Generate a new 32-byte seed for the bls key (we recommend pwgen):
+
+``$ sudo apt install pwgen
+$ pwgen -s -y -B 32 1``
+
+If the output has a single-quote symbol ('), rerun until it doesn't.
+
+**NOTE: This is not your Steward or Node seed.**
+
+2. Record the seed somewhere secure.
+
+3. Switch to the indy user.
+
+``$ sudo su - indy``
+
+4. Configure the BLS key.
+
+``$ init_bls_keys --name NAME --seed'<SEED>'``
+
+The ``--seed`` is a 32-byte input used to create the BLS key.
+
+_Example with Seed:_
+
+ ``$ init_bls_keys --name Node1 --seed'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'``
+
+Be sure to capture the `Stdout` at the end of the output which looks like the following:
+
+`BLS Public key is 3AfkzUZVn2WT9mxW2zQXMgX39FXSY5qzohnMVpdvNS5KSath1YG5Ux4u9ubTFTaP6W55XX9Yx7xPWeYos489oyY53WzwNBG7X4o32ESnZ9xacLmNsQLBjqc6oqpWGTbEXv4edFTrZ88n93sEh4fjFhQMumaXxDfWJgd9aj7KCSpf38F`
+
+5. Exit the indy user.
+
+``$ exit ``
+
+**_From the CLI:_**
+
+1. Manually upgrade CLI.
+
+2. Launch the CLI.
+
+``$ indy ``
+
+The first time running the upgraded CLI you will be prompted to migrate your previous settings. Answer "Yes."
+
+3. Connect to the pool.
+
+`indy> connect live`
+
+4. Set your Steward as the signer in the CLI.
+
+`indy@live> use DID <Steward DID>`
+
+_Example:_
+
+`indy@live> use DID Th7MpTaRZVRYnPiabds81Y`
+
+**Note:** If your DID is not found in the wallet, you will need to use your steward seed:
+
+`indy@live> new key with seed <steward_seed>`
+
+5. Now you will send a node transaction like what you did when you added the node to the pool. You will add the BLS key as a new parameter to the transaction to update the pool ledger with this additional public key.
+
+`indy@live> send NODE dest=<node_dest> data={'alias':'<node name>','blskey': 'key_generated_by_init_bls_keys'}`
+
+_Example:_
+
+`indy@live< send NODE dest=Gw6pDLhcBcoQesN72qfotTgFa7cbuqZpkX3Xo6pLhPhv data={'alias':'Node1','blskey': '3AfkzUZVn2WT9mxW2zQXMgX39FXSY5qzohnMVpdvNS5KSath1YG5Ux4u9ubTFTaP6W55XX9Yx7xPWeYos489oyY53WzwNBG7X4o32ESnZ9xacLmNsQLBjqc6oqpWGTbEXv4edFTrZ88n93sEh4fjFhQMumaXxDfWJgd9aj7KCSpf38F}`
+
 
 #### Questions and Answers
 
