@@ -588,8 +588,9 @@ Mapping of all file/folder changes are located [here](https://docs.google.com/sp
 
 1. Generate a new 32-byte seed for the bls key (we recommend pwgen):
 
-``$ sudo apt install pwgen
-$ pwgen -s -y -B 32 1``
+``$ sudo apt install pwgen``
+
+``$ pwgen -s -y -B 32 1``
 
 If the output has a single-quote symbol ('), rerun until it doesn't.
 
