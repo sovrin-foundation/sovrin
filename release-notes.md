@@ -604,13 +604,13 @@ If the output has a single-quote symbol ('), rerun until it doesn't.
 
 4. Configure the BLS key.
 
-``$ init_bls_keys --name <NODE_ALIAS> --seed'<SEED>'``
+``$ init_bls_keys --name <NODE_ALIAS> --seed '<SEED>'``
 
 The ``--seed`` is the seed you generated above, and will be used to create the BLS key.
 
 _Example with Seed:_
 
- ``$ init_bls_keys --name Node1 --seed'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'``
+ ``$ init_bls_keys --name Node1 --seed 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'``
 
 Capture the stdout at the end of the output, which looks like the following, and record it.
 
@@ -656,7 +656,9 @@ _Example:_
 
 _Example:_
 
-`indy@live< send NODE dest=Gw6pDLhcBcoQesN72qfotTgFa7cbuqZpkX3Xo6pLhPhv data={'alias':'Node1','blskey': '3AfkzUZVn2WT9mxW2zQXMgX39FXSY5qzohnMVpdvNS5KSath1YG5Ux4u9ubTFTaP6W55XX9Yx7xPWeYos489oyY53WzwNBG7X4o32ESnZ9xacLmNsQLBjqc6oqpWGTbEXv4edFTrZ88n93sEh4fjFhQMumaXxDfWJgd9aj7KCSpf38F'}`
+`indy@live> send NODE dest=Gw6pDLhcBcoQesN72qfotTgFa7cbuqZpkX3Xo6pLhPhv data={'alias':'Node1','blskey': '3AfkzUZVn2WT9mxW2zQXMgX39FXSY5qzohnMVpdvNS5KSath1YG5Ux4u9ubTFTaP6W55XX9Yx7xPWeYos489oyY53WzwNBG7X4o32ESnZ9xacLmNsQLBjqc6oqpWGTbEXv4edFTrZ88n93sEh4fjFhQMumaXxDfWJgd9aj7KCSpf38F'}`
+
+**Note:** The 'node_dest' value can be found on the node with `sudo read_ledger --type pool`.
 
 
 #### Questions and Answers
