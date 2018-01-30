@@ -152,25 +152,25 @@
 
                 New Proposal
                 {
-                    "identifier": &lt;Trust Anchor DID&gt;,
+                    "id": &lt;Trust Anchor DID&gt;,
                     "signature": &lt;signature over this transaction from the Trust Anchor&gt;,
                     "reqId": &lt;A nonce for this transaction&gt;,
                     "operation": {
                         "type": "NYM",
                         "dest": &lt;new DID that is being registered&gt;,
                         "document": {
-                            "keys": [{
+                            "publicKeys": [{
                                 "id": &lt;a valid unique identifier&gt;
-                                "type": &lt;ed25519, ed41417, p-256, p-384, p-512, rsa, defined in appendix&gt;
-                                "usage": [&lt;verification&gt;],
-                                "encoding": &lt;base64, base58, hex, pem&gt;
-                                "value": &lt;Key material encoded&gt;
+                                "type": &lt;ed25519, defined in appendix&gt;
+                                "publicKeyBase58Check": &lt;Key material encoded&gt;
                             }],
-                            "services": [{
-                              "id": &lt;a valid unique identifier&gt;,
-                              "type": &lt;agent, email, api, dns, etc&gt;,
-                              "path": &lt;path to reach DID at this service&gt;,
-                              "endpoints": [&lt;A URI for the endpoint&gt;]
+                            "authentication": [{
+                                "type": "ed25519",
+                                "publicKey": "&lt;key id in publicKeys&gt;"
+                            }],
+                            "serviceEndpoints": [{
+                              "type": &lt;agentService, emailService, apiService, dnsService, etc&gt;,
+                              "serviceEndpoint": &lt;A URI for the endpoint&gt;
                             }]
                         }
                     }
@@ -178,24 +178,25 @@
 
                 Example
                 {
-                    "identifier": "did:sov:29wksjcn38djfh47ruqrtcd5",
-                    "signature": "base64:1qaz2wsx3edc4rfv5tgb6yhn7ujm8iklop0+/==",
-                    "reqId": "base64:0okn987yhbgfterdscxsw",
+                    "id": "did:sov:29wksjcn38djfh47ruqrtcd5",
+                    "signature": "1qaz2wsx3edc4rfv5tgb6yhn7ujm8iklop==",
+                    "reqId": "okn987yhbgFtErDsCXsw",
                     "operation": {
                         "type": "NYM",
                         "dest": "did:sov:mnjkl98uipsndg2hdjdjuf7",
                         "document": {
-                            "keys": [{
+                            "publicKeys": [{
+                                "id": "key1"
                                 "type": "ed25519",
-                                "usage": ["verification"],
-                                "encoding": "pem"
-                                "value": "-----BEGIN PUBLIC KEY...END PUBLIC KEY-----\r\n"
+                                "publicKeyBase58Check": "..."
                             }],
-                            "services": [{
-                              "id": "#agent1",
-                              "type": "agent",
-                              "path": "/did/did:sov:29wksjcn38djfh47ruqrtcd5",
-                              "endpoints":["https://www.sovrin.org/agents"]
+                            "authentication": [{
+                                "type": "ed25519",
+                                "publicKey": "key1"
+                            }],
+                            "serviceEndpoints": [{
+                              "type": "agentService",
+                              "serviceEndpoint":"https://www.sovrin.org/agents"
                             }]
                         }
                     }
@@ -211,18 +212,19 @@
           <pre>
             {
               "id": "did:sov:mnjkl98uipsndg2hdjdjuf7",
-              "keys": [{
+              "publicKeys": [{
+                  "id": "key1"
                   "type": "ed25519",
-                  "usage": ["verification"],
-                  "encoding": "pem"
-                  "value": "-----BEGIN PUBLIC KEY...END PUBLIC KEY-----\r\n"
-              }],
-              "services": [{
-                "id": "#agent1",
-                "type": "agent",
-                "path": "/did/did:sov:29wksjcn38djfh47ruqrtcd5",
-                "endpoints":["https://www.sovrin.org/agents"]
-              }]
+                  "publicKeyBase58Check": "..."
+                }],
+              "authentication": [{
+                  "type": "ed25519",
+                  "publicKey": "key1"
+                }],
+              "serviceEndpoints": [{
+                  "type": "agentService",
+                  "serviceEndpoint":"https://www.sovrin.org/agents"
+                }]
             }
           </pre>
         </p>
@@ -263,17 +265,13 @@
 
                 New Proposal
                 {
-                    "identifier": &lt;DID of the author of this query&gt;,
+                    "id": &lt;DID of the author of this query&gt;,
                     "signature": &lt;signature over this transaction from the author&gt;,
                     "reqId": &lt;a nonce for this query&gt;,
                     "type": "GET_NYM",
                     "dest": &lt;DID whose record needs to be queried&gt;,
-                    "key": {
-                        "type": &lt;Ed25519, Ed41417, P-256, P-384, P-512, RSA&gt;
-                        "usage": [&lt;verification&gt;]
-                        "encoding": &lt;base64, base58, hex, pem&gt;
-                        "value": &lt;Key material encoded&gt;
-                    }
+                    "verkey": &lt;The verification key id of the DID to use&gt;
+                    "role": &lt; role, whether this DID is a Trust Anchor, a Steward, Trustee or is a non-priviledged identity &gt;,
                 }
         </pre>
 
@@ -295,24 +293,20 @@
 
                   New Proposal
                   {
-                    "identifier": &lt;DID of the author of this query&gt;,
+                    "id": &lt;DID of the author of this query&gt;,
                     "signature": [&lt;signature over this transaction from the author&gt;,]
                     "reqId": &lt;a nonce for this query&gt;,
                     "operation": {
                         "type": "NYM",
-                        "dest": &lt;DID whose record needs to be queried&gt;,
+                        "dest": &lt;DID whose record needs to be updated&gt;,
                         "document": {
-                            "keys": [{
-                                "type": &lt;Ed25519, Ed41417, P-256, P-384, P-512, RSA&gt;
-                                "usage": [&lt;verification&gt;]
-                                "encoding": &lt;base64, base58, hex, pem&gt;
-                                "value": &lt;Key material encoded in format&gt;
+                            "publicKeys": [{
+                                "type": &lt;ed25519&gt;
+                                "publicKeyBase58Check": &lt;Key material encoded in format&gt;
                             }],
-                            "services": [{
-                              "id": &lt;a valid unique identifier&gt;,
-                              "type": &lt;agent, email, api, dns, etc&gt;,
-                              "path": &lt;path to reach DID at this service&gt;,
-                              "endpoints": [&lt;A URI for the endpoint&gt;]
+                            "serviceEndpoints": [{
+                              "type": &lt;agentService, emailService, apiService, dnsService, etc&gt;,
+                              "serviceEndpoint": &lt;A URI for the endpoint&gt;
                             }]
                         }
                       }
@@ -335,7 +329,7 @@
             the DID should send the following transaction.
             <pre>
                 {
-                    "identifier": &lt;DID of the owner&gt;,
+                    "id": &lt;DID of the owner&gt;,
                     "signature": &lt;signature over this transaction from the DID in identifier&gt;,
                     "reqId": &lt;a nonce for this transaction&gt;,
                     "operation": {
@@ -398,19 +392,7 @@
             You might also connect with us in Hyperledger and W3C working groups or at the semi-annual Internet Identity Workshop conferences.</p>
     </section>
     <section>
-      <h2>Appendix A: Key Usages Types</h2>
-      The following are valid values for <strong>keys/usages</strong><br><br>
-      <table border="1">
-        <tr><th>Value</th><th>Purpose</th></tr>
-        <tr><td>Encryption</td><td>Confidentiality protection like data or wrapping other keys.<br>Integrity protection like a MAC.</td></tr>
-        <tr><td>Authentication</td><td>Assurance of an entity claim or that the data came from an entity.<br>A signature verification</td></tr>
-        <tr><td>Authorization</td><td>An entity has permisson or delegation rights.<br>A signature verification</td></tr>
-        <tr><td>Agreement</td><td>A static public key for computing secure key agreement schemes.<br>I.E. Diffie-Hellman.</td></tr>
-      </table>
-    </section>
-
-    <section>
-      <h2>Appendix B: Key Algorithm Types</h2>
+      <h2>Appendix A: Key Algorithm Types</h2>
       This is extracted from RFC 5480 and 5639:<br>
       The NIST-named curves are:<br>
 <br>
@@ -449,18 +431,23 @@
       prime256v1   ... same as nistp256, secp256r1<br>
       prime384v1   … same as nistp384, secp384r1<br>
       prime521v1   ... same as nistp521, secp521r1<br>
-      The following are valid values for <strong>keys/type</strong><br><br><br>
+<br>
+      Barreto Naehring curves are defined at <a href="https://tools.ietf.org/id/draft-kasamatsu-bncurves-01.html#rfc.section.4.3.1">ISO/IEC 15946-5</a>, <a href="https://eprint.iacr.org/2007/390.pdf">DevScoDah2007</a>, and <a href="https://fidoalliance.org/specs/fido-uaf-v1.1-id-20170202/fido-ecdaa-algorithm-v1.1-id-20170202.html">FIDO ECDAA Section 4</a>
+<br><br>
+      The following are valid values for <strong>publicKey/type</strong><br><br>
       <table border="1">
         <tr><th>Key Type</th></tr>
         <tr><td>rsa</td></tr>
-        <tr><td>Curves from <a href="https://safecurves.cr.yp.to">SafeCurves</a></td></tr>
-        <tr><td>m-221, e-222, ed1174, ed25519 (x25519), ed383187, ed41417, e-382, m-383, ed448, e-521, m-511</td></tr>
-        <tr><td>Curves from <a href="http://www.ecc-brainpool.org/download/Domain-parameters.pdf">BrainPool</a></td></tr>
+        <tr><td><a href="https://safecurves.cr.yp.to">Twisted Edwards/Montgomery Curves</a></td></tr>
+        <tr><td>m-221, e-222, ed1174, ed25519, ed383187, ed41417, e-382, m-383, ed448, e-521, m-511</td></tr>
+        <tr><td><a href="http://www.ecc-brainpool.org/download/Domain-parameters.pdf">BrainPool Curves</a></td></tr>
         <tr><td>brainpoolp160r1, brainpoolp192r1, brainpoolp224r1, brainpoolp256r1, brainpoolp320r1, brainpoolp384r1, brainpoolp512r1</td></tr>
-        <tr><td>Curves from <a href="http://www.secg.org/SEC2-Ver-1.0.pdf">SEC2</a></td></tr>
+        <tr><td><a href="http://www.secg.org/SEC2-Ver-1.0.pdf">SEC2 Curves</a></td></tr>
         <tr><td>secp112r1, secp128r1, secp160r1, secp192r1, secp224r1, secp256r1, secp384r1, secp521r1</td></tr>
         <tr><td>secp160k1, secp163k1, secp192k1, secp224k1, secp256k1</td></tr>
         <tr><td>sect163r2, sect233r1, sect239r1, sect283r1, sect409r1, sect571r1</td></tr>
+        <tr><td><a href="https://tools.ietf.org/id/draft-kasamatsu-bncurves-01.html">Barreto Naehrig Curves</a></td></tr>
+        <tr><td>fp224bn, fp254bna, fp254bnb, fp256bn, fp384bn, fp512bn, fp638bn</td></tr>
       </table>
     </section>
   </body>
