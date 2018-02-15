@@ -159,7 +159,7 @@
                         "type": "NYM",
                         "dest": &lt;new DID that is being registered&gt;,
                         "document": {
-                            "publicKeys": [{
+                            "publicKey": [{
                                 "id": &lt;a valid unique identifier&gt;
                                 "type": &lt;ed25519, defined in appendix&gt;
                                 "publicKeyBase58Check": &lt;Key material encoded&gt;
@@ -168,7 +168,7 @@
                                 "type": "ed25519",
                                 "publicKey": "&lt;key id in publicKeys&gt;"
                             }],
-                            "serviceEndpoints": [{
+                            "serviceEndpoint": [{
                               "type": &lt;agentService, emailService, apiService, dnsService, etc&gt;,
                               "serviceEndpoint": &lt;A URI for the endpoint&gt;
                             }]
@@ -185,16 +185,16 @@
                         "type": "NYM",
                         "dest": "did:sov:mnjkl98uipsndg2hdjdjuf7",
                         "document": {
-                            "publicKeys": [{
+                            "publicKey": [{
                                 "id": "key1"
-                                "type": "ed25519",
+                                "type": "ED25519VerificationKey",
                                 "publicKeyBase58Check": "..."
                             }],
                             "authentication": [{
-                                "type": "ed25519",
+                                "type": "ED25519VerificationKey",
                                 "publicKey": "key1"
                             }],
-                            "serviceEndpoints": [{
+                            "serviceEndpoint": [{
                               "type": "agentService",
                               "serviceEndpoint":"https://www.sovrin.org/agents"
                             }]
@@ -212,16 +212,16 @@
           <pre>
             {
               "id": "did:sov:mnjkl98uipsndg2hdjdjuf7",
-              "publicKeys": [{
+              "publicKey": [{
                   "id": "key1"
-                  "type": "ed25519",
+                  "type": "ED25519VerificationKey",
                   "publicKeyBase58Check": "..."
                 }],
               "authentication": [{
                   "type": "ed25519",
                   "publicKey": "key1"
                 }],
-              "serviceEndpoints": [{
+              "serviceEndpoint": [{
                   "type": "agentService",
                   "serviceEndpoint":"https://www.sovrin.org/agents"
                 }]
@@ -300,11 +300,11 @@
                         "type": "NYM",
                         "dest": &lt;DID whose record needs to be updated&gt;,
                         "document": {
-                            "publicKeys": [{
+                            "publicKey": [{
                                 "type": &lt;ed25519&gt;
                                 "publicKeyBase58Check": &lt;Key material encoded in format&gt;
                             }],
-                            "serviceEndpoints": [{
+                            "serviceEndpoint": [{
                               "type": &lt;agentService, emailService, apiService, dnsService, etc&gt;,
                               "serviceEndpoint": &lt;A URI for the endpoint&gt;
                             }]
@@ -362,7 +362,7 @@
 
     <section>
         <h2>Privacy Considerations</h2>
-        <div class="replace-me">
+        <div>
           Assume psuedonymous DID. What Sovrin is doing about privacy and addresses each of these.
             <p>Considering <a href="http://www.lifewithalacrity.com/2015/04/the-four-kinds-of-privacy.html" target="_blank">all
                 four types of privacy</a>, explore issues from these sections of the DID spec:</p>
@@ -383,12 +383,12 @@
         The code at <a href="https://github.com/hyperledger/indy-node/commit/16d55bf69beeb9579d77a70282e8563dc918b181" target="_blank">https://github.com/hyperledger/indy-node, commit 16d55bf69beeb9579d77a70282e8563dc918b181</a>
         and <a href="https://github.com/hyperledger/indy-sdk/commit/9aa80828f6b0c769acb7fed7ac4b6342b8308b98" target="_blank">https://github.com/hyperledger/indy-sdk, commit 9aa80828f6b0c769acb7fed7ac4b6342b8308b98</a>
         constitute a canonical implementation of Sovrin DIDs, and should be treated like an oracle.
-        <p class="replace-me">Note that the code includes a test suite; any other implementations should ensure that all tests pass before they claim compatibility.</p>
+        <p>Note that the code includes a test suite; any other implementations should ensure that all tests pass before they claim compatibility.</p>
     </section>
 
     <section>
         <h2>Resources</h2>
-        <p class="replace-me">Many developers maintaining the code and spec tend to hang out in RocketChat at chat.hyperledger.org, #indy and #indy-sdk.
+        <p>Many developers maintaining the code and spec tend to hang out in RocketChat at chat.hyperledger.org, #indy and #indy-sdk.
             You might also connect with us in Hyperledger and W3C working groups or at the semi-annual Internet Identity Workshop conferences.</p>
     </section>
     <section>
