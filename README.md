@@ -23,18 +23,16 @@ or at [forum.sovrin.org](https://forum.sovrin.org).
 To report vulnerabilities against Sovrin, email security@sovrin.org or visit us on
 [hackerone](https://hackerone.com/sovrin_foundation).
 
-If you'd like to write code against Sovrin, we recommend that you check out 
+If you'd like to write code against Sovrin, we recommend that you check out
 [indy-sdk](https://github.com/hyperledger/indy-sdk); it offers a C-callable library
 plus convenience wrappers in java, python, .NET, and more. Documentation is currently
 light, but the [API](https://github.com/hyperledger/indy-sdk/tree/master/src/api) is
-liberally commented... You may also want to work through Indy's 
-[Getting Started Guide](https://github.com/hyperledger/indy-node/blob/master/getting-started.md),
-which was originally written for Sovrin and then genericized. 
+liberally commented... You may also want to work through Indy's
+[Getting Started Guide](https://github.com/hyperledger/indy-node/blob/stable/getting-started.md),
+which was originally written for Sovrin and then genericized.
 
 If you want to contribute to
 Sovrin, it's likely that you'll want to do so via [indy-node](https://github.com/hyperledger/indy-node).
 Bugs, stories, and backlog for Indy are managed in
 [Hyperledger's Jira](https://jira.hyperledger.org/projects/INDY).
 Use project name `INDY` (or `IS` for the Indy SDK).
-
-
