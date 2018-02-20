@@ -87,13 +87,86 @@ Mapping of all file/folder changes are located [here](https://docs.google.com/sp
 
 #### Upgrade Steps
 
-1. Send `Pool Upgrade` command so all nodes upgrade.
 
-2. Sometime later each Steward will need to run the following command line to add their BLS Keys:
+1. Send Pool Upgrade command so all nodes upgrade.
 
-Steward should run from `indy` user script `enable_bls` (placed in /usr/local/bin):
+2. Sometime later each Steward will need to do the following steps to add their BLS Keys:
 
-`enable_bls --name=<node-name> --node_dest=<node-dest-as-in-node-txn> --steward_seed=<seed-used-to-create-steward-did> --bls_seed=<32 character seed-for-bls-key>`
+##### Steps to Add BLS Keys
+
+**_From the Validator Node:_**
+
+1. Generate a new 32-byte seed for the bls key (we recommend pwgen):
+
+``$ sudo apt install pwgen
+$ pwgen -s -y -B 32 1``
+
+If the output has a single-quote symbol ('), rerun until it doesn't.
+
+**NOTE: This is not your Steward or Node seed.**
+
+2. Record the seed **somewhere secure**.
+
+3. Switch to the indy user.
+
+``$ sudo su - indy``
+
+4. Configure the BLS key.
+
+``$ init_bls_keys --name <NODE_ALIAS> --seed'<SEED>'``
+
+The ``--seed`` is the seed you generated above, and will be used to create the BLS key.
+
+_Example with Seed:_
+
+ ``$ init_bls_keys --name Node1 --seed'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'``
+
+Capture the stdout at the end of the output, which looks like the following, and record it.
+
+`BLS Public key is 3AfkzUZVn2WT9mxW2zQXMgX39FXSY5qzohnMVpdvNS5KSath1YG5Ux4u9ubTFTaP6W55XX9Yx7xPWeYos489oyY53WzwNBG7X4o32ESnZ9xacLmNsQLBjqc6oqpWGTbEXv4edFTrZ88n93sEh4fjFhQMumaXxDfWJgd9aj7KCSpf38F`
+
+5. Exit the indy user.
+
+``$ exit ``
+
+**_From the CLI Node:_**
+
+1. Manually upgrade the CLI.
+
+ ``$ sudo apt update``
+ 
+ ``$ sudo apt upgrade``
+
+2. Launch the CLI.
+
+``$ indy ``
+
+The first time running the upgraded CLI you will be prompted to migrate your previous settings. Answer "Yes."
+
+3. Connect to the pool.
+
+`indy> connect live`
+
+4. Set your Steward as the signer in the CLI.
+
+`indy@live> use DID <Steward DID>`
+
+_Example:_
+
+`indy@live> use DID Th7MpTaRZVRYnPiabds81Y`
+
+**Note:** If your DID is not found in the wallet, you will need to use your steward seed:
+
+`indy@live> new key with seed <steward_seed>`
+
+5. Now you will send a node transaction like what you did when you added the node to the pool. You will add the BLS key as a new parameter to the transaction to update the pool ledger with this additional public key. For 'dest', use the same base58 value for this that was used when you initially onboarded your VM onto the provisional pool.
+
+`indy@live> send NODE dest=<node_dest> data={'alias':'<node name>','blskey': '<key_generated_by_init_bls_keys>'}`
+
+_Example:_
+
+`indy@live< send NODE dest=Gw6pDLhcBcoQesN72qfotTgFa7cbuqZpkX3Xo6pLhPhv data={'alias':'Node1','blskey': '3AfkzUZVn2WT9mxW2zQXMgX39FXSY5qzohnMVpdvNS5KSath1YG5Ux4u9ubTFTaP6W55XX9Yx7xPWeYos489oyY53WzwNBG7X4o32ESnZ9xacLmNsQLBjqc6oqpWGTbEXv4edFTrZ88n93sEh4fjFhQMumaXxDfWJgd9aj7KCSpf38F'}`
+
 
 #### Questions and Answers
 
@@ -106,7 +179,7 @@ Boneh-Lynn-Shacham - The BLS signature scheme is used to verify that a signer is
 
 **How does the CLI use State Proof for confirmation?**
 
-When the CLI requests information about a transaction is checks the BLS signatures to verify the transaction was written by nodes that are part of the validator pool. The CLI sends a request to one node (arbitrary one). If the Reply doesn't have a State Proof, or the reply is incorrect/invalid, then CLI falls back to sending requests to all Nodes and waiting for f+1 equal Replies.
+When the CLI requests information about a transaction it checks the BLS signatures to verify the transaction was written by nodes that are part of the validator pool. The CLI sends a request to one node (arbitrary one). If the Reply doesn't have a State Proof, or the reply is incorrect/invalid, then CLI falls back to sending requests to all Nodes and waiting for f+1 equal Replies.
 
 **What if not all nodes in the pool have BLS signing keys for a transaction?**
 
@@ -122,25 +195,28 @@ When initializing your node using `init_indy_node` the output will display the k
 
 When you send the transaction to add the new node to the pool it will also contain the BLS key in the transaction shown in this example.
 
-*Example of send node command with BLS for 5th AWS node:*
+*Example of send node command with BLS for 5th node in test pool:*
 
-`send NODE dest=4Tn3wZMNCvhSTXPcLinQDnHyj56DTLQtL61ki4jo2Loc data=
-{'client_port': 9702, 'client_ip': '10.0.0.105', 'alias': 'Node5', 'node_ip': '10.0.0.105', 'node_port': 9701, 'services': ['VALIDATOR'], 'blskey':'2RdajPq6rCidK5gQbMzSJo1NfBMYiS3e44GxjTqZUk3RhBdtF28qEABHRo4MgHS2hwekoLWRTza9XiGEMRCompeujWpX85MPt87WdbTMysXZfb7J1ZXUEMrtE5aZahfx6p2YdhZdrArFvTmFWdojaD2V5SuvuaQL4G92anZ1yteay3R'}`
+ ``send NODE dest=4Tn3wZMNCvhSTXPcLinQDnHyj56DTLQtL61ki4jo2Loc data=
+{'client_port': 9702, 'client_ip': '10.0.0.105', 'alias': 'Node5', 'node_ip': '10.0.0.105', 'node_port': 9701, 'services': ['VALIDATOR'], 'blskey':'2RdajPq6rCidK5gQbMzSJo1NfBMYiS3e44GxjTqZUk3RhBdtF28qEABHRo4MgHS2hwekoLWRTza9XiGEMRCompeujWpX85MPt87WdbTMysXZfb7J1ZXUEMrtE5aZahfx6p2YdhZdrArFvTmFWdojaD2V5SuvuaQL4G92anZ1yteay3R'}``
 
 **Can I use a seed when generating my BLS keys?**
 
 For a new node when using `init_indy_node` if you specify a seed for this script that same seed is used to generate your BLS keys.
 
-For existing nodes being upgraded to the new version using state proofs you would use the script `enable_bls` where you can specify a seed on the command line.
+**For existing nodes** being upgraded to 1.2.50, which includes state proofs, you would use the script `init_bls_keys` where you can specify a 32-character seed on the command line.
 
-`enable_bls --name=<node-name> --node_dest=<;node-dest-as-in-node-txn> --steward_seed=<seed-used-to-create-steward-did> --bls_seed=<32 character seed-for-bls-key>
-`
+ ``init_bls_keys --name <NODE_ALIAS> --seed '<SEED>'``
 
+After running `init_bls_keys`, Stewards of existing nodes will be required use their CLI node to update their validator's information on the ledger to include the bls keys: 
+
+ ``send NODE dest=<node_dest> data={'alias':'<node name>', 'blskey': '<key_generated_by_init_bls_keys>'}``
+ 
 ##### Multi-network and indy_config.py
 
 **Where do I find the configuration file settings?**
 
-With file and folder changes the new location for `indy_config.py` is in the directory location /etc/indy/. The configuration file has a new setting called ``"NETWORK_NAME"`` which is used to identify which network and associated genesis transaction files to use like `sandbox` or `live`. If adding a new node to a live pool change this setting before initializing the node.
+With file and folder changes the new location for `indy_config.py` is in the directory location /etc/indy/. The configuration file has a new setting called ``"NETWORK_NAME"`` which is used to identify which network and associated genesis transaction files to use, such as `sandbox` or `live`. If adding a new node to a live pool, change this setting before initializing the node.
 The genesis files are now located in their own directory based off the network name "/var/lib/indy/NETWORK_NAME". The defaults are `live`, `local`, and `sandbox`. Setting the ``"NETWORK_NAME"`` in the `indy_config.py` file will determine which network is used. The default setting in the `indy_config.py` file is "``"NETWORK_NAME=sandbox"``.
 
 
