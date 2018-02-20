@@ -11,15 +11,15 @@
 
 
 
-* [Aries 1.1.8](aries-1.1.8)
+* [Aries 1.1.8](#aries-118)
 
-* [Aries 1.1.7](aries-1.1.7)
+* [Aries 1.1.7](#aries-117)
 
-* [Aries 1.1.6 Hot Fix](#aries-1.1.6-hot-fix)
+* [Aries 1.1.6 Hot Fix](#aries-116-hot-fix)
 
-* [Aries 1.1.6](#aries-1.1.6)
+* [Aries 1.1.6](#aries-116)
 
-* [Aries 1.0](#aries-1.0)
+* [Aries 1.0](#aries-10)
 
 
 
