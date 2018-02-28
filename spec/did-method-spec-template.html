@@ -74,11 +74,12 @@
     <section>
         <h2>Namespace Specific Identifier (NSI)</h2>
         <p>
-          The Sovrin DID scheme is defined by the following ABNF:<br><br>
+          The Sovrin DID scheme is defined by the following <a href="ftp://ftp.rfc-editor.org/in-notes/std/std68.txt">ABNF</a>:<br><br>
           <code>
-            sovrin-did = "did:sov:{idstring}"<br>
-            idstring   = 21 or 22 char<br>
-            char       = "1" / "2" / "3" / "4" / "5" / "6" / "7" / "8" / "9" / "A" / "B" / "C"<br/>
+            sovrin-did    = "did:sov:idstring" *(":" subnamespace)<br>
+            idstring      = 21*22(char)<br>
+            subnamespace  = ALPHA *(ALPHA / DIGIT / "_" / "-")<br>
+            char          = "1" / "2" / "3" / "4" / "5" / "6" / "7" / "8" / "9" / "A" / "B" / "C"<br/>
               &nbsp;&nbsp;&nbsp;&nbsp;/ "D" / "E" / "F" / "G" / "H" / "J" / "K" / "L" / "M" / "N" / "P" / "Q"<br/>
               &nbsp;&nbsp;&nbsp;&nbsp;/ "R" / "S" / "T" / "U" / "V" / "W" / "X" / "Y" / "Z" / "a" / "b" / "c"<br/>
               &nbsp;&nbsp;&nbsp;&nbsp;/ "d" / "e" / "f" / "g" / "h" / "i" / "j" / "k" / "m" / "n" / "o" / "p"<br/>
@@ -87,7 +88,9 @@
           All Sovrin DIDs are base58 encoded using the Bitcoin/IPFS alphabets of a 16-byte uuid.
           The encoding uses most alphas and digits, omitting 0OIl to avoid readability problems. This
             gives an NSI length of either 21 or 22 characters, and it means that DIDs are case-sensitive and may not
-            be case-normalized, even though the prefix is always lower-case.
+            be case-normalized, even though the prefix is always lower-case.<br>
+          <br>
+          Optional one or more sub namespaces may be specified to indicate which Sovrin system the DID should reference.
           </p>
         <h3>Namestring Generation Method</h3>
         <p>The 16-byte uuid underlying a Sovrin DID can be generated in various ways--using standard uuid methods, for example, or
@@ -97,7 +100,10 @@
           key descriptions in the owner section of the DID Document.
         </p>
         <p>A convenient regex to match <code>sov</code> DIDs is: <br><br>
-            <code>^[1-9A-HJ-NP-Za-km-z]{21,22}$</code></p>
+            <code>^[1-9A-HJ-NP-Za-km-z]{21,22}$</code><br><br>
+           A convenient regex to match the entire did string is:<br><br>
+            <code>^did:sov:[1-9A-HJ-NP-Za-km-z]{21,22}(?&lt;namespace&gt;(?::\w[-\w]*)*)$</code>
+        </p>
         <h3>Examples</h3>
         <p>A valid <code>sov</code> DID might be: <code>did:sov:2wJPyULfLLnYTEFYzByfUR</code>.</p>
     </section>
