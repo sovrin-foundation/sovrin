@@ -39,9 +39,9 @@ Component Version Information
 
 | Components | Version Numbers |
 | --- | --- |
-| indy-plenum | 1.2.31 |
+| indy-plenum | 1.2.34 |
 | indy-anoncreds | 1.0.11 |
-| indy-node | 1.3.52 |
+| indy-node | 1.3.55 |
 | sovrin | 1.1.8 |
 |   |   |    |
 
@@ -75,7 +75,9 @@ Component Version Information
 | ATTRIB transaction with ENC and HASH wasn&#39;t working. |   | [INDY-1074](https://jira.hyperledger.org/browse/INDY-1074) |
 | When returning N-F nodes to the pool, View Change does not occur if Primary node is stopped. |   | [INDY-1151](https://jira.hyperledger.org/browse/INDY-1151) |
 | We were unable to recover write consensus at n-f after f+1 descent. |   | [INDY-1166](https://jira.hyperledger.org/browse/INDY-1166) |
-|   |   |   |   |
+| Newly upgraded STN fails to accept transactions (pool has been broken after upgrade because of one not upgraded node).  |   |[INDY-1183](https://jira.hyperledger.org/browse/INDY-1183)   |   
+|We were unable to submit upgrade transactions to STN.   |    |[INDY-1190](https://jira.hyperledger.org/browse/INDY-1190)     
+|   |    |    |    |
 
 ### Changes - Additions - Known Issues
 
@@ -99,7 +101,10 @@ Component Version Information
 | **Known Issue:** Pool has lost consensus after primary demotion (with 4 nodes setup only). |   | [INDY-1163](https://jira.hyperledger.org/browse/INDY-1163) |
 | **Known Issue:** Ambiguous behavior after node demotion. |   | [INDY-1179](https://jira.hyperledger.org/browse/INDY-1179) |
 | **Known Issue:** One of the nodes does not respond to libindy after several running load test. |   | [INDY-1180](https://jira.hyperledger.org/browse/INDY-1180) |
-|   |   |   |   |
+|**Known Issue:** Pool does not work after not simultaneous manual pool upgrades.   |   |[INDY-1197](https://jira.hyperledger.org/browse/INDY-1197)   |   
+|**Known Issue:** Pool stops working if the primary node was not included to schedule in the upgrade transaction.   |   |[INDY-1198](https://jira.hyperledger.org/browse/INDY-1198)  |
+|   |   |     |     |
+
 
 ### Additional Information:
 
