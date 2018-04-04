@@ -9,7 +9,7 @@
 
 
 
-
+* [Aries 1.1.9](#aries-119)
 
 * [Aries 1.1.8](#aries-118)
 
@@ -29,6 +29,61 @@
 #### Disclosure
 
 Although every attempt has been made to make this information as accurate as possible, please know there may be things that are omitted, not fully developed yet, or updates since this publication that were not included in the information below. Only the most pressing or significant items have been listed. For the entire list of tickets and or specific information about any given item, please visit the list at [Hyperleder Indy's Jira](https://jira.hyperledger.org/). Once logged in, simply navigate to Projects > Indy.
+
+
+## Aries 1.1.9
+
+Component Version Information
+
+| Components | Version Numbers |
+| --- | --- |
+| indy-node | 1.3.56 |
+| sovrin | 1.1.9 |
+|   |   |   |
+
+### Major Fixes
+
+| Description | Additional Information | Ticket Number |
+| --- | --- | --- |
+| The Node was restarting because of an &quot;Out of memory&quot; error. |   | [INDY-1238](https://jira.hyperledger.org/browse/INDY-1238) |
+| The pool was not working after not simultaneous manual pool upgrades. |   | [INDY-1197](https://jira.hyperledger.org/browse/INDY-1197) |
+| When adding a new schema, field &#39;attr\_names&#39; of schema json can be an empty list. |   | [INDY-1169](https://jira.hyperledger.org/browse/INDY-1169) |
+| This prevents an Identity Owner from creating a schema or claimDef. |   | [INDY-1111](https://jira.hyperledger.org/browse/INDY-1111) |
+| There was the same primary for both instances 0 and 1. |   | [INDY-1112](https://jira.hyperledger.org/browse/INDY-1112) |
+| The node logs were being duplicated in syslog. |   | [INDY-1102](https://jira.hyperledger.org/browse/INDY-1102) |
+| It was possible to create several nodes with the same alias. |   | [INDY-1148](https://jira.hyperledger.org/browse/INDY-1148) |
+| There was ambiguous behavior after node demotion. |   | [INDY-1179](https://jira.hyperledger.org/browse/INDY-1179) |
+| One of the nodes were not responding to libindy after several running load tests. |   | [INDY-1180](https://jira.hyperledger.org/browse/INDY-1180) |
+| When returning N-F nodes to the pool, &quot;View change&quot; was not occurring if the Primary node was stopped. |   | [INDY-1151](https://jira.hyperledger.org/browse/INDY-1151) |
+| There was a failed restart after getting the &quot;unhandled exception (KeyError)&quot;. |   | [INDY-1152](https://jira.hyperledger.org/browse/INDY-1152) |
+|   |   |   |   |
+
+### Changes - Additions - Known Issues
+
+| Description | Workaround | Ticket |
+| --- | --- | --- |
+| Made it so that a developer can distinguish logs of each replica. |   | [INDY-1186](https://jira.hyperledger.org/browse/INDY-1186) |
+| Made it so a developer, can track the path of each request. |   | [INDY-1187](https://jira.hyperledger.org/browse/INDY-1187) |
+| Made it so that you can use RocksDB as a key-value storage. |   | [INDY-1205](https://jira.hyperledger.org/browse/INDY-1205) |
+| Refactored the common Request structure. |   | [INDY-1124](https://jira.hyperledger.org/browse/INDY-1124) |
+| Made it so that it supports anoncreds revocation in Indy. |   | [INDY-680](https://jira.hyperledger.org/browse/INDY-680) |
+| Made it so that it supports REVOC\_REG\_DEF transaction. |   | [INDY-1134](https://jira.hyperledger.org/browse/INDY-1134) |
+| Made it so that it supports GET\_REVOC\_REG\_DEF request. |   | [INDY-1135](https://jira.hyperledger.org/browse/INDY-1135) |
+| Made it so that it supports REVOC\_REG\_ENTRY transaction. |   | [INDY-1136](https://jira.hyperledger.org/browse/INDY-1136) |
+| Made it so that it supports GET\_REVOC\_REG request. |   | [INDY-1137](https://jira.hyperledger.org/browse/INDY-1137) |
+| Made it so that it supports getting state root by timestamp. |   | [INDY-1138](https://jira.hyperledger.org/browse/INDY-1138) |
+| Got rid of the RAET code. |   | [INDY-1057](https://jira.hyperledger.org/browse/INDY-1057) |
+| Incubation: Move CI part of pipelines to Hyperledger infrastructure. |   | [INDY-837](https://jira.hyperledger.org/browse/INDY-837) |
+| Made it so that a user can revoke a connection by rotating the new key to nothing. |   | [INDY-582](https://jira.hyperledger.org/browse/INDY-582) |
+| **Known Issue:** Define the policy how to restore node from the state when it&#39;s stashing all the reqs and there is a risk of running out of memory. |   | [INDY-1250](https://jira.hyperledger.org/browse/INDY-1250) |
+| **Known Issue:** Re-promoted node cannot hook up to a lower viewChange. |   | [INDY-1199](https://jira.hyperledger.org/browse/INDY-1199) |
+| **Known Issue:** One of the nodes does not respond to libindy after several running load test. |   | [INDY-1180](https://jira.hyperledger.org/browse/INDY-1180) |
+| **Known Issue:** One node fails behind others during the load\_test with a high load. |   | [INDY-1188](https://jira.hyperledger.org/browse/INDY-1188) |
+|   |   |   |    |
+
+### Additional Information:
+
+None at this time.
 
 
 ## Aries 1.1.8
