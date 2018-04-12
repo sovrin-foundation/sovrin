@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <title>Sovrin DID Method Specification</title>
+      <style>
+        #instructions {
+          border: dashed 1px black;
+          padding: 1em;
+          background-color:#d0d0d0;
+        }
+        .replace-me {
+          font-style:italic;
+          color:magenta
+        }
+      </style>
+    <script
+     src='https://www.w3.org/Tools/respec/respec-w3c-common'
+     class='remove'></script>
+    <script class='remove'>
+      var respecConfig = {
+        specStatus: "ED",
+        editors: [{
+            name: "Michael Lodder",
+            url: "https://evernym.com",
+          }, {
+            name: "Daniel Hardman",
+            url: "https://github.com/dhh1128"
+          }
+        ],
+        processVersion: 2017,
+        edDraftURI: "https://github.com/mikelodder7/sovrin",
+        shortName: "sovrin"
+      };
+    </script>
+  </head>
+  <body>
+    <section class="introductory">
+        <h2>About</h2>
+        <p>The Sovrin DID method specification conforms to the requirements specified in the DID specification
+           currently published by the W3C Credentials Community Group. For more information about DIDs and
+           DID method specifications, please see the <a
+                    href="https://github.com/WebOfTrustInfo/rebooting-the-web-of-trust-fall2017/blob/master/topics-and-advance-readings/did-primer.md"
+                    target="_blank">DID Primer</a> and <a href="https://w3c-ccg.github.io/did-spec/">DID Spec</a>.</p>
+    </section>
+    <section id='abstract'>
+      <p>
+        Sovrin is a public ledger designed specifically and only for privacy-preserving
+          self-sovereign identity. The Sovrin Ledger is governed by the
+        international non-profit <a href="https://www.sovrin.org" target="_blank">Sovrin Foundation</a>.
+        As the only public ledger designed exclusively for self-sovereign identity,
+        Sovrin is optimized for DIDs and DID Documents. DIDs are created, stored,
+        and used with verifiable claims. This specification covers how these DIDs are
+        managed. It also describes related features of Sovrin of
+        particular interest to DID owners, guardians, and developers.
+      </p>
+    </section>
+    <section id='sotd'>
+      <p>&nbsp;
+      </p>
+    </section>
+    <section>
+        <h2>Sovrin DID Method </h2>
+        <p>The namestring that shall identify this DID method is: <code>sov</code></p>
+        <p>A DID that uses this method MUST begin with the following prefix: <code>did:sov</code>.
+            Per the DID specification, this string MUST be in lowercase. The remainder of the DID, after the prefix,
+            is the NSI specified below.</p>
+    </section>
+    <section>
+        <h2>Target System(s)</h2>
+        <p>This DID method applies to the Sovrin network in all its incarnations, beginning with Sovrin's
+        provisional launch on 31 July 2017.</p>
+    </section>
+    <section>
+        <h2>Namespace Specific Identifier (NSI)</h2>
+        <p>
+          The Sovrin DID scheme is defined by the following <a href="ftp://ftp.rfc-editor.org/in-notes/std/std68.txt">ABNF</a>:<br><br>
+          <code>
+            sovrin-did    = "did:sov:idstring" *(":" subnamespace)<br>
+            idstring      = 21*22(char)<br>
+            subnamespace  = ALPHA *(ALPHA / DIGIT / "_" / "-")<br>
+            char          = "1" / "2" / "3" / "4" / "5" / "6" / "7" / "8" / "9" / "A" / "B" / "C"<br/>
+              &nbsp;&nbsp;&nbsp;&nbsp;/ "D" / "E" / "F" / "G" / "H" / "J" / "K" / "L" / "M" / "N" / "P" / "Q"<br/>
+              &nbsp;&nbsp;&nbsp;&nbsp;/ "R" / "S" / "T" / "U" / "V" / "W" / "X" / "Y" / "Z" / "a" / "b" / "c"<br/>
+              &nbsp;&nbsp;&nbsp;&nbsp;/ "d" / "e" / "f" / "g" / "h" / "i" / "j" / "k" / "m" / "n" / "o" / "p"<br/>
+              &nbsp;&nbsp;&nbsp;&nbsp;/ "q" / "r" / "s" / "t" / "u" / "v" / "w" / "x" / "y" / "z"<br>
+          </code><br>
+          All Sovrin DIDs are base58 encoded using the Bitcoin/IPFS alphabets of a 16-byte uuid.
+          The encoding uses most alphas and digits, omitting 0OIl to avoid readability problems. This
+            gives an NSI length of either 21 or 22 characters, and it means that DIDs are case-sensitive and may not
+            be case-normalized, even though the prefix is always lower-case.<br>
+          <br>
+          Optional one or more sub namespaces may be specified to indicate which Sovrin system the DID should reference.
+          </p>
+        <h3>Namestring Generation Method</h3>
+        <p>The 16-byte uuid underlying a Sovrin DID can be generated in various ways--using standard uuid methods, for example, or
+            by selecting the first 16 bytes of a 256 bit Ed25519 verification key (the public
+          portion of the key pair). In the latter case, there may or may not be an active verification
+          key for the identity owner; that information is only available in the
+          key descriptions in the owner section of the DID Document.
+        </p>
+        <p>A convenient regex to match <code>sov</code> DIDs is: <br><br>
+            <code>^[1-9A-HJ-NP-Za-km-z]{21,22}$</code><br><br>
+           A convenient regex to match the entire did string is:<br><br>
+            <code>^did:sov:[1-9A-HJ-NP-Za-km-z]{21,22}(?&lt;namespace&gt;(?::\w[-\w]*)*)$</code>
+        </p>
+        <h3>Examples</h3>
+        <p>A valid <code>sov</code> DID might be: <code>did:sov:2wJPyULfLLnYTEFYzByfUR</code>.</p>
+    </section>
+    <section>
+      <h2>JSON-LD Context Definition</h2>
+        <p>On Sovrin, public DIDs and their corresponding documents are stored on the ledger.</p>
+       <p class="replace-me">TODO</p>
+    </section>
+    <section>
+        <h2>CRUD Operation Definitions</h2>
+
+        <h3>Create (Register)</h3>
+        <p>The DID method specification must specify how a client creates a DID record—the combination of a DID and its associated document—on the target system, including all cryptographic operations necessary to establish proof of ownership.</p>
+        <p>For example:</p>
+        <p>To create a DID, you must submit a transaction that looks like this: <br>
+          <pre>
+                {
+                    "submitterId": &lt;Trust Anchor DID&gt;,
+                    "signature": &lt;signature over this transaction from the Trust Anchor&gt;,
+                    "reqId": &lt;A nonce for this transaction&gt;,
+                    "operation": {
+                        "type": "NYM",
+                        "did": &lt;new DID that is being registered&gt;,
+                        "document": {
+                            "publicKey": [{
+                                "id": &lt;a valid unique identifier&gt;
+                                "type": &lt;ed25519, defined in appendix&gt;
+                                "publicKeyBase58": &lt;Key material encoded&gt;
+                            }],
+                            "authentication": [{
+                                "type": &lt;type of DID authentication&gt;
+                                "publicKey": "&lt;reference to a publicKey object&gt;"
+                            }],
+                            "service": [{
+                              "type": &lt;agentService, emailService, apiService, dnsService, etc&gt;,
+                              "serviceEndpoint": &lt;A URI for the endpoint&gt;
+                            }],
+                            "role":&lt;Optional; Enumeration for roles, an integer; if left empty then no special role is assigned&gt;
+                        }
+                    }
+                }
+
+                Example
+                {
+                    "submitterId": "did:sov:29wksjcn38djfh47ruqrtcd5",
+                    "signature": "1qaz2wsx3edc4rfv5tgb6yhn7ujm8iklop==",
+                    "reqId": "okn987yhbgFtErDsCXsw",
+                    "operation": {
+                        "type": "NYM",
+                        "did": "did:sov:mnjkl98uipsndg2hdjdjuf7",
+                        "document": {
+                            "publicKey": [{
+                                "id": "key1"
+                                "type": "ED25519SignatureVerification",
+                                "publicKeyBase58": "..."
+                            }],
+                            "authentication": [{
+                                "type": "ED25519SigningAuthentication",
+                                "publicKey": "key1"
+                            }],
+                            "service": [{
+                              "type": "agentService",
+                              "serviceEndpoint":"https://www.sovrin.org/agents"
+                            }]
+                        }
+                    }
+                }
+            </pre> The transaction must be signed by a Trust Anchor and must provide an un-registered DID and a document of data
+            about that DID. Possible outcomes from the create operation include:
+            <ul>
+                <li>NACK: “Malformed transaction or missing required fields”</li>
+                <li>REJECT: "Authorization rules are invalid. DID already registered or non Trust Anchor authored the transaction or signature did not match”</li>
+                <li>SUCCESS: "Contains the sequence number of the transaction and the merkle proof"</li>
+            </ul>
+        </p>
+        <p>The DID document stored on the ledger as follows
+          <pre>
+            {
+              "id": "did:sov:mnjkl98uipsndg2hdjdjuf7",
+              "publicKey": [{
+                  "id": "key1"
+                  "type": "ED25519SignatureVerification",
+                  "publicKeyBase58": "..."
+                }],
+              "authentication": [{
+                  "type": "ED25519SigningAuthentication",
+                  "publicKey": "key1"
+                }],
+              "service": [{
+                  "type": "agentService",
+                  "serviceEndpoint":"https://www.sovrin.org/agents"
+                }]
+            }
+          </pre>
+        </p>
+
+        <h3>Read (Resolve)</h3>
+        <p>A Sovrin DID record can be looked up directly by the DID using a standard Sovrin GET_NYM transaction that simply
+            takes the DID and will return the DID record. The client trusts the DID record because it either receives the
+            same DID record from sufficient number of validators or it receives a proof of the DID record from a single validator
+            that the DID record is part of a merkle tree whose root has an aggregate signature from sufficient number of
+            validators.
+        </p>
+        <p>This is how the DID record query looks like</p>
+        <pre>
+                {
+                    "submitterId": &lt;Optional; DID of the author of this query&gt;,
+                    "reqId": &lt;Optional; a nonce for this query&gt;,
+                    "operation": {
+                        "did": &lt;DID to be queried&gt;,
+                        "type": "GET_NYM"
+                    }
+                }
+        </pre>
+        <p>Anyone can query a DID record, by sending the above request. The response contains the DID document.</p>
+        <pre>
+        </pre>
+
+        <h3>Update (Replace)</h3>
+        <p>To replace the DID document, the owner or guardian (guardianship ends once ownership begins) of the DID should send the following
+            transaction using a key referenced in the <strong>authentication</strong> property.
+            <pre>
+                  {
+                    "submitterId": &lt;DID of the author of this query&gt;,
+                    "signature": [&lt;signature over this transaction from the author&gt;,]
+                    "reqId": &lt;a nonce for this query&gt;,
+                    "operation": {
+                        "type": "NYM",
+                        "did": &lt;DID whose record needs to be updated&gt;,
+                        "document": {
+                            "publicKey": [{
+                                "id": &lt;a valid unique identifier&gt;
+                                "type": &lt;ED25519&gt;
+                                "publicKeyBase58": &lt;Key material encoded in format&gt;
+                            },{
+                                "id": &lt;a valid unique identifier&gt;
+                                "type": &lt;ED25519&gt;
+                                "publicKeyBase58": &lt;Key material encoded in format&gt;
+                            },{
+                                "id": &lt;a valid unique identifier&gt;
+                                "type": &lt;ED25519&gt;
+                                "publicKeyBase58": &lt;Key material encoded in format&gt;
+                            }],
+                            "authentication": [{
+                                "type": "ED25519SigningAuthenticationThreshold",
+                                "threshold": &lt;an integer&gt;,
+                                "publicKey": [&lt;key references&gt;]
+                            }],
+                            "service": [{
+                              "type": &lt;agentService, emailService, apiService, dnsService, authenticationService, etc&gt;,
+                              "serviceEndpoint": &lt;A URI for the endpoint&gt;
+                            }]
+                        }
+                      }
+                  }
+                </pre>
+                <br/>
+                This example shows how to update the DID document to require multiple signatures for authentication:
+                <pre>
+                {
+                    "submitterId": "did:sov:qazWSX3erfcY459iLMh7",
+                    "signature": ["1qaz2wsx3eeciguytGGVDR990ik=="]
+                    "reqId": "897432983746n43g"
+                    "operation": {
+                        "type": "NYM",
+                        "did": "did:sov:c432cDSGUASJN987jnJKb",
+                        "document": {
+                            "publicKey": [{
+                                "id": "#key1",
+                                "type": "ED25519VerificationKey",
+                                "publicKeyBase58": ...
+                            },{
+                                "id": "#key2",
+                                "type": "ED25519VerificationKey",
+                                "publicKeyBase58": ...
+                            },{
+                                "id": "#key3",
+                                "type": "ED25519VerificationKey",
+                                "publicKeyBase58": ...
+                            }],
+                            "authentication": [{
+                                "type": "ED25519SigningAuthenticationThreshold",
+                                "threshold": 2,
+                                "publicKey": ["#key1","#key2","#key3"]
+                            }],
+                            "service": [{
+                              "type": "agentService",
+                              "serviceEndpoint": "https://www.sovrin.org/agents"
+                            }]
+                        }
+                      }
+                  }
+                </pre>
+        </p>
+
+        <h3>Delete (Revoke)</h3>
+        <p>Deleting or revoking a verification key is not to be confused with temporary suspension or rotation. Deletion
+            sets an identity's verification key to null; this permanently terminates the identity's ability to operate
+            on the network because there is no key that the identity can use to authenticate itself--even to submit a
+            new key rotation request. It is irreversible.</p>
+         <p>Revocation may be appropriate
+            when a person dies or a business is legally dissolved. It does not remove any record or history of the
+            identity--it simply prevents any new history from accruing. This guarantees that
+            no malicious actor can recover and reactivate an identity that's dead.</p>
+        <p>The scope of deletion in Sovrin is one DID only. This does not prevent an entity from creating new DIDs;
+        it simply prevents an entity from reusing the old DID that has been terminated.</p>
+        <p> To revoke the document of the DID, the owner of
+            the DID should send the following transaction.
+            <pre>
+                {
+                    "submitterId": &lt;DID of the owner&gt;,
+                    "signature": &lt;signature over this transaction from the DID in identifier&gt;,
+                    "reqId": &lt;a nonce for this transaction&gt;,
+                    "operation": {
+                        "type": "NYM",
+                        "did": &lt;DID whose key is being revoked&gt;,
+                        "document": null
+                    }
+                }
+            </pre>
+        </p>
+    </section>
+
+    <section>
+        <h2>Security Considerations</h2>
+        <h3>Attacks</h3>
+            <p>Secure communication to the Sovrin Ledger uses <a href="http://curvezmq.org">CurveZMQ</a> to mitigate attacks like eavesdropping, replay, message insertion, deletion, modification, impersonation, and man-in-the-middle. Any vulnerabilities in that protocol will apply to Sovrin.</p>
+            <p>Sovrin uses a modified version of the Redundant Byzantinne Fault Tolerace protocol called <a href="https://github.com/hyperledger/indy-plenum/wiki">Plenum</a> to reach consensus.</p>
+
+        <p>Sovrin currently stores only the following data on the ledger:
+            <ul>
+                <li>Public DIDs/DID Documents which includes: public keys and service endpoints</li>
+                <li>Credential Schemas</li>
+                <li>Credential Definitions – the use of a specific Schema, by a specific DID for the purpose of issuing credentials and a reference to a Revocation Registry</li>
+                <li>Revocation Registries associated with Credential Definitions</li>
+                <li>Policy Registries – used for authorizing agents and a reference to a Policy Accumulator.</li>
+                <li>Policy Accumulators – proving authorizing agents in zero knowledge.</li>
+            </ul>
+            All confidential information such as cryptographic private keys are stored with end consumers of Sovrin.
+        </p>
+
+        <h3>Residual Risks</h3>
+            <p>We don't believe to have any residual risks at this time.</p>
+
+        <div class="replace-me">
+        <h3>Recovery From Key Compromise</h3>
+
+            <p>This section MUST provide integrity protection and update authentication for all operations required by Section 7 of this specification (DID Operations).</p>
+
+            <p><a href="https://en.wikipedia.org/wiki/Confused_deputy_problem" target="_blank">Confused Deputy Problem</a> when attempting separation of writeAuthorization from authenticationCredential.</p>
+            <p>Other sections from DID spec to incorporate into the outline:</p>
+        </div>
+    </section>
+
+    <section>
+        <h2>Privacy Considerations</h2>
+        <div>
+          Assume psuedonymous DID. What Sovrin is doing about privacy and addresses each of these.
+            <p>Considering <a href="http://www.lifewithalacrity.com/2015/04/the-four-kinds-of-privacy.html" target="_blank">all
+                four types of privacy</a>, explore issues from these sections of the DID spec:</p>
+
+            <pre style="color:magenta">
+            10. Privacy Considerations
+            10.1 Requirements of DID Method Specifications
+            10.2 Keep Personally-Identifiable Information (PII) Off-Ledger
+            10.3 DID Correlation Risks and Pseudonymous DIDs
+            10.4 Document Correlation Risks
+            10.5 Herd Privacy
+            </pre>
+        </div>
+    </section>
+
+    <section>
+        <h2>Reference Implementations</h2>
+        The code at <a href="https://github.com/hyperledger/indy-node/tree/stable" target="_blank">https://github.com/hyperledger/indy-node, stable</a>
+        and <a href="https://github.com/hyperledger/indy-sdk/tree/master" target="_blank">https://github.com/hyperledger/indy-sdk, master</a>
+        constitute a canonical implementation of Sovrin DIDs, and should be treated like an oracle.
+        <p>Note that the code includes a test suite; any other implementations should ensure that all tests pass before they claim compatibility.</p>
+    </section>
+
+    <section>
+        <h2>Resources</h2>
+        <p>Many developers maintaining the code and spec tend to hang out in RocketChat at chat.hyperledger.org, #indy and #indy-sdk.
+            You might also connect with us in Hyperledger and W3C working groups or at the semi-annual Internet Identity Workshop conferences.</p>
+    </section>
+    <section>
+      <h2>Appendix A: Key Algorithm Types</h2>
+      This is extracted from RFC 5480 and 5639:<br>
+      The NIST-named curves are:<br>
+<br>
+         -- Note that in [X9.62] the curves are referred to as 'ansiX9' as<br>
+         -- opposed to 'sec'.  For example, secp192r1 is the same curve as<br>
+         -- ansix9p192r1.<br>
+<br>
+         -- Note that in [PKI-ALG] the secp192r1 curve was referred to as<br>
+         -- prime192v1 and the secp256r1 curve was referred to as<br>
+         -- prime256v1.<br>
+<br>
+         -- Note that [FIPS186-3] refers to secp192r1 as P-192, secp224r1 as<br>
+         -- P-224, secp256r1 as P-256, secp384r1 as P-384, and secp521r1 as<br>
+         -- P-521.<br>
+<br>
+      secp192r1   ... same as nistp192, prime192v1<br>
+      secp224r1   ... same as nistp224, prime224v1<br>
+      secp256k1   ... used by Bitcoin<br>
+      secp256r1   ... same as nistp256, prime256v1<br>
+      secp384r1   ... same as nistp384, prime384v1<br>
+      secp521r1   ... same as nistp521, prime521v1<br>
+      Curves from http://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.186-4.pdf<br>
+      nistp192    ... same as secp192r1, prime192v1<br>
+      nistp224    ... same as secp224r1, prime224v1<br>
+      nistp256    ... same as secp256r1, prime256v1<br>
+      nistp384    ... same as secp384r1, prime384v1<br>
+      nistp521    ... same as secp521r1, prime521v1<br>
+      Curves from ANS X9.62<br>
+      prime192v1   ... same as nistp192, secp192r1<br>
+      prime192v2<br>
+      prime192v3<br>
+      prime224v1   ...same as nistp224, secp224r1<br>
+      prime239v1<br>
+      prime239v2<br>
+      prime239v3<br>
+      prime256v1   ... same as nistp256, secp256r1<br>
+      prime384v1   … same as nistp384, secp384r1<br>
+      prime521v1   ... same as nistp521, secp521r1<br>
+<br>
+      Barreto Naehring curves are defined at <a href="https://tools.ietf.org/id/draft-kasamatsu-bncurves-01.html#rfc.section.4.3.1">ISO/IEC 15946-5</a>, <a href="https://eprint.iacr.org/2007/390.pdf">DevScoDah2007</a>, and <a href="https://fidoalliance.org/specs/fido-uaf-v1.1-id-20170202/fido-ecdaa-algorithm-v1.1-id-20170202.html">FIDO ECDAA Section 4</a>
+<br><br>
+      The following are valid values for <strong>publicKey/type</strong><br><br>
+      <table border="1">
+        <tr><th>Key Type</th></tr>
+        <tr><td>rsa</td></tr>
+        <tr><td><a href="https://safecurves.cr.yp.to">Twisted Edwards/Montgomery Curves</a></td></tr>
+        <tr><td>m-221, e-222, ed1174, ed25519, ed383187, ed41417, e-382, m-383, ed448, e-521, m-511</td></tr>
+        <tr><td><a href="http://www.ecc-brainpool.org/download/Domain-parameters.pdf">BrainPool Curves</a></td></tr>
+        <tr><td>brainpoolp160r1, brainpoolp192r1, brainpoolp224r1, brainpoolp256r1, brainpoolp320r1, brainpoolp384r1, brainpoolp512r1</td></tr>
+        <tr><td><a href="http://www.secg.org/SEC2-Ver-1.0.pdf">SEC2 Curves</a></td></tr>
+        <tr><td>secp112r1, secp128r1, secp160r1, secp192r1, secp224r1, secp256r1, secp384r1, secp521r1</td></tr>
+        <tr><td>secp160k1, secp163k1, secp192k1, secp224k1, secp256k1</td></tr>
+        <tr><td>sect163r2, sect233r1, sect239r1, sect283r1, sect409r1, sect571r1</td></tr>
+        <tr><td><a href="https://tools.ietf.org/id/draft-kasamatsu-bncurves-01.html">Barreto Naehrig Curves</a></td></tr>
+        <tr><td>fp224bn, fp254bna, fp254bnb, fp256bn, fp384bn, fp512bn, fp638bn</td></tr>
+      </table>
+    </section>
+    <section>
+      <h2>Appendix B: Ed25519 Signature Suite</h2>
+      A description to the Ed25519 Signature Suite can be found <a href="https://w3c-dvcg.github.io/lds-ed255192018/">here</a>.
+    </section>
+  </body>
+</html>
