@@ -83,6 +83,10 @@ Component Version Information
 |**Known Issue:** Pool can be broken by primary node reboot in case of network issues between nodes. **Note:** RocksDB was added as dependency (INDY-1205). It is used for revocation, but the rest part of node functionality is still using LevelDB.   |   |[INDY-1256](https://jira.hyperledger.org/browse/INDY-1256)       |
 |   |   |   |    |
 
+### Upgrade Scripts
+
+None for this release.
+
 ### Additional Information:
 
 None at this time.
