@@ -8,6 +8,7 @@
 
 
 
+* [1.1.10](#1110)
 
 * [1.1.9](#119)
 
@@ -29,6 +30,43 @@
 #### Disclosure
 
 Although every attempt has been made to make this information as accurate as possible, please know there may be things that are omitted, not fully developed yet, or updates since this publication that were not included in the information below. Only the most pressing or significant items have been listed. For the entire list of tickets and or specific information about any given item, please visit the list at [Hyperleder Indy's Jira](https://jira.hyperledger.org/). Once logged in, simply navigate to Projects > Indy.
+
+
+## 1.1.10
+
+
+Component Version Information
+
+| Components | Version Numbers |
+| --- | --- |
+| indy-plenum | 1.2.34 |
+| indy-anoncreds | 1.0.11 |
+| indy-node | 1.3.58 |
+| release version number | 1.1.10 |
+|   |   |    |
+
+Major Fixes
+
+| Description | Additional Information | Ticket Number |
+| --- | --- | --- |
+| Fixed an issue where the STN was losing consensus. |   | [INDY-1256](https://jira.hyperledger.org/browse/INDY-1256) |
+| Fixed an issue where we were unable to use the read\_ledger tool with the parameter "to". |   | [INDY-1284](https://jira.hyperledger.org/browse/INDY-1284) |
+|   |   |   |    |   
+
+Changes - Additions - Known Issues
+
+| Description | Workaround | Ticket |
+| --- | --- | --- |
+| Support was added for supervisord. |   | [https://github.com/hyperledger/indy-node/pull/588](https://jira.hyperledger.org/browse/INDY-1186) |
+|   |   |   |    |
+
+### Upgrade Scripts:
+
+None for this release.
+
+### Additional Information:
+
+None at this time.
 
 
 ## 1.1.9
