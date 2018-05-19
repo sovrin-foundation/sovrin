@@ -89,8 +89,7 @@ fi
 # adding sovrin package to packages to hold
 SOVRIN_IS_HELD=$(grep HOLD_EXT=.*sovrin.* $GENERAL_CONFIG_DIR/node_control.conf)
 if [ -z "${SOVRIN_IS_HELD}" ]; then
-    if [ -z "$(grep -e 'HOLD_EXT.*\"' $GENERAL_CONFIG_DIR/node_control.conf)" ];;
- then  
+    if [ -z "$(grep -e 'HOLD_EXT.*\"' $GENERAL_CONFIG_DIR/node_control.conf)" ]; then  
        # If already exist string like HOLD_EXT=some packages
        sed -ie '/HOLD_EXT=/{ s/=/=sovrin /1}' $GENERAL_CONFIG_DIR/node_control.cc
 onf
