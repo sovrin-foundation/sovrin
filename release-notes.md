@@ -8,18 +8,19 @@
 
 
 
+* [1.1.10](#1110)
 
-* [Aries 1.1.9](#aries-119)
+* [1.1.9](#119)
 
-* [Aries 1.1.8](#aries-118)
+* [1.1.8](#118)
 
-* [Aries 1.1.7](#aries-117)
+* [1.1.7](#117)
 
-* [Aries 1.1.6 Hot Fix](#aries-116-hot-fix)
+* [1.1.6 Hot Fix](#116-hot-fix)
 
-* [Aries 1.1.6](#aries-116)
+* [1.1.6](#116)
 
-* [Aries 1.0](#aries-10)
+* [1.0](#10)
 
 
 
@@ -31,14 +32,51 @@
 Although every attempt has been made to make this information as accurate as possible, please know there may be things that are omitted, not fully developed yet, or updates since this publication that were not included in the information below. Only the most pressing or significant items have been listed. For the entire list of tickets and or specific information about any given item, please visit the list at [Hyperleder Indy's Jira](https://jira.hyperledger.org/). Once logged in, simply navigate to Projects > Indy.
 
 
-## Aries 1.1.9
+## 1.1.10
+
+
+Component Version Information
+
+| Components | Version Numbers |
+| --- | --- |
+| indy-plenum | 1.2.34 |
+| indy-anoncreds | 1.0.11 |
+| indy-node | 1.3.58 |
+| release version number | 1.1.10 |
+|   |   |    |
+
+Major Fixes
+
+| Description | Additional Information | Ticket Number |
+| --- | --- | --- |
+| Fixed an issue where the STN was losing consensus. |   | [INDY-1256](https://jira.hyperledger.org/browse/INDY-1256) |
+| Fixed an issue where we were unable to use the read\_ledger tool with the parameter "to". |   | [INDY-1284](https://jira.hyperledger.org/browse/INDY-1284) |
+|   |   |   |    |   
+
+Changes - Additions - Known Issues
+
+| Description | Workaround | Ticket |
+| --- | --- | --- |
+| Support was added for supervisord. |   | [https://github.com/hyperledger/indy-node/pull/588](https://jira.hyperledger.org/browse/INDY-1186) |
+|   |   |   |    |
+
+### Upgrade Scripts:
+
+None for this release.
+
+### Additional Information:
+
+None at this time.
+
+
+## 1.1.9
 
 Component Version Information
 
 | Components | Version Numbers |
 | --- | --- |
 | indy-node | 1.3.56 |
-| sovrin | 1.1.9 |
+| release version number | 1.1.9 |
 |   |   |   |
 
 ### Major Fixes
@@ -56,6 +94,7 @@ Component Version Information
 | One of the nodes were not responding to libindy after several running load tests. |   | [INDY-1180](https://jira.hyperledger.org/browse/INDY-1180) |
 | When returning N-F nodes to the pool, &quot;View change&quot; was not occurring if the Primary node was stopped. |   | [INDY-1151](https://jira.hyperledger.org/browse/INDY-1151) |
 | There was a failed restart after getting the &quot;unhandled exception (KeyError)&quot;. |   | [INDY-1152](https://jira.hyperledger.org/browse/INDY-1152) |
+| Fixed a bug where you were unable to install indy-node if sdk repo is in sources.list   |   |[INDY-1269](https://jira.hyperledger.org/browse/INDY-1269)   |  
 |   |   |   |   |
 
 ### Changes - Additions - Known Issues
@@ -79,14 +118,19 @@ Component Version Information
 | **Known Issue:** Re-promoted node cannot hook up to a lower viewChange. |   | [INDY-1199](https://jira.hyperledger.org/browse/INDY-1199) |
 | **Known Issue:** One of the nodes does not respond to libindy after several running load test. |   | [INDY-1180](https://jira.hyperledger.org/browse/INDY-1180) |
 | **Known Issue:** One node fails behind others during the load\_test with a high load. |   | [INDY-1188](https://jira.hyperledger.org/browse/INDY-1188) |
+|**Known Issue:** Pool can be broken by primary node reboot in case of network issues between nodes. **Note:** RocksDB was added as dependency (INDY-1205). It is used for revocation, but the rest part of node functionality is still using LevelDB.   |   |[INDY-1256](https://jira.hyperledger.org/browse/INDY-1256)       |
 |   |   |   |    |
+
+### Upgrade Scripts
+
+None for this release.
 
 ### Additional Information:
 
 None at this time.
 
 
-## Aries 1.1.8
+## 1.1.8
 
 **Important: Upgrade to this version should be performed simultaneously for all nodes (with `force=True`).**
 
@@ -97,7 +141,7 @@ Component Version Information
 | indy-plenum | 1.2.34 |
 | indy-anoncreds | 1.0.11 |
 | indy-node | 1.3.55 |
-| sovrin | 1.1.8 |
+| release version number | 1.1.8 |
 |   |   |    |
 
 ### Major Fixes
@@ -167,7 +211,7 @@ Node promoting is not recommended for 1.3.52 version according to known issues b
 
 As mentioned above, upgrade to this version should be performed simultaneously for all nodes (with `force=True`).
 
-## Aries 1.1.7
+## 1.1.7
 
 
 Component Version Information
@@ -177,7 +221,7 @@ Component Version Information
 | indy-plenum | 1.2.29 |
 | indy-anoncreds | 1.0.11 |
 | indy-node | 1.2.50 |
-| sovrin | 1.1.7 |
+| release version number | 1.1.7 |
 |   |   |   |
 
 ### Major Fixes
@@ -360,7 +404,7 @@ With file and folder changes the new location for `indy_config.py` is in the dir
 The genesis files are now located in their own directory based off the network name "/var/lib/indy/NETWORK_NAME". The defaults are `live`, `local`, and `sandbox`. Setting the ``"NETWORK_NAME"`` in the `indy_config.py` file will determine which network is used. The default setting in the `indy_config.py` file is "``"NETWORK_NAME=sandbox"``.
 
 
-## Aries 1.1.6 Hot Fix
+## 1.1.6 Hot Fix
 
 
 Component Version Information
@@ -370,7 +414,7 @@ Component Version Information
 | indy-plenum | 1.1.27 |
 | indy-anoncreds | 1.0.10 |
 | indy-node | 1.1.43 |
-| sovrin | 1.1.6 |
+| release version number | 1.1.6 |
 |   |   |   |
 
 ### Major Fixes
@@ -385,7 +429,7 @@ Component Version Information
 | Corrected existing tests according to introduced prevention of upgrade to a lower version. |   | [INDY-895](https://jira.hyperledger.org/browse/INDY-895) [INDY-869](https://jira.hyperledger.org/browse/INDY-869) |
 |   |   |   |   |
 
-## Aries 1.1.6
+## 1.1.6
 
 
 Component Version Information
@@ -395,7 +439,7 @@ Component Version Information
 | indy-plenum | 1.1.27 |
 | indy-anoncreds | 1.0.10 |
 | indy-node | 1.1.37 |
-| sovrin | 1.1.6 |
+| release version number | 1.1.6 |
 |   |   | |
 
 ### Major Fixes
@@ -438,7 +482,7 @@ Component Version Information
 | **If the pool loses enough nodes and cannot reach consensus when enough nodes become available, the pool will still not reach consensus.** | If you restart all the nodes in the pool, it will start reaching consensus again. | [INDY-849](https://jira.hyperledger.org/browse/INDY-849) |
 
 
-## Aries 1.0
+## 1.0
 
 
 ### Major Features
