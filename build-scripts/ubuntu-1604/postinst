@@ -86,20 +86,14 @@ if [ -f /home/indy/.indy ]; then
     rm /home/indy/.indy
 fi
 
+
+sed -ie '/HOLD_EXT/{ s/\\//g}' $GENERAL_CONFIG_DIR/node_control.conf
 # adding sovrin package to packages to hold
 SOVRIN_IS_HELD=$(grep HOLD_EXT=.*sovrin.* $GENERAL_CONFIG_DIR/node_control.conf)
 if [ -z "${SOVRIN_IS_HELD}" ]; then
-    if [ -z "$(grep -e 'HOLD_EXT.*\"' $GENERAL_CONFIG_DIR/node_control.conf)" ]; then  
-       # If already exist string like HOLD_EXT=some packages
-       sed -ie '/HOLD_EXT=/{ s/=/=sovrin /1}' $GENERAL_CONFIG_DIR/node_control.cc
-onf
-    else
-       # If already exist string like HOLD_EXT="some packages"
-       sed -ie '/HOLD_EXT=/{ s/\"/\"sovrin /1}' $GENERAL_CONFIG_DIR/node_controll
-.conf
-    fi
-fi  
-sed -ie '/HOLD_EXT/{ s/\\//g}' $GENERAL_CONFIG_DIR/node_control.conf
+    # remove =" or just = to ="sovrin or =sovrin
+    sed -ie '/HOLD_EXT=/{s/=\("\?\)/=\1sovrin /1}' $GENERAL_CONFIG_DIR/node_control.conf
+fi
 
 chown -R indy:indy $GENERAL_CONFIG_DIR
 chown -R indy:indy /var/log/indy
