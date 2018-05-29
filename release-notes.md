@@ -51,6 +51,7 @@ Major Fixes
 | --- | --- | --- |
 | Fixed an issue where the STN was losing consensus. |   | [INDY-1256](https://jira.hyperledger.org/browse/INDY-1256) |
 | Fixed an issue where we were unable to use the read\_ledger tool with the parameter "to". |   | [INDY-1284](https://jira.hyperledger.org/browse/INDY-1284) |
+|Fixed the upgrade from 1.2.223 (1.3.55 stable analogue) to 1.3.410 (rocksdb) wasn't working.|    |[INDY-1330](https://jira.hyperledger.org/browse/INDY-1330)  |
 |   |   |   |    |   
 
 Changes - Additions - Known Issues
@@ -58,6 +59,7 @@ Changes - Additions - Known Issues
 | Description | Workaround | Ticket |
 | --- | --- | --- |
 | Support was added for supervisord. |   | [https://github.com/hyperledger/indy-node/pull/588](https://jira.hyperledger.org/browse/INDY-1186) |
+| Indy-node dependencies are fixed.  |   |    |
 |   |   |   |    |
 
 ### Upgrade Scripts:
