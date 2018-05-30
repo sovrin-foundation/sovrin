@@ -39,9 +39,9 @@ Component Version Information
 
 | Components | Version Numbers |
 | --- | --- |
-| indy-plenum | 1.2.34 |
+| indy-plenum | 1.2.42 |
 | indy-anoncreds | 1.0.11 |
-| indy-node | 1.3.58 |
+| indy-node | 1.3.62 |
 | release version number | 1.1.10 |
 |   |   |    |
 
