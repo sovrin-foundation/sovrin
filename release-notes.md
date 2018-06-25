@@ -104,6 +104,19 @@ Although every attempt has been made to make this information as accurate as pos
 
 **All indy-cli pools should be recreated with actual genesis files.**
 
+#### CLI Upgrading:
+
+**Old CLI (`indy`):**
+
+upgrade from 1.3 to 1.4 version
+delete `~.ind-cli/networks/&lt;network_name&gt;/data` folder
+replace both old genesis files by new ones (from 1.4 node or from sovrin repo)
+
+**New CLI (`indy-cli`):**
+
+upgrade from 1.4 to 1.5 version
+recreate indy-cli pool using 1.4 pool genesis file (from 1.4 node or from sovrin repo)
+
 ### Additional Information:
 
 **List of breaking changes for migration from indy-node 1.3 to 1.4:**
