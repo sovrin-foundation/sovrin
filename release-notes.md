@@ -8,6 +8,8 @@
 
 
 
+* [1.1.11](#1111)
+
 * [1.1.10](#1110)
 
 * [1.1.9](#119)
@@ -32,32 +34,140 @@
 Although every attempt has been made to make this information as accurate as possible, please know there may be things that are omitted, not fully developed yet, or updates since this publication that were not included in the information below. Only the most pressing or significant items have been listed. For the entire list of tickets and or specific information about any given item, please visit the list at [Hyperleder Indy's Jira](https://jira.hyperledger.org/). Once logged in, simply navigate to Projects > Indy.
 
 
-## 1.1.10
+## 1.1.11
 
 
-Component Version Information
+### Component Version Information
 
 | Components | Version Numbers |
 | --- | --- |
-| indy-plenum | 1.2.34 |
+| indy-plenum | 1.4.43 |
 | indy-anoncreds | 1.0.11 |
-| indy-node | 1.3.58 |
+| indy-node | 1.4.63 |
+| release version number | 1.1.11 |
+|   |   |   |
+
+### Major Fixes
+
+| Description | Additional Information | Ticket Number |
+| --- | --- | --- |
+| Fixed and issues where one of the nodes stopped writing after 44287 txns with errors in status. |   | [INDY-1410](https://jira.hyperledger.org/browse/INDY-1410) |
+| Fixed an issue where the pool stopped accepting transactions on 5731 txns (1 sec delays, no logging). |   | [INDY-1365](https://jira.hyperledger.org/browse/INDY-1365) |
+| Fixed an issue where the pool stopped writing after ~300,000 txns from 5 clients |   | [INDY-1315](https://jira.hyperledger.org/browse/INDY-1315) |
+| Fixed an issue where STN was not accepting transactions with only one node down. |   | [INDY-1351](https://jira.hyperledger.org/browse/INDY-1351) |
+| Fixed an issue where the pool stops taking txns at ~178k txns written in ledger. |   | [INDY-1260](https://jira.hyperledger.org/browse/INDY-1260) |
+| Fixed an issue where `ReqIdrToTxn` does not store information about the ledger. |   | [INDY-1327](https://jira.hyperledger.org/browse/INDY-1327) |
+| Made simple Timeout fixes of the current View Change protocol. |   | [INDY-1341](https://jira.hyperledger.org/browse/INDY-1341) |
+| Fixed an issue where the migration fails in case of upgrade to version with new transactions format. |   | [INDY-1379](https://jira.hyperledger.org/browse/INDY-1379) |
+| Fixed an issue where `--network parameter of read_ledger ` doesn't work. |   | [INDY-1318](https://jira.hyperledger.org/browse/INDY-1318) |
+| Fixed an issue where the /var/log/indy/validator-info.log was inappropriately owned by root. |   | [INDY-1310](https://jira.hyperledger.org/browse/INDY-1310) |
+| Created a fix around the issues found in the current logic of catch-up. |   | [INDY-1298](https://jira.hyperledger.org/browse/INDY-1298) |
+| Fixed GetValidatorInfo so it has correct validation for signature and permissions. |   | [INDY-1363](https://jira.hyperledger.org/browse/INDY-1363) |
+| Fixed an issue where there was an unhandled exception during node working. |   | [INDY-1316](https://jira.hyperledger.org/browse/INDY-1316) |
+| Fixed an issue where `validator-info` and `read_ledger` were giving inconsistent responses in node on provisional. |   | [INDY-1219](https://jira.hyperledger.org/browse/INDY-1219) |
+| Fixed an issue where the pool stops taking txns at 3000 writing connections. |   | [INDY-1259](https://jira.hyperledger.org/browse/INDY-1259) |
+|   |   |   |
+|   |   |   |   |
+
+### Changes - Additions - Known Issues
+
+| Description | Workaround | Ticket |
+| --- | --- | --- |
+| Reviewed and replaced `assert` with exceptions in indy-plenum where needed. |   | [INDY-810](https://jira.hyperledger.org/browse/INDY-810) |
+| Tuned RocksDB options for the best performance. |   | [INDY-1245](https://jira.hyperledger.org/browse/INDY-1245) |
+| Created a migration guide from Indy-node 1.3 to 1.4. |   | [INDY-1392](https://jira.hyperledger.org/browse/INDY-1392) |
+| Сhanged a key in the requests map and field reqIdr in Pre Prepare and Ordered. |   | [INDY-1370](https://jira.hyperledger.org/browse/INDY-1370) |
+| Investigated issues found during load testing of 25-nodes pool with increased timeouts for catchups and viewchange. |   | [INDY-1400](https://jira.hyperledger.org/browse/INDY-1400) |
+| We now support binding on separate NICs for Client-to-Node and Node-to-Node communication. |   | [INDY-1332](https://jira.hyperledger.org/browse/INDY-1332) |
+| Added short checkpoints stabilization without matching digests. |   | [INDY-1329](https://jira.hyperledger.org/browse/INDY-1329) |
+| Added indy-crypto package to the hold list. |   | [INDY-1323](https://jira.hyperledger.org/browse/INDY-1323) |
+| Removed ledger status based catch-up trigger together with the wrong catch-up workflow. |   | [INDY-1297](https://jira.hyperledger.org/browse/INDY-1297) |
+| Read-ledger without storage copy in case of RocksDB (RocksDB read-only mode support). |   | [INDY-1243](https://jira.hyperledger.org/browse/INDY-1243) |
+| Applied state machine to Catchup code. |   | [INDY-971](https://jira.hyperledger.org/browse/INDY-971) |
+| Refactored the common Request structure. |   | [INDY-1124](https://jira.hyperledger.org/browse/INDY-1124) |
+| Refactored the common transactions structure. |   | [INDY-1123](https://jira.hyperledger.org/browse/INDY-1123) |
+| We now support the new libindy with changed txn format. |   | [INDY-1319](https://jira.hyperledger.org/browse/INDY-1319) |
+| Explored config parameters to find the best performance/stability settings. |   | [INDY-1334](https://jira.hyperledger.org/browse/INDY-1334) |
+| Extended the Validator Info tool to provide more information about the current state of the pool. |   | [INDY-1175](https://jira.hyperledger.org/browse/INDY-1175) |
+|  A Steward needs to be able to get validator-info from all nodes. |   | [INDY-1184](https://jira.hyperledger.org/browse/INDY-1184) |
+| Modified existing load scripts for a better load testing. |   | [INDY-1279](https://jira.hyperledger.org/browse/INDY-1279) |
+| Performed a migration from LevelDB to RocksDB |   | [INDY-1244](https://jira.hyperledger.org/browse/INDY-1244) |
+| A Trustee needs to be able to restart the pool in critical situations. |   | [INDY-1173](https://jira.hyperledger.org/browse/INDY-1173) |
+| Move the log compression into separate process. |   | [INDY-1275](https://jira.hyperledger.org/browse/INDY-1275) |
+| **Known Issue:** There's an incorrect read\_ledger info with seq\_no parameter. |   | [INDY-1415](https://jira.hyperledger.org/browse/INDY-1415) |
+| **Known Issue:** Pool upgrade should be performed simultaneously for all nodes due to txn format changes. All indy-cli pools should be recreated with actual genesis files. |   |   |
+| **List of breaking changes for migration from indy-node 1.3 to 1.4:** |   | [1.3-1.4 Migration Guide](https://github.com/hyperledger/indy-node/blob/master/docs/1.3_to_1.4_migration_guide.md) |
+
+### Upgrade Scripts:
+
+**Pool upgrade should be performed simultaneously for all nodes due to txn format changes.**
+
+**All indy-cli pools should be recreated with actual genesis files.**
+
+#### CLI Upgrading:
+
+**Old CLI (`indy`):**
+
+upgrade from 1.3 to 1.4 version
+delete `~.ind-cli/networks/&lt;network_name&gt;/data` folder
+replace both old genesis files by new ones (from 1.4 node or from sovrin repo)
+
+**New CLI (`indy-cli`):**
+
+upgrade from 1.4 to 1.5 version
+recreate indy-cli pool using 1.4 pool genesis file (from 1.4 node or from sovrin repo)
+
+### Additional Information:
+
+**List of breaking changes for migration from indy-node 1.3 to 1.4:**
+
+https://github.com/hyperledger/indy-node/blob/master/docs/1.3\_to\_1.4\_migration\_guide.md
+
+**IndyNode 1.4 and LibIndy 1.5 compatibility:**
+
+_General_
+
+By default LibIndy 1.5 will be compatible with IndyNode 1.3 (current stable), and not 1.4 (the new one).
+
+LibIndy 1.5 can become compatible with IndyNode 1.4 if `indy_set_protocol_version(2)` is called during app initialization.
+
+_Guideline for teams and apps_
+
+Applications can freely update to LibIndy 1.5 and still use stable Node 1.3
+
+If an app wants to work with the latest master or Stable Node 1.4, then they need to support breaking changes (there are not so many, mostly a new reply for write txns as txn format is changed, see 1.3\_to\_1.4\_migration\_guide.md)
+
+call `indy_set_protocol_version(2)` during app initialization
+
+
+## 1.1.10
+
+
+### Component Version Information
+
+| Components | Version Numbers |
+| --- | --- |
+| indy-plenum | 1.2.42 |
+| indy-anoncreds | 1.0.11 |
+| indy-node | 1.3.62 |
 | release version number | 1.1.10 |
 |   |   |    |
 
-Major Fixes
+### Major Fixes
 
 | Description | Additional Information | Ticket Number |
 | --- | --- | --- |
 | Fixed an issue where the STN was losing consensus. |   | [INDY-1256](https://jira.hyperledger.org/browse/INDY-1256) |
 | Fixed an issue where we were unable to use the read\_ledger tool with the parameter "to". |   | [INDY-1284](https://jira.hyperledger.org/browse/INDY-1284) |
+|Fixed the upgrade from 1.2.223 (1.3.55 stable analogue) to 1.3.410 (rocksdb) wasn't working.|    |[INDY-1330](https://jira.hyperledger.org/browse/INDY-1330)  |
 |   |   |   |    |   
 
-Changes - Additions - Known Issues
+### Changes - Additions - Known Issues
 
 | Description | Workaround | Ticket |
 | --- | --- | --- |
 | Support was added for supervisord. |   | [https://github.com/hyperledger/indy-node/pull/588](https://jira.hyperledger.org/browse/INDY-1186) |
+| Indy-node dependencies are fixed.  |   |    |
 |   |   |   |    |
 
 ### Upgrade Scripts:
@@ -71,7 +181,7 @@ None at this time.
 
 ## 1.1.9
 
-Component Version Information
+### Component Version Information
 
 | Components | Version Numbers |
 | --- | --- |
@@ -134,7 +244,7 @@ None at this time.
 
 **Important: Upgrade to this version should be performed simultaneously for all nodes (with `force=True`).**
 
-Component Version Information
+### Component Version Information
 
 | Components | Version Numbers |
 | --- | --- |
@@ -214,7 +324,7 @@ As mentioned above, upgrade to this version should be performed simultaneously f
 ## 1.1.7
 
 
-Component Version Information
+### Component Version Information
 
 | Components | Version Numbers |
 | --- | --- |
@@ -407,7 +517,7 @@ The genesis files are now located in their own directory based off the network n
 ## 1.1.6 Hot Fix
 
 
-Component Version Information
+### Component Version Information
 
 | Components | Version Numbers |
 | --- | --- |
@@ -432,7 +542,7 @@ Component Version Information
 ## 1.1.6
 
 
-Component Version Information
+### Component Version Information
 
 | Components | Version Numbers |
 | --- | --- |
