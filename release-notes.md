@@ -41,9 +41,9 @@ Although every attempt has been made to make this information as accurate as pos
 
 | Components | Version Numbers |
 | --- | --- |
-| indy-plenum | 1.4.43 |
+| indy-plenum | 1.4.45 |
 | indy-anoncreds | 1.0.11 |
-| indy-node | 1.4.63 |
+| indy-node | 1.4.66 |
 | release version number | 1.1.11 |
 |   |   |   |
 
@@ -138,6 +138,9 @@ Applications can freely update to LibIndy 1.5 and still use stable Node 1.3
 If an app wants to work with the latest master or Stable Node 1.4, then they need to support breaking changes (there are not so many, mostly a new reply for write txns as txn format is changed, see 1.3\_to\_1.4\_migration\_guide.md)
 
 call `indy_set_protocol_version(2)` during app initialization
+
+Use https://github.com/hyperledger/indy-sdk/blob/b4a2bb82087e2eafe5e55bddb20a3069e5fb7d0b/cli/README.md#old-python-based-cli-migration to export dids from your old CLI wallet to the new one (new indy-cli).
+
 
 
 ## 1.1.10
