@@ -65,7 +65,11 @@ Although every attempt has been made to make this information as accurate as pos
 | Fixed an issue where the node crashes on \_remove\_stashed\_checkpoints. |   | [INDY-1427](https://jira.hyperledger.org/browse/INDY-1427) |
 | Fixed an issue where memory was running out during non-completed viewChange process (under load). |   | [INDY-1360](https://jira.hyperledger.org/browse/INDY-1360) |
 | Fixed an issue where part of nodes continued ordering txns after `incorrect state trie` under load. |   | [INDY-1422](https://jira.hyperledger.org/browse/INDY-1422) |
-|   |   |   |   |
+| Fixed an issue where the upgrade failed on pool from 1.3.62 to 1.4.66.  |   |[INDY-1447](https://jira.hyperledger.org/browse/INDY-1447)   |   
+|Fixed an issue where a forced upgrade from 1.3.62 -> 1.5.67 without one node in schedule  failed.   |  |[INDY-1519](https://jira.hyperledger.org/browse/INDY-1519)  |  
+|   |  |  |  |
+
+
 
 ### Changes - Additions - Known Issues
 
@@ -87,16 +91,17 @@ Although every attempt has been made to make this information as accurate as pos
 | Made it so that a node must send LEDGER\_STATUS with correct last ordered 3PC after catch-up. |   | [INDY-1452](https://jira.hyperledger.org/browse/INDY-1452) |
 | Fixed calculation of prepared certificates during View Change. |   | [INDY-1385](https://jira.hyperledger.org/browse/INDY-1385) |
 | Made it so that catchup should not be interrupted by external events. |   | [INDY-1404](https://jira.hyperledger.org/browse/INDY-1404) |
-| **Known Issue:** Upgrade failed on pool from 1.3.62 to 1.4.66 |   | [INDY-1447](https://jira.hyperledger.org/browse/INDY-1447) |
+| **Known Issue:** Upgrade failed on pool from 1.3.62 to 1.4.66. Note that INDY-1447 was fixed in indy-node 1.5.68, but it still presents in indy-node 1.3.62 and 1.4.66 code. So, some of the nodes may not to be upgraded during simultaneous pool-upgrade. If this problem will appear, stewards should perform manual upgrade of indy-node in accordance with this instruction: (!) To reduce the risk of reproducing INDY-1447, it is recommended to use old CLI for pool upgrade.  |   | [INDY-1447](https://jira.hyperledger.org/browse/INDY-1447) |
 |   |   |   | |
 
 ### Upgrade Scripts:
 
-**None at this time.**
+**Pool upgrade from indy-node 1.3.62 should be performed simultaneously for all nodes due to txn format changes.**
 
 ### Additional Information:
 
-**None at this time.**
+**All indy-cli pools should be recreated with actual genesis files.
+For more details about txn format changes see INDY-1421.**
 
 
 
