@@ -74,6 +74,7 @@ if [ ! -f $GENERAL_CONFIG_PATH ]; then
     echo "CLI_NETWORK_DIR = '~/.indy-cli/networks'" >> $GENERAL_CONFIG_PATH
     echo "NETWORK_NAME = '$DEFAULT_NETWORK'" >> $GENERAL_CONFIG_PATH
     echo "WRITES_REQUIRE_TRUST_ANCHOR = $WRITES_REQUIRE_TRUST_ANCHOR" >> $GENERAL_CONFIG_PATH
+    echo "UPGRADE_ENTRY = 'sovrin'" >> $GENERAL_CONFIG_PATH
 fi
 
 
@@ -84,10 +85,17 @@ elif [[ $NETWORK_LINE =~ ^NETWORK_NAME[[:space:]]*=[[:space:]]*None[[:space:]]*$
     sed -i "s/^\(NETWORK_NAME\s*=\s*\).*\$/\1\'$DEFAULT_NETWORK\'/" $GENERAL_CONFIG_PATH
 fi
 
+
 PERMISSION_LINE=$(grep ^WRITES_REQUIRE_TRUST_ANCHOR[[:space:]]*=[[:space:]]* $GENERAL_CONFIG_PATH)
 if [ -z "${PERMISSION_LINE}" ]; then
     echo "" >> $GENERAL_CONFIG_PATH
     echo "WRITES_REQUIRE_TRUST_ANCHOR = $WRITES_REQUIRE_TRUST_ANCHOR" >> $GENERAL_CONFIG_PATH
+
+
+TOP_LEVEL_PKT_LINE=$(grep ^UPGRADE_ENTRY[[:space:]]*=[[:space:]]* $GENERAL_CONFIG_PATH)
+if [ -z "${TOP_LEVEL_PKT_LINE}" ]; then
+    echo "" >> $GENERAL_CONFIG_PATH
+    echo "UPGRADE_ENTRY = 'sovrin'" >> $GENERAL_CONFIG_PATH
 fi
 
 # workaround when .indy become regular file
