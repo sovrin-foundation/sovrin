@@ -86,9 +86,8 @@ fi
 
 PERMISSION_LINE=$(grep ^WRITES_REQUIRE_TRUST_ANCHOR[[:space:]]*=[[:space:]]* $GENERAL_CONFIG_PATH)
 if [ -z "${PERMISSION_LINE}" ]; then
-    echo "WRITES_REQUIRE_TRUST_ANCHOR = $WRITES_REQUIRE_TRUST_ANCHOR" >> $GENERAL_CONFIG_PATH
-else
     echo "" >> $GENERAL_CONFIG_PATH
+    echo "WRITES_REQUIRE_TRUST_ANCHOR = $WRITES_REQUIRE_TRUST_ANCHOR" >> $GENERAL_CONFIG_PATH
 fi
 
 # workaround when .indy become regular file
