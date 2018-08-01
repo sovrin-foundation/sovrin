@@ -18,6 +18,8 @@ SANDBOX_NETWORK='sandbox'
 LIVE_NETWORK='live'
 DEFAULT_NETWORK=$SANDBOX_NETWORK
 
+DEFAULT_WRITE_PERMISSION=True
+
 
 mkdir -p $GENERAL_CONFIG_DIR
 mkdir -p /var/lib/indy
@@ -71,6 +73,7 @@ if [ ! -f $GENERAL_CONFIG_PATH ]; then
     echo "CLI_BASE_DIR = '~/.indy-cli/'" >> $GENERAL_CONFIG_PATH
     echo "CLI_NETWORK_DIR = '~/.indy-cli/networks'" >> $GENERAL_CONFIG_PATH
     echo "NETWORK_NAME = '$DEFAULT_NETWORK'" >> $GENERAL_CONFIG_PATH
+    echo "WRITES_REQUIRE_TRUST_ANCHOR = $DEFAULT_WRITE_PERMISSION" >> $GENERAL_CONFIG_PATH
 fi
 
 
@@ -79,6 +82,11 @@ if [ -z "${NETWORK_LINE}" ]; then
     echo "NETWORK_NAME = '$DEFAULT_NETWORK'" >> $GENERAL_CONFIG_PATH
 elif [[ $NETWORK_LINE =~ ^NETWORK_NAME[[:space:]]*=[[:space:]]*None[[:space:]]*$ ]]; then
     sed -i "s/^\(NETWORK_NAME\s*=\s*\).*\$/\1\'$DEFAULT_NETWORK\'/" $GENERAL_CONFIG_PATH
+fi
+
+PERMISSION_LINE=$(grep ^WRITES_REQUIRE_TRUST_ANCHOR[[:space:]]*=[[:space:]]* $GENERAL_CONFIG_PATH)
+if [ -z "${PERMISSION_LINE}" ]; then
+    echo "WRITES_REQUIRE_TRUST_ANCHOR = $DEFAULT_WRITE_PERMISSION" >> $GENERAL_CONFIG_PATH
 fi
 
 # workaround when .indy become regular file
