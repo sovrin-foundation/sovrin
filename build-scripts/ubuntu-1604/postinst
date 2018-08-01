@@ -71,6 +71,7 @@ if [ ! -f $GENERAL_CONFIG_PATH ]; then
     echo "CLI_BASE_DIR = '~/.indy-cli/'" >> $GENERAL_CONFIG_PATH
     echo "CLI_NETWORK_DIR = '~/.indy-cli/networks'" >> $GENERAL_CONFIG_PATH
     echo "NETWORK_NAME = '$DEFAULT_NETWORK'" >> $GENERAL_CONFIG_PATH
+    echo "UPGRADE_ENTRY = 'sovrin'" >> $GENERAL_CONFIG_PATH
 fi
 
 
@@ -79,6 +80,12 @@ if [ -z "${NETWORK_LINE}" ]; then
     echo "NETWORK_NAME = '$DEFAULT_NETWORK'" >> $GENERAL_CONFIG_PATH
 elif [[ $NETWORK_LINE =~ ^NETWORK_NAME[[:space:]]*=[[:space:]]*None[[:space:]]*$ ]]; then
     sed -i "s/^\(NETWORK_NAME\s*=\s*\).*\$/\1\'$DEFAULT_NETWORK\'/" $GENERAL_CONFIG_PATH
+fi
+
+TOP_LEVEL_PKT_LINE=$(grep ^UPGRADE_ENTRY[[:space:]]*=[[:space:]]* $GENERAL_CONFIG_PATH)
+if [ -z "${TOP_LEVEL_PKT_LINE}" ]; then
+    echo "" >> $GENERAL_CONFIG_PATH
+    echo "UPGRADE_ENTRY = 'sovrin'" >> $GENERAL_CONFIG_PATH
 fi
 
 # workaround when .indy become regular file
