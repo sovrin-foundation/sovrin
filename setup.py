@@ -37,5 +37,5 @@ setup(
         '': ['*.txt', '*.md', '*.rst', '*.json', '*.conf', '*.html',
              '*.css', '*.ico', '*.png', 'LICENSE', 'LEGAL', '*.indy']},
     include_package_data=True,
-    install_requires=['indy-node==1.6.71'],
+    install_requires=['indy-node==1.6.73'],
 )
