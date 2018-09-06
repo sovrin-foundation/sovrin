@@ -51,7 +51,6 @@ echo "PKG_NAME=${PKG_NAME}"
 echo "CMD=${CMD}"
 
 docker run \
-    -i  \
     --rm \
     -v "${PKG_SOURCE_PATH}:/input" \
     -v "${OUTPUT_FOLDER}:/output" \
