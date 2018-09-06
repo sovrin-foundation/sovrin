@@ -7,16 +7,27 @@
 ![image alt text](banner.png)
 
 
+* [1.1.17](#1117)
 
+* [1.1.13](#1113)
 
+* [1.1.12](#1112)
 
-* [Aries 1.1.7](aries-1.1.7)
+* [1.1.11](#1111)
 
-* [Aries 1.1.6 Hot Fix](#aries-1.1.6-hot-fix)
+* [1.1.10](#1110)
 
-* [Aries 1.1.6](#aries-1.1.6)
+* [1.1.9](#119)
 
-* [Aries 1.0](#aries-1.0)
+* [1.1.8](#118)
+
+* [1.1.7](#117)
+
+* [1.1.6 Hot Fix](#116-hot-fix)
+
+* [1.1.6](#116)
+
+* [1.0](#10)
 
 
 
@@ -27,17 +38,496 @@
 
 Although every attempt has been made to make this information as accurate as possible, please know there may be things that are omitted, not fully developed yet, or updates since this publication that were not included in the information below. Only the most pressing or significant items have been listed. For the entire list of tickets and or specific information about any given item, please visit the list at [Hyperleder Indy's Jira](https://jira.hyperledger.org/). Once logged in, simply navigate to Projects > Indy.
 
-## Aries 1.1.7
+
+## 1.1.17
+
+**Important:** Several iterations were done very rapidly between the last release and this one. All of the changes, upgrades, etc... are included in this new release. Simply upgrading will include them all from 1.1.13 until 1.1.17. To see further, specific numerous changes, please reference the appropriate tickets in the [Hyperledger Jira ticketing system.](https://jira.hyperledger.org/)
+
+### Component Version Information
+
+| Components | Version Numbers |
+| --- | --- |
+| indy-plenum | 1.6.51 |
+| indy-anoncreds | 1.0.11 |
+| indy-node | 1.6.73 |
+| release version number | 1.1.17 |
+|   |   |   |
+
+### Major Fixes
+
+| Description | Additional Information | Ticket Number |
+| --- | --- | --- |
+| Fixed and issue where the pool stopped writing after F change. |   | [INDY-1583](https://jira.hyperledger.org/browse/INDY-1583) |
+| Fixed an issue where read\_ledger was passing incorrectly formatted stdout and breaks convention |   | [INDY-1645](https://jira.hyperledger.org/browse/INDY-1645) |
+| Fixed an issue where the node couldn&#39;t catch up a large ledger. |   | [INDY-1595](https://jira.hyperledger.org/browse/INDY-1595) |
+| Fixed an issue where the Validator Info may hang for a couple of minutes. |   | [INDY-1603](https://jira.hyperledger.org/browse/INDY-1603) |
+| Fixed an issue where the read\_ledger tool is not able to read the sovrin plugin ledger. |   | [INDY-1548](https://jira.hyperledger.org/browse/INDY-1548) |
+|   |   |   |   |
+
+### Changes - Additions - Known Issues
+
+| Description | Workaround | Ticket |
+| --- | --- | --- |
+| Made it so that the 3PC Batch should preserve the order of requests when applying PrePrepare on non-primary. |   | [INDY-1642](https://jira.hyperledger.org/browse/INDY-1642) |
+| Made it so that Monitor takes into account requests not passing the dynamic validation when triggering view change. |   | [INDY-1643](https://jira.hyperledger.org/browse/INDY-1643) |
+| Improved throughput calculation to reduce a chance of false positive View Changes. |   | [INDY-1565](https://jira.hyperledger.org/browse/INDY-1565) |
+| Made it so that the performance of monitor is improved. |   | [INDY-1660](https://jira.hyperledger.org/browse/INDY-1660) |
+| Made it so that Stewards, can have a script that can generates Proof of possession for their BLS key. That value can now be used in a NODE txn. |   | [INDY-1588](https://jira.hyperledger.org/browse/INDY-1588) |
+| Added Support Proof of Possession for BLS keys. |   | [INDY-1389](https://jira.hyperledger.org/browse/INDY-1389) |
+| Made it so that the average is not used when calculating total throughput/latency of backups. |   | [INDY-1582](https://jira.hyperledger.org/browse/INDY-1582) |
+| Made it so that any client requests are discarded during view change. |   | [INDY-1564](https://jira.hyperledger.org/browse/INDY-1564) |
+| Created a simple tool to show graphical representation of some common metrics. |   | [INDY-1568](https://jira.hyperledger.org/browse/INDY-1568) |
+| Changed default configs for better performance and stability. |   | [INDY-1549](https://jira.hyperledger.org/browse/INDY-1549) |
+|   |   |   | |
+| **Known Issue:** Upgrade failed on pool from 1.3.62 to 1.4.66. Note that INDY-1447 was fixed in indy-node 1.5.68, but it still presents in indy-node 1.3.62 and 1.4.66 code. | **So, some of the nodes may not to be upgraded during simultaneous pool-upgrade.** If this problem will appear, stewards should perform manual upgrade of indy-node in accordance with this [instruction:](https://docs.google.com/document/d/1vUvbioL5OsmZMSkwRcu0p0jdttJO5VS8K3GhDLdNaoI)**(!)** To reduce the risk of reproducing INDY-1447, it is **recommended to use old CLI for pool upgrade.** | [INDY-1447](https://jira.hyperledger.org/browse/INDY-1447) |
+|   |   |   |   |
+
+### Upgrade Scripts:
+
+**Pool upgrade from indy-node 1.3.62 to indy-node 1.6.73 should be performed simultaneously for all nodes due to txn format changes.**
+
+There must be sovrin package upgrade to 1.1.17 version after indy-node package upgrade. You need to specify package=sovrin in pool-upgrade command to do this.
+
+### Additional Information:
+
+**All indy-cli pools should be recreated with actual genesis files.**
+
+**For more details about txn format changes see** [**INDY-1421**](https://jira.hyperledger.org/browse/INDY-1421) **.**
+
+**There are possible OOM issues during 3+ hours of target load or large catch-ups at 8 GB RAM nodes pool so 32 GB is recommended.**
 
 
-Component Version Information
+## 1.1.13
+
+### Component Version Information
+
+| Components | Version Numbers |
+| --- | --- |
+| indy-plenum | 1.6.49 |
+| indy-anoncreds | 1.0.11 |
+| indy-node | 1.6.70 |
+| release version number | 1.1.13 |
+|   |   |    |
+
+### Major Fixes
+
+| Description | Additional Information | Ticket Number |
+| --- | --- | --- |
+| Fixed and issue where several nodes (less than f) were getting ahead the rest ones under load. |   | [INDY-1473](https://jira.hyperledger.org/browse/INDY-1473) |
+| Fixed an issue where the pool has stopped to write txns. |   | [INDY-1539](https://jira.hyperledger.org/browse/INDY-1539) |
+| Fixed an issue where re-send messages to disconnected remotes. |   | [INDY-1497](https://jira.hyperledger.org/browse/INDY-1497) |
+| Fixed an issue where the pool stopped writing under 20txns/sec load. |   | [INDY-1478](https://jira.hyperledger.org/browse/INDY-1478) |
+| Fixed an issue where 1.3.62 -\&gt; 1.5.67 forced upgrade without one node in schedule failed. |   | [INDY-1519](https://jira.hyperledger.org/browse/INDY-1519) |
+| Fixed an issue where tmp.log must have unique name. |   | [INDY-1502](https://jira.hyperledger.org/browse/INDY-1502) |
+| Fixed an issue where a node needed to hook up to a lower viewChange. |   | [INDY-1199](https://jira.hyperledger.org/browse/INDY-1199) |
+| Fixed an issue where the one of the nodes lagged behind others after forced view changes. |   | [INDY-1470](https://jira.hyperledger.org/browse/INDY-1470) |
+| Made it so that View Change should not be triggered by re-sending Primary disconnected if Primary is not disconnected anymore. |   | [INDY-1544](https://jira.hyperledger.org/browse/INDY-1544) |
+|   |   |   |   |
+
+### Changes - Additions - Known Issues
+
+| Description | Workaround | Ticket |
+| --- | --- | --- |
+| Made it so that as a Trustee running POOL\_UPGRADE txn, you can specify any package depending on indy-node, so that the package with the dependencies get upgraded. |   | [INDY-1491](https://jira.hyperledger.org/browse/INDY-1491) |
+| Made it so that Monitor is reset after the view change. |   | [INDY-1555](https://jira.hyperledger.org/browse/INDY-1555) |
+| Made it so that GC by Checkpoints are not triggered during View Change. |   | [INDY-1545](https://jira.hyperledger.org/browse/INDY-1545) |
+| Made it so that the validator info must show committed and uncommitted roots for all states. |   | [INDY-1542](https://jira.hyperledger.org/browse/INDY-1542) |
+| Explored timing and execution time. |   | [INDY-1475](https://jira.hyperledger.org/browse/INDY-1475) |
+| Memory leaks profiling. |   | [INDY-1493](https://jira.hyperledger.org/browse/INDY-1493) |
+| Bound connection socket to NODE\_IP |   | [INDY-1531](https://jira.hyperledger.org/browse/INDY-1531) |
+| Enable TRACK\_CONNECTED\_CLIENTS\_NUM option |   | [INDY-1496](https://jira.hyperledger.org/browse/INDY-1496) |
+| Updated revocation registry delta value during REG\_ENTRY\_REVOC writing. |   | [INDY-1378](https://jira.hyperledger.org/browse/INDY-1378) |
+| Support latest SDK in Indy Plenum and Node. |   | [INDY-1480](https://jira.hyperledger.org/browse/INDY-1480) |
+| Latency measurements in monitor are windowed. |   | [INDY-1468](https://jira.hyperledger.org/browse/INDY-1468) |
+| Trust anchor permissions are not needed for ledger writes. |   | [INDY-1528](https://jira.hyperledger.org/browse/INDY-1528) |
+|   |   |   |
+| **Known Issue:** Docker pool can&#39;t be built because of new python3-indy-crypto in sdk repo. The problem described in INDY-1517 will be fixed in the next release of indy-node. | Workaround for this problem is to add python3-indy-crypto=0.4.1 to the list of packages to be installed. | [INDY-1517](https://jira.hyperledger.org/browse/INDY-1517) |
+| **Known Issue:** Upgrade failed on pool from 1.3.62 to 1.4.66. Note that INDY-1447 was fixed in indy-node 1.5.68, but it still presents in indy-node 1.3.62 and 1.4.66 code. | **So, some of the nodes may not to be upgraded during simultaneous pool-upgrade.** If this problem will appear, stewards should perform manual upgrade of indy-node in accordance with this [instruction:](https://docs.google.com/document/d/1vUvbioL5OsmZMSkwRcu0p0jdttJO5VS8K3GhDLdNaoI)**(!)** To reduce the risk of reproducing INDY-1447, it is **recommended to use old CLI for pool upgrade.** | [INDY-1447](https://jira.hyperledger.org/browse/INDY-1447) |
+|   |   |   |  |
+
+### Upgrade Scripts:
+
+**Pool upgrade from indy-node 1.3.62 to indy-node 1.6.70 should be performed simultaneously for all nodes due to txn format changes.**
+
+There must be sovrin package upgrade to 1.1.13 version after indy-node package upgrade. You need to specify package=sovrin in pool-upgrade command to do this.
+
+### Additional Information:
+
+**All indy-cli pools should be recreated with actual genesis files.**
+
+**For more details about txn format changes see** [**INDY-1421**](https://jira.hyperledger.org/browse/INDY-1421) **.**
+
+
+## 1.1.12
+
+
+### Component Version Information
+
+| Components | Version Numbers |
+| --- | --- |
+| indy-plenum | 1.5.47 |
+| indy-anoncreds | 1.0.11 |
+| indy-node | 1.5.67 |
+| release version number | 1.1.12 |
+|   |   |    |
+
+### Major Fixes
+
+| Description | Additional Information | Ticket Number |
+| --- | --- | --- |
+| Fixed and issue where logs were appearing in the old CLI. |   | [INDY-1471](https://jira.hyperledger.org/browse/INDY-1471) |
+| Fixed an issue where there were numerous blacklists under high loads. |   | [INDY-1461](https://jira.hyperledger.org/browse/INDY-1461) |
+| Fixed an issue where the pool stopped writing after 1114k txns (different view\_no). |   | [INDY-1460](https://jira.hyperledger.org/browse/INDY-1460) |
+| Fixed an issue where the "AttributeError: NoneType object has no attribute 'request' during load"; was appearing. |   | [INDY-1464](https://jira.hyperledger.org/browse/INDY-1464) |
+| Fixed an issue where the validator-info was reading an empty file. |   | [INDY-1406](https://jira.hyperledger.org/browse/INDY-1406) |
+| Fixed an issue where validator-info -v --json wasn't producing valid JSON. |   | [INDY-1443](https://jira.hyperledger.org/browse/INDY-1443) |
+| Fixed an issue where the first Pre-Prepare message had `incorrect state trie` root right after view\_change (on master replica). |   | [INDY-1459](https://jira.hyperledger.org/browse/INDY-1459) |
+| Fixed an issue where the pool could not order transactions because Node set incorrect watermarks after its restart. |   | [INDY-1455](https://jira.hyperledger.org/browse/INDY-1455) |
+| Fixed an issue where the pool stopped working due to several incomplete view changes. |   | [INDY-1454](https://jira.hyperledger.org/browse/INDY-1454) |
+| Fixed an issue where the node crashes on \_remove\_stashed\_checkpoints. |   | [INDY-1427](https://jira.hyperledger.org/browse/INDY-1427) |
+| Fixed an issue where memory was running out during non-completed viewChange process (under load). |   | [INDY-1360](https://jira.hyperledger.org/browse/INDY-1360) |
+| Fixed an issue where part of nodes continued ordering txns after `incorrect state trie` under load. |   | [INDY-1422](https://jira.hyperledger.org/browse/INDY-1422) |
+| Fixed an issue where the upgrade failed on pool from 1.3.62 to 1.4.66.  |   |[INDY-1447](https://jira.hyperledger.org/browse/INDY-1447)   |   
+|Fixed an issue where a forced upgrade from 1.3.62 -> 1.5.67 without one node in schedule  failed.   |  |[INDY-1519](https://jira.hyperledger.org/browse/INDY-1519)  |  
+|   |  |  |  |
+
+
+
+### Changes - Additions - Known Issues
+
+| Description | Workaround | Ticket |
+| --- | --- | --- |
+| Implemented periodic restart of client stack to allow new clients to connect. |   | [INDY-1431](https://jira.hyperledger.org/browse/INDY-1431) |
+| Got rid of peersWithoutRemotes. |   | [INDY-1467](https://jira.hyperledger.org/browse/INDY-1467) |
+| High Watermark on backup may be reset to 300. |   | [INDY-1462](https://jira.hyperledger.org/browse/INDY-1462) |
+| We now allow optional field in node-to-node and client-to-node. |   | [INDY-1494](https://jira.hyperledger.org/browse/INDY-1494) |
+| Catchup during view change may last forever under the load. |   | [INDY-1463](https://jira.hyperledger.org/browse/INDY-1463) |
+| Propagate Primary mode should not be set for already started view change. |   | [INDY-1458](https://jira.hyperledger.org/browse/INDY-1458) |
+| Catchup needs to be finished during high load. |   | [INDY-1450](https://jira.hyperledger.org/browse/INDY-1450) |
+| Included reviewed logging strings in Indy. |   | [INDY-1416](https://jira.hyperledger.org/browse/INDY-1416) |
+| Added benchmark performance impact of recorder tool. |   | [INDY-1483](https://jira.hyperledger.org/browse/INDY-1483) |
+| Decreased the amount of logging with INFO level. |   | [INDY-1311](https://jira.hyperledger.org/browse/INDY-1311) |
+| Made it so that throughput measurements in monitor should are windowed. |   | [INDY-1435](https://jira.hyperledger.org/browse/INDY-1435) |
+| Limited the number of requested PROPAGATES in MessageRequests. |   | [INDY-1386](https://jira.hyperledger.org/browse/INDY-1386) |
+| Made it so that any client requests during view change are not processed. |   | [INDY-1453](https://jira.hyperledger.org/browse/INDY-1453) |
+| Made it so that a node must send LEDGER\_STATUS with correct last ordered 3PC after catch-up. |   | [INDY-1452](https://jira.hyperledger.org/browse/INDY-1452) |
+| Fixed calculation of prepared certificates during View Change. |   | [INDY-1385](https://jira.hyperledger.org/browse/INDY-1385) |
+| Made it so that catchup should not be interrupted by external events. |   | [INDY-1404](https://jira.hyperledger.org/browse/INDY-1404) |
+| **Known Issue:** Upgrade failed on pool from 1.3.62 to 1.4.66. Note that INDY-1447 was fixed in indy-node 1.5.68, but it still presents in indy-node 1.3.62 and 1.4.66 code. So, some of the nodes may not to be upgraded during simultaneous pool-upgrade. If this problem will appear, stewards should perform manual upgrade of indy-node in accordance with this instruction: (!) To reduce the risk of reproducing INDY-1447, it is recommended to use old CLI for pool upgrade.  |   | [INDY-1447](https://jira.hyperledger.org/browse/INDY-1447) |
+|   |   |   | |
+
+### Upgrade Scripts:
+
+**Pool upgrade from indy-node 1.3.62 should be performed simultaneously for all nodes due to txn format changes.**
+
+### Additional Information:
+
+**All indy-cli pools should be recreated with actual genesis files.
+For more details about txn format changes see INDY-1421.**
+
+
+
+## 1.1.11
+
+
+### Component Version Information
+
+| Components | Version Numbers |
+| --- | --- |
+| indy-plenum | 1.4.45 |
+| indy-anoncreds | 1.0.11 |
+| indy-node | 1.4.66 |
+| release version number | 1.1.11 |
+|   |   |   |
+
+### Major Fixes
+
+| Description | Additional Information | Ticket Number |
+| --- | --- | --- |
+| Fixed and issues where one of the nodes stopped writing after 44287 txns with errors in status. |   | [INDY-1410](https://jira.hyperledger.org/browse/INDY-1410) |
+| Fixed an issue where the pool stopped accepting transactions on 5731 txns (1 sec delays, no logging). |   | [INDY-1365](https://jira.hyperledger.org/browse/INDY-1365) |
+| Fixed an issue where the pool stopped writing after ~300,000 txns from 5 clients |   | [INDY-1315](https://jira.hyperledger.org/browse/INDY-1315) |
+| Fixed an issue where STN was not accepting transactions with only one node down. |   | [INDY-1351](https://jira.hyperledger.org/browse/INDY-1351) |
+| Fixed an issue where the pool stops taking txns at ~178k txns written in ledger. |   | [INDY-1260](https://jira.hyperledger.org/browse/INDY-1260) |
+| Fixed an issue where `ReqIdrToTxn` does not store information about the ledger. |   | [INDY-1327](https://jira.hyperledger.org/browse/INDY-1327) |
+| Made simple Timeout fixes of the current View Change protocol. |   | [INDY-1341](https://jira.hyperledger.org/browse/INDY-1341) |
+| Fixed an issue where the migration fails in case of upgrade to version with new transactions format. |   | [INDY-1379](https://jira.hyperledger.org/browse/INDY-1379) |
+| Fixed an issue where `--network parameter of read_ledger ` doesn't work. |   | [INDY-1318](https://jira.hyperledger.org/browse/INDY-1318) |
+| Fixed an issue where the /var/log/indy/validator-info.log was inappropriately owned by root. |   | [INDY-1310](https://jira.hyperledger.org/browse/INDY-1310) |
+| Created a fix around the issues found in the current logic of catch-up. |   | [INDY-1298](https://jira.hyperledger.org/browse/INDY-1298) |
+| Fixed GetValidatorInfo so it has correct validation for signature and permissions. |   | [INDY-1363](https://jira.hyperledger.org/browse/INDY-1363) |
+| Fixed an issue where there was an unhandled exception during node working. |   | [INDY-1316](https://jira.hyperledger.org/browse/INDY-1316) |
+| Fixed an issue where `validator-info` and `read_ledger` were giving inconsistent responses in node on provisional. |   | [INDY-1219](https://jira.hyperledger.org/browse/INDY-1219) |
+| Fixed an issue where the pool stops taking txns at 3000 writing connections. |   | [INDY-1259](https://jira.hyperledger.org/browse/INDY-1259) |
+|   |   |   |
+|   |   |   |   |
+
+### Changes - Additions - Known Issues
+
+| Description | Workaround | Ticket |
+| --- | --- | --- |
+| Reviewed and replaced `assert` with exceptions in indy-plenum where needed. |   | [INDY-810](https://jira.hyperledger.org/browse/INDY-810) |
+| Tuned RocksDB options for the best performance. |   | [INDY-1245](https://jira.hyperledger.org/browse/INDY-1245) |
+| Created a migration guide from Indy-node 1.3 to 1.4. |   | [INDY-1392](https://jira.hyperledger.org/browse/INDY-1392) |
+| Сhanged a key in the requests map and field reqIdr in Pre Prepare and Ordered. |   | [INDY-1370](https://jira.hyperledger.org/browse/INDY-1370) |
+| Investigated issues found during load testing of 25-nodes pool with increased timeouts for catchups and viewchange. |   | [INDY-1400](https://jira.hyperledger.org/browse/INDY-1400) |
+| We now support binding on separate NICs for Client-to-Node and Node-to-Node communication. |   | [INDY-1332](https://jira.hyperledger.org/browse/INDY-1332) |
+| Added short checkpoints stabilization without matching digests. |   | [INDY-1329](https://jira.hyperledger.org/browse/INDY-1329) |
+| Added indy-crypto package to the hold list. |   | [INDY-1323](https://jira.hyperledger.org/browse/INDY-1323) |
+| Removed ledger status based catch-up trigger together with the wrong catch-up workflow. |   | [INDY-1297](https://jira.hyperledger.org/browse/INDY-1297) |
+| Read-ledger without storage copy in case of RocksDB (RocksDB read-only mode support). |   | [INDY-1243](https://jira.hyperledger.org/browse/INDY-1243) |
+| Applied state machine to Catchup code. |   | [INDY-971](https://jira.hyperledger.org/browse/INDY-971) |
+| Refactored the common Request structure. |   | [INDY-1124](https://jira.hyperledger.org/browse/INDY-1124) |
+| Refactored the common transactions structure. |   | [INDY-1123](https://jira.hyperledger.org/browse/INDY-1123) |
+| We now support the new libindy with changed txn format. |   | [INDY-1319](https://jira.hyperledger.org/browse/INDY-1319) |
+| Explored config parameters to find the best performance/stability settings. |   | [INDY-1334](https://jira.hyperledger.org/browse/INDY-1334) |
+| Extended the Validator Info tool to provide more information about the current state of the pool. |   | [INDY-1175](https://jira.hyperledger.org/browse/INDY-1175) |
+|  A Steward needs to be able to get validator-info from all nodes. |   | [INDY-1184](https://jira.hyperledger.org/browse/INDY-1184) |
+| Modified existing load scripts for a better load testing. |   | [INDY-1279](https://jira.hyperledger.org/browse/INDY-1279) |
+| Performed a migration from LevelDB to RocksDB |   | [INDY-1244](https://jira.hyperledger.org/browse/INDY-1244) |
+| A Trustee needs to be able to restart the pool in critical situations. |   | [INDY-1173](https://jira.hyperledger.org/browse/INDY-1173) |
+| Move the log compression into separate process. |   | [INDY-1275](https://jira.hyperledger.org/browse/INDY-1275) |
+| **Known Issue:** There's an incorrect read\_ledger info with seq\_no parameter. |   | [INDY-1415](https://jira.hyperledger.org/browse/INDY-1415) |
+| **Known Issue:** Pool upgrade should be performed simultaneously for all nodes due to txn format changes. All indy-cli pools should be recreated with actual genesis files. |   |   |
+| **List of breaking changes for migration from indy-node 1.3 to 1.4:** |   | [1.3-1.4 Migration Guide](https://github.com/hyperledger/indy-node/blob/master/docs/1.3_to_1.4_migration_guide.md) |
+
+### Upgrade Scripts:
+
+**Pool upgrade should be performed simultaneously for all nodes due to txn format changes.**
+
+**All indy-cli pools should be recreated with actual genesis files.**
+
+#### CLI Upgrading:
+
+**Old CLI (`indy`):**
+
+upgrade from 1.3 to 1.4 version
+delete `~.ind-cli/networks/&lt;network_name&gt;/data` folder
+replace both old genesis files by new ones (from 1.4 node or from sovrin repo)
+
+**New CLI (`indy-cli`):**
+
+upgrade from 1.4 to 1.5 version
+recreate indy-cli pool using 1.4 pool genesis file (from 1.4 node or from sovrin repo)
+
+### Additional Information:
+
+**List of breaking changes for migration from indy-node 1.3 to 1.4:**
+
+https://github.com/hyperledger/indy-node/blob/master/docs/1.3\_to\_1.4\_migration\_guide.md
+
+**IndyNode 1.4 and LibIndy 1.5 compatibility:**
+
+_General_
+
+By default LibIndy 1.5 will be compatible with IndyNode 1.3 (current stable), and not 1.4 (the new one).
+
+LibIndy 1.5 can become compatible with IndyNode 1.4 if `indy_set_protocol_version(2)` is called during app initialization.
+
+_Guideline for teams and apps_
+
+Applications can freely update to LibIndy 1.5 and still use stable Node 1.3
+
+If an app wants to work with the latest master or Stable Node 1.4, then they need to support breaking changes (there are not so many, mostly a new reply for write txns as txn format is changed, see 1.3\_to\_1.4\_migration\_guide.md)
+
+call `indy_set_protocol_version(2)` during app initialization
+
+Use https://github.com/hyperledger/indy-sdk/blob/b4a2bb82087e2eafe5e55bddb20a3069e5fb7d0b/cli/README.md#old-python-based-cli-migration to export dids from your old CLI wallet to the new one (new indy-cli).
+
+
+
+## 1.1.10
+
+
+### Component Version Information
+
+| Components | Version Numbers |
+| --- | --- |
+| indy-plenum | 1.2.42 |
+| indy-anoncreds | 1.0.11 |
+| indy-node | 1.3.62 |
+| release version number | 1.1.10 |
+|   |   |    |
+
+### Major Fixes
+
+| Description | Additional Information | Ticket Number |
+| --- | --- | --- |
+| Fixed an issue where the STN was losing consensus. |   | [INDY-1256](https://jira.hyperledger.org/browse/INDY-1256) |
+| Fixed an issue where we were unable to use the read\_ledger tool with the parameter "to". |   | [INDY-1284](https://jira.hyperledger.org/browse/INDY-1284) |
+|Fixed the upgrade from 1.2.223 (1.3.55 stable analogue) to 1.3.410 (rocksdb) wasn't working.|    |[INDY-1330](https://jira.hyperledger.org/browse/INDY-1330)  |
+|   |   |   |    |   
+
+### Changes - Additions - Known Issues
+
+| Description | Workaround | Ticket |
+| --- | --- | --- |
+| Support was added for supervisord. |   | [https://github.com/hyperledger/indy-node/pull/588](https://jira.hyperledger.org/browse/INDY-1186) |
+| Indy-node dependencies are fixed.  |   |    |
+|   |   |   |    |
+
+### Upgrade Scripts:
+
+None for this release.
+
+### Additional Information:
+
+None at this time.
+
+
+## 1.1.9
+
+### Component Version Information
+
+| Components | Version Numbers |
+| --- | --- |
+| indy-node | 1.3.56 |
+| release version number | 1.1.9 |
+|   |   |   |
+
+### Major Fixes
+
+| Description | Additional Information | Ticket Number |
+| --- | --- | --- |
+| The Node was restarting because of an &quot;Out of memory&quot; error. |   | [INDY-1238](https://jira.hyperledger.org/browse/INDY-1238) |
+| The pool was not working after not simultaneous manual pool upgrades. |   | [INDY-1197](https://jira.hyperledger.org/browse/INDY-1197) |
+| When adding a new schema, field &#39;attr\_names&#39; of schema json can be an empty list. |   | [INDY-1169](https://jira.hyperledger.org/browse/INDY-1169) |
+| This prevents an Identity Owner from creating a schema or claimDef. |   | [INDY-1111](https://jira.hyperledger.org/browse/INDY-1111) |
+| There was the same primary for both instances 0 and 1. |   | [INDY-1112](https://jira.hyperledger.org/browse/INDY-1112) |
+| The node logs were being duplicated in syslog. |   | [INDY-1102](https://jira.hyperledger.org/browse/INDY-1102) |
+| It was possible to create several nodes with the same alias. |   | [INDY-1148](https://jira.hyperledger.org/browse/INDY-1148) |
+| There was ambiguous behavior after node demotion. |   | [INDY-1179](https://jira.hyperledger.org/browse/INDY-1179) |
+| One of the nodes were not responding to libindy after several running load tests. |   | [INDY-1180](https://jira.hyperledger.org/browse/INDY-1180) |
+| When returning N-F nodes to the pool, &quot;View change&quot; was not occurring if the Primary node was stopped. |   | [INDY-1151](https://jira.hyperledger.org/browse/INDY-1151) |
+| There was a failed restart after getting the &quot;unhandled exception (KeyError)&quot;. |   | [INDY-1152](https://jira.hyperledger.org/browse/INDY-1152) |
+| Fixed a bug where you were unable to install indy-node if sdk repo is in sources.list   |   |[INDY-1269](https://jira.hyperledger.org/browse/INDY-1269)   |  
+|   |   |   |   |
+
+### Changes - Additions - Known Issues
+
+| Description | Workaround | Ticket |
+| --- | --- | --- |
+| Made it so that a developer can distinguish logs of each replica. |   | [INDY-1186](https://jira.hyperledger.org/browse/INDY-1186) |
+| Made it so a developer, can track the path of each request. |   | [INDY-1187](https://jira.hyperledger.org/browse/INDY-1187) |
+| Made it so that you can use RocksDB as a key-value storage. |   | [INDY-1205](https://jira.hyperledger.org/browse/INDY-1205) |
+| Refactored the common Request structure. |   | [INDY-1124](https://jira.hyperledger.org/browse/INDY-1124) |
+| Made it so that it supports anoncreds revocation in Indy. |   | [INDY-680](https://jira.hyperledger.org/browse/INDY-680) |
+| Made it so that it supports REVOC\_REG\_DEF transaction. |   | [INDY-1134](https://jira.hyperledger.org/browse/INDY-1134) |
+| Made it so that it supports GET\_REVOC\_REG\_DEF request. |   | [INDY-1135](https://jira.hyperledger.org/browse/INDY-1135) |
+| Made it so that it supports REVOC\_REG\_ENTRY transaction. |   | [INDY-1136](https://jira.hyperledger.org/browse/INDY-1136) |
+| Made it so that it supports GET\_REVOC\_REG request. |   | [INDY-1137](https://jira.hyperledger.org/browse/INDY-1137) |
+| Made it so that it supports getting state root by timestamp. |   | [INDY-1138](https://jira.hyperledger.org/browse/INDY-1138) |
+| Got rid of the RAET code. |   | [INDY-1057](https://jira.hyperledger.org/browse/INDY-1057) |
+| Incubation: Move CI part of pipelines to Hyperledger infrastructure. |   | [INDY-837](https://jira.hyperledger.org/browse/INDY-837) |
+| Made it so that a user can revoke a connection by rotating the new key to nothing. |   | [INDY-582](https://jira.hyperledger.org/browse/INDY-582) |
+| **Known Issue:** Define the policy how to restore node from the state when it&#39;s stashing all the reqs and there is a risk of running out of memory. |   | [INDY-1250](https://jira.hyperledger.org/browse/INDY-1250) |
+| **Known Issue:** Re-promoted node cannot hook up to a lower viewChange. |   | [INDY-1199](https://jira.hyperledger.org/browse/INDY-1199) |
+| **Known Issue:** One of the nodes does not respond to libindy after several running load test. |   | [INDY-1180](https://jira.hyperledger.org/browse/INDY-1180) |
+| **Known Issue:** One node fails behind others during the load\_test with a high load. |   | [INDY-1188](https://jira.hyperledger.org/browse/INDY-1188) |
+|**Known Issue:** Pool can be broken by primary node reboot in case of network issues between nodes. **Note:** RocksDB was added as dependency (INDY-1205). It is used for revocation, but the rest part of node functionality is still using LevelDB.   |   |[INDY-1256](https://jira.hyperledger.org/browse/INDY-1256)       |
+|   |   |   |    |
+
+### Upgrade Scripts
+
+None for this release.
+
+### Additional Information:
+
+None at this time.
+
+
+## 1.1.8
+
+**Important: Upgrade to this version should be performed simultaneously for all nodes (with `force=True`).**
+
+### Component Version Information
+
+| Components | Version Numbers |
+| --- | --- |
+| indy-plenum | 1.2.34 |
+| indy-anoncreds | 1.0.11 |
+| indy-node | 1.3.55 |
+| release version number | 1.1.8 |
+|   |   |    |
+
+### Major Fixes
+
+| Description | Additional Information | Ticket Number |
+| --- | --- | --- |
+| Transactions were missing from the config ledger after the upgrade. |   | [INDY-799](https://jira.hyperledger.org/browse/INDY-799) |
+| The node was broken after a load\_test.py run. |   | [INDY-960](https://jira.hyperledger.org/browse/INDY-960) |
+| The pool stopped taking transactions after sending 1,000 simultaneous transactions. |   | [INDY-911](https://jira.hyperledger.org/browse/INDY-911) |
+| The pool stopped working: Node services stop with 1,000 simultaneous clients doing GET\_NYM reads |   | [INDY-986](https://jira.hyperledger.org/browse/INDY-986) |
+| The node is broken after adding it to the pool. |   | [INDY-948](https://jira.hyperledger.org/browse/INDY-948) |
+| The generate\_indy\_pool\_transactions command can be run only by an indy user. |   | [INDY-1048](https://jira.hyperledger.org/browse/INDY-1048) |
+| Made it so that updates to existing Schemas are not allowed. |   | [INDY-1035](https://jira.hyperledger.org/browse/INDY-1035) |
+| The pool was unable to write txns after two nodes adding. |   | [INDY-1018](https://jira.hyperledger.org/browse/INDY-1018) |
+| Fixed a bug where it was possible to override CLAIM\_DEF for existing schema-did pair. |   | [INDY-1083](https://jira.hyperledger.org/browse/INDY-1083) |
+| Fixed a bug where here was a huge amount of calls and a lot of execution time in kv\_store.py. |   | [INDY-1077](https://jira.hyperledger.org/browse/INDY-1077) |
+| One of added nodes wasn&#39;t catching up. |   | [INDY-1029](https://jira.hyperledger.org/browse/INDY-1029) |
+| The pool stopped working and lost consensus while new node was performing a catch-up. |   | [INDY-1025](https://jira.hyperledger.org/browse/INDY-1025) |
+| Performing a View Change on large pools of 19 or more nodes can cause pool to stop functioning. |   | [INDY-1054](https://jira.hyperledger.org/browse/INDY-1054) |
+| Performing a View Change issue stopped the pool from accepting new transactions. |   | [INDY-1034](https://jira.hyperledger.org/browse/INDY-1034) |
+| We were unable to send transactions in STN. |   | [INDY-1076](https://jira.hyperledger.org/browse/INDY-1076) [INDY-1079](https://jira.hyperledger.org/browse/INDY-1079) |
+| Replica.lastPrePrepareSeqNo may not be reset on view change. |   | [INDY-1061](https://jira.hyperledger.org/browse/INDY-1061) |
+| We were unable to send an upgrade transaction without including demoted nodes. |   | [INDY-897](https://jira.hyperledger.org/browse/INDY-897) |
+| The Nym request to STN was resulting in inconsistent responses. |   | [INDY-1069](https://jira.hyperledger.org/browse/INDY-1069) |
+| The validator node was being re-promoted during view change. |   | [INDY-959](https://jira.hyperledger.org/browse/INDY-959) |
+| There was a false cancel message during an upgrade. |   | [INDY-1078](https://jira.hyperledger.org/browse/INDY-1078) |
+| Transactions were being added to nodes in STN during system reboot.. |   | [INDY-1045](https://jira.hyperledger.org/browse/INDY-1045) |
+| There were problems with nodes demotion during load test. |   | [INDY-1033](https://jira.hyperledger.org/browse/INDY-1033) |
+| The node monitoring tool (email plugin) wasn&#39;t working. |   | [INDY-995](https://jira.hyperledger.org/browse/INDY-995) |
+| ATTRIB transaction with ENC and HASH wasn&#39;t working. |   | [INDY-1074](https://jira.hyperledger.org/browse/INDY-1074) |
+| When returning N-F nodes to the pool, View Change does not occur if Primary node is stopped. |   | [INDY-1151](https://jira.hyperledger.org/browse/INDY-1151) |
+| We were unable to recover write consensus at n-f after f+1 descent. |   | [INDY-1166](https://jira.hyperledger.org/browse/INDY-1166) |
+| Newly upgraded STN fails to accept transactions (pool has been broken after upgrade because of one not upgraded node).  |   |[INDY-1183](https://jira.hyperledger.org/browse/INDY-1183)   |   
+|We were unable to submit upgrade transactions to STN.   |    |[INDY-1190](https://jira.hyperledger.org/browse/INDY-1190)     
+|   |    |    |    |
+
+### Changes - Additions - Known Issues
+
+| Description | Workaround | Ticket |
+| --- | --- | --- |
+| Added indy-sdk test dependency to plenum and use indy-sdk for plenum tests. |   | [INDY-900](https://jira.hyperledger.org/browse/INDY-900) [INDY-901](https://jira.hyperledger.org/browse/INDY-901) |
+| Published docker images to dockerhub. |   | [INDY-962](https://jira.hyperledger.org/browse/INDY-962) |
+| Simplified the view change code. |   | [INDY-480](https://jira.hyperledger.org/browse/INDY-480) |
+| Refactored config.py to reflect file folder re-factoring for Incubation. |   | [INDY-878](https://jira.hyperledger.org/browse/INDY-878) |
+| Added Abstract Observers Support. |   | [INDY-628](https://jira.hyperledger.org/browse/INDY-628) |
+| Moved scripts from sovrin-environment to one of Indy repos. |   | [INDY-1055](https://jira.hyperledger.org/browse/INDY-1055) |
+| Got rid of Sovrin dependency in the environment scripts. |   | [INDY-1064](https://jira.hyperledger.org/browse/INDY-1064) |
+| Updated information in &quot;Getting Started with Indy&quot;. |   | [INDY-1062](https://jira.hyperledger.org/browse/INDY-1062) |
+| Updated information in &quot;Setting Up a Test Indy Network in VMs&quot;. |   | [INDY-1062](https://jira.hyperledger.org/browse/INDY-1062) |
+| Add iptables rules to limit the number of clients connections. |   | [INDY-1087](https://jira.hyperledger.org/browse/INDY-1087) |
+| Knowledge transfer on Indy build processes. |   | [INDY-1088](https://jira.hyperledger.org/browse/INDY-1088) |
+| Incubation: Move CI part of pipelines to Hyperledger infrastructure. |   | [INDY-837](https://jira.hyperledger.org/browse/INDY-837) |
+| Made it so that a user can revoke a connection by rotating the new key to nothing. |   | [INDY-582](https://jira.hyperledger.org/browse/INDY-582) |
+| Client needs to be able to make sure that we have the latest State Proof. |   | [INDY-928](https://jira.hyperledger.org/browse/INDY-928) |
+| Created it so that anyone could have access to an up-to-date Technical overview of plenum and indy. |   | [INDY-1022](https://jira.hyperledger.org/browse/INDY-928) |
+| **Known Issue:** Pool has lost consensus after primary demotion (with 4 nodes setup only). |   | [INDY-1163](https://jira.hyperledger.org/browse/INDY-1163) |
+| **Known Issue:** Ambiguous behavior after node demotion. |   | [INDY-1179](https://jira.hyperledger.org/browse/INDY-1179) |
+| **Known Issue:** One of the nodes does not respond to libindy after several running load test. |   | [INDY-1180](https://jira.hyperledger.org/browse/INDY-1180) |
+|**Known Issue:** Pool does not work after not simultaneous manual pool upgrades.   |   |[INDY-1197](https://jira.hyperledger.org/browse/INDY-1197)   |   
+|**Known Issue:** Pool stops working if the primary node was not included to schedule in the upgrade transaction.   |   |[INDY-1198](https://jira.hyperledger.org/browse/INDY-1198)  |
+|   |   |     |     |
+
+
+### Additional Information:
+
+Node promoting is not recommended for 1.3.52 version according to known issues because backup protocol instances may work incorrectly until next view change.
+
+As mentioned above, upgrade to this version should be performed simultaneously for all nodes (with `force=True`).
+
+## 1.1.7
+
+
+### Component Version Information
 
 | Components | Version Numbers |
 | --- | --- |
 | indy-plenum | 1.2.29 |
 | indy-anoncreds | 1.0.11 |
 | indy-node | 1.2.50 |
-| sovrin | 1.1.7 |
+| release version number | 1.1.7 |
 |   |   |   |
 
 ### Major Fixes
@@ -134,7 +624,7 @@ Capture the stdout at the end of the output, which looks like the following, and
 1. Manually upgrade the CLI.
 
  ``$ sudo apt update``
- 
+
  ``$ sudo apt upgrade``
 
 2. Launch the CLI.
@@ -208,10 +698,10 @@ For a new node when using `init_indy_node` if you specify a seed for this script
 
  ``init_bls_keys --name <NODE_ALIAS> --seed '<SEED>'``
 
-After running `init_bls_keys`, Stewards of existing nodes will be required use their CLI node to update their validator's information on the ledger to include the bls keys: 
+After running `init_bls_keys`, Stewards of existing nodes will be required use their CLI node to update their validator's information on the ledger to include the bls keys:
 
  ``send NODE dest=<node_dest> data={'alias':'<node name>', 'blskey': '<key_generated_by_init_bls_keys>'}``
- 
+
 ##### Multi-network and indy_config.py
 
 **Where do I find the configuration file settings?**
@@ -220,17 +710,17 @@ With file and folder changes the new location for `indy_config.py` is in the dir
 The genesis files are now located in their own directory based off the network name "/var/lib/indy/NETWORK_NAME". The defaults are `live`, `local`, and `sandbox`. Setting the ``"NETWORK_NAME"`` in the `indy_config.py` file will determine which network is used. The default setting in the `indy_config.py` file is "``"NETWORK_NAME=sandbox"``.
 
 
-## Aries 1.1.6 Hot Fix
+## 1.1.6 Hot Fix
 
 
-Component Version Information
+### Component Version Information
 
 | Components | Version Numbers |
 | --- | --- |
 | indy-plenum | 1.1.27 |
 | indy-anoncreds | 1.0.10 |
 | indy-node | 1.1.43 |
-| sovrin | 1.1.6 |
+| release version number | 1.1.6 |
 |   |   |   |
 
 ### Major Fixes
@@ -245,17 +735,17 @@ Component Version Information
 | Corrected existing tests according to introduced prevention of upgrade to a lower version. |   | [INDY-895](https://jira.hyperledger.org/browse/INDY-895) [INDY-869](https://jira.hyperledger.org/browse/INDY-869) |
 |   |   |   |   |
 
-## Aries 1.1.6
+## 1.1.6
 
 
-Component Version Information
+### Component Version Information
 
 | Components | Version Numbers |
 | --- | --- |
 | indy-plenum | 1.1.27 |
 | indy-anoncreds | 1.0.10 |
 | indy-node | 1.1.37 |
-| sovrin | 1.1.6 |
+| release version number | 1.1.6 |
 |   |   | |
 
 ### Major Fixes
@@ -298,7 +788,7 @@ Component Version Information
 | **If the pool loses enough nodes and cannot reach consensus when enough nodes become available, the pool will still not reach consensus.** | If you restart all the nodes in the pool, it will start reaching consensus again. | [INDY-849](https://jira.hyperledger.org/browse/INDY-849) |
 
 
-## Aries 1.0
+## 1.0
 
 
 ### Major Features

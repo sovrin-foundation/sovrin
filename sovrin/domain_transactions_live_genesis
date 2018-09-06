@@ -1,16 +1,16 @@
-{"alias":"Phil Windley","dest":"NMjQb59rKTJXKNqVYfcZFi","role":"0","type":"1","verkey":"Ce9jZ2bQcLRCrY3eT5AbjsU5mXFa4jMF6dDSF21tyeFJ"}
-{"alias":"Jason Law","dest":"K2ze2xR8MAxkQscdkboKnD","role":"0","type":"1","verkey":"~KhvZWs1QSS8bS1RxB55NE3"}
-{"alias":"Drummond Reed","dest":"Jv4afJBghiuJ2tiZDduarJ","role":"0","type":"1","verkey":"AmKnoVceCaEHBCaDjtSYqwLLpmVQLBbZMgAZHfSyv936"}
-{"alias":"Peter Simpson","dest":"JX29L7h6UpDNEThiaTYx9N","role":"0","type":"1","verkey":"AYmPQJTcpsH1YxRQUwwRgGzQVLFf8JRvmuS5LKNZN1gA"}
-{"alias":"Ron Amstutz","dest":"7jJe9ArRfRchSKL2sYgFDj","role":"0","type":"1","verkey":"4fjHSUqU9RmeXWXHV6MnKFDtEyEcBUipovhNCDuei5XW"}
-{"alias":"Mawaki Chango","dest":"CPU9r7iLSXcSdn79FzbUvQ","role":"0","type":"1","verkey":"7CyhcN7gsqo9VxAV1V7ZhiqTetAadY2S4QYcUdo3Uh4p"}
-{"alias":"Evernym","dest":"J4N1K1SEB8uY2muwmecY5q","identifier":"NMjQb59rKTJXKNqVYfcZFi","role":"2","type":"1","verkey":"~NYHEeWamMLdccWtRQcwUPX"}
-{"alias":"Global Consent","dest":"UoFyxT8BAqotbkhiehxHCn","identifier":"K2ze2xR8MAxkQscdkboKnD","role":"2","type":"1","verkey":"~G4pty2iYgvDFHjoovRBt3Z"}
-{"alias":"Danube Tech","dest":"BrYDA5NubejDVHkCYBbpY5","identifier":"Jv4afJBghiuJ2tiZDduarJ","role":"2","type":"1","verkey":"~4qKbF4VjuiHFiSFcgfnpHE"}
-{"alias":"Royal Credit Union","dest":"4ohadAwtb2kfqvXynfmfbq","identifier":"JX29L7h6UpDNEThiaTYx9N","role":"2","type":"1","verkey":"~AVvsGbPoepqJFLWMQEzC1u"}
-{"alias":"Digital Bazaar","dest":"rckdVhnC5R5WvdtC83NQp","identifier":"7jJe9ArRfRchSKL2sYgFDj","role":"2","type":"1","verkey":"~BWgi35EysasXayHkG1btJy"}
-{"alias":"OAS Federal Credit Union","dest":"BFAeui85mkcuNeQQhZfqQY","identifier":"CPU9r7iLSXcSdn79FzbUvQ","role":"2","type":"1","verkey":"~Crzv4XmAn3Cum252ACCiBq"}
-{"alias":"Best Innovation Group","dest":"L851TgZcjr6xqh4w6vYa34","identifier":"NMjQb59rKTJXKNqVYfcZFi","role":"2","type":"1","verkey":"~JJFYrdBGMNrq8YQ49MrLHm"}
-{"alias":"Desert Schools Credit Union","dest":"FjuHvTjq76Pr9kdZiDadqq","identifier":"K2ze2xR8MAxkQscdkboKnD","role":"2","type":"1","verkey":"~FtLzjxJz2f6J14MCreazYJ"}
-{"alias":"Prosapien","dest":"Y1ENo59jsXYvTeP378hKWG","identifier":"Jv4afJBghiuJ2tiZDduarJ","role":"2","type":"1","verkey":"~5yx9bVvZF74bMUL5ewEWV9"}
-{"alias":"iRespond","dest":"JdJi97RRDH7Bx7khr1znAq","identifier":"7jJe9ArRfRchSKL2sYgFDj","role":"2","type":"1","verkey":"~JR1M9nZuLV75fcAYuenYB1"}
+{"reqSignature":{},"txn":{"data":{"alias":"Phil Windley","dest":"NMjQb59rKTJXKNqVYfcZFi","role":"0","verkey":"Ce9jZ2bQcLRCrY3eT5AbjsU5mXFa4jMF6dDSF21tyeFJ"},"metadata":{},"type":"1"},"txnMetadata":{"seqNo":1},"ver":"1"}
+{"reqSignature":{},"txn":{"data":{"alias":"Jason Law","dest":"K2ze2xR8MAxkQscdkboKnD","role":"0","verkey":"~KhvZWs1QSS8bS1RxB55NE3"},"metadata":{},"type":"1"},"txnMetadata":{"seqNo":2},"ver":"1"}
+{"reqSignature":{},"txn":{"data":{"alias":"Drummond Reed","dest":"Jv4afJBghiuJ2tiZDduarJ","role":"0","verkey":"AmKnoVceCaEHBCaDjtSYqwLLpmVQLBbZMgAZHfSyv936"},"metadata":{},"type":"1"},"txnMetadata":{"seqNo":3},"ver":"1"}
+{"reqSignature":{},"txn":{"data":{"alias":"Peter Simpson","dest":"JX29L7h6UpDNEThiaTYx9N","role":"0","verkey":"AYmPQJTcpsH1YxRQUwwRgGzQVLFf8JRvmuS5LKNZN1gA"},"metadata":{},"type":"1"},"txnMetadata":{"seqNo":4},"ver":"1"}
+{"reqSignature":{},"txn":{"data":{"alias":"Ron Amstutz","dest":"7jJe9ArRfRchSKL2sYgFDj","role":"0","verkey":"4fjHSUqU9RmeXWXHV6MnKFDtEyEcBUipovhNCDuei5XW"},"metadata":{},"type":"1"},"txnMetadata":{"seqNo":5},"ver":"1"}
+{"reqSignature":{},"txn":{"data":{"alias":"Mawaki Chango","dest":"CPU9r7iLSXcSdn79FzbUvQ","role":"0","verkey":"7CyhcN7gsqo9VxAV1V7ZhiqTetAadY2S4QYcUdo3Uh4p"},"metadata":{},"type":"1"},"txnMetadata":{"seqNo":6},"ver":"1"}
+{"reqSignature":{},"txn":{"data":{"alias":"Evernym","dest":"J4N1K1SEB8uY2muwmecY5q","role":"2","verkey":"~NYHEeWamMLdccWtRQcwUPX"},"metadata":{"from":"NMjQb59rKTJXKNqVYfcZFi"},"type":"1"},"txnMetadata":{"seqNo":7},"ver":"1"}
+{"reqSignature":{},"txn":{"data":{"alias":"Global Consent","dest":"UoFyxT8BAqotbkhiehxHCn","role":"2","verkey":"~G4pty2iYgvDFHjoovRBt3Z"},"metadata":{"from":"K2ze2xR8MAxkQscdkboKnD"},"type":"1"},"txnMetadata":{"seqNo":8},"ver":"1"}
+{"reqSignature":{},"txn":{"data":{"alias":"Danube Tech","dest":"BrYDA5NubejDVHkCYBbpY5","role":"2","verkey":"~4qKbF4VjuiHFiSFcgfnpHE"},"metadata":{"from":"Jv4afJBghiuJ2tiZDduarJ"},"type":"1"},"txnMetadata":{"seqNo":9},"ver":"1"}
+{"reqSignature":{},"txn":{"data":{"alias":"Royal Credit Union","dest":"4ohadAwtb2kfqvXynfmfbq","role":"2","verkey":"~AVvsGbPoepqJFLWMQEzC1u"},"metadata":{"from":"JX29L7h6UpDNEThiaTYx9N"},"type":"1"},"txnMetadata":{"seqNo":10},"ver":"1"}
+{"reqSignature":{},"txn":{"data":{"alias":"Digital Bazaar","dest":"rckdVhnC5R5WvdtC83NQp","role":"2","verkey":"~BWgi35EysasXayHkG1btJy"},"metadata":{"from":"7jJe9ArRfRchSKL2sYgFDj"},"type":"1"},"txnMetadata":{"seqNo":11},"ver":"1"}
+{"reqSignature":{},"txn":{"data":{"alias":"OAS Federal Credit Union","dest":"BFAeui85mkcuNeQQhZfqQY","role":"2","verkey":"~Crzv4XmAn3Cum252ACCiBq"},"metadata":{"from":"CPU9r7iLSXcSdn79FzbUvQ"},"type":"1"},"txnMetadata":{"seqNo":12},"ver":"1"}
+{"reqSignature":{},"txn":{"data":{"alias":"Best Innovation Group","dest":"L851TgZcjr6xqh4w6vYa34","role":"2","verkey":"~JJFYrdBGMNrq8YQ49MrLHm"},"metadata":{"from":"NMjQb59rKTJXKNqVYfcZFi"},"type":"1"},"txnMetadata":{"seqNo":13},"ver":"1"}
+{"reqSignature":{},"txn":{"data":{"alias":"Desert Schools Credit Union","dest":"FjuHvTjq76Pr9kdZiDadqq","role":"2","verkey":"~FtLzjxJz2f6J14MCreazYJ"},"metadata":{"from":"K2ze2xR8MAxkQscdkboKnD"},"type":"1"},"txnMetadata":{"seqNo":14},"ver":"1"}
+{"reqSignature":{},"txn":{"data":{"alias":"Prosapien","dest":"Y1ENo59jsXYvTeP378hKWG","role":"2","verkey":"~5yx9bVvZF74bMUL5ewEWV9"},"metadata":{"from":"Jv4afJBghiuJ2tiZDduarJ"},"type":"1"},"txnMetadata":{"seqNo":15},"ver":"1"}
+{"reqSignature":{},"txn":{"data":{"alias":"iRespond","dest":"JdJi97RRDH7Bx7khr1znAq","role":"2","verkey":"~JR1M9nZuLV75fcAYuenYB1"},"metadata":{"from":"7jJe9ArRfRchSKL2sYgFDj"},"type":"1"},"txnMetadata":{"seqNo":16},"ver":"1"}
