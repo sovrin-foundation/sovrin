@@ -9,7 +9,7 @@ RUN apt-get update -y && apt-get install -y \
         python3-pip \
         python-setuptools \
         python3-venv \
-    # fmp
+    # fpm
         ruby \
         ruby-dev \
         rubygems \
