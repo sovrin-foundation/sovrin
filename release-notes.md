@@ -7,6 +7,9 @@
 ![image alt text](banner.png)
 
 
+* [1.1.17](#1117)
+
+* [1.1.13](#1113)
 
 * [1.1.12](#1112)
 
@@ -34,6 +37,125 @@
 #### Disclosure
 
 Although every attempt has been made to make this information as accurate as possible, please know there may be things that are omitted, not fully developed yet, or updates since this publication that were not included in the information below. Only the most pressing or significant items have been listed. For the entire list of tickets and or specific information about any given item, please visit the list at [Hyperleder Indy's Jira](https://jira.hyperledger.org/). Once logged in, simply navigate to Projects > Indy.
+
+
+## 1.1.17
+
+**Important:** Several iterations were done very rapidly between the last release and this one. All of the changes, upgrades, etc... are included in this new release. Simply upgrading will include them all from 1.1.13 until 1.1.17. To see further, specific numerous changes, please reference the appropriate tickets in the [Hyperledger Jira ticketing system.](https://jira.hyperledger.org/)
+
+### Component Version Information
+
+| Components | Version Numbers |
+| --- | --- |
+| indy-plenum | 1.6.51 |
+| indy-anoncreds | 1.0.11 |
+| indy-node | 1.6.73 |
+| release version number | 1.1.17 |
+|   |   |   |
+
+### Major Fixes
+
+| Description | Additional Information | Ticket Number |
+| --- | --- | --- |
+| Fixed and issue where the pool stopped writing after F change. |   | [INDY-1583](https://jira.hyperledger.org/browse/INDY-1583) |
+| Fixed an issue where read\_ledger was passing incorrectly formatted stdout and breaks convention |   | [INDY-1645](https://jira.hyperledger.org/browse/INDY-1645) |
+| Fixed an issue where the node couldn&#39;t catch up a large ledger. |   | [INDY-1595](https://jira.hyperledger.org/browse/INDY-1595) |
+| Fixed an issue where the Validator Info may hang for a couple of minutes. |   | [INDY-1603](https://jira.hyperledger.org/browse/INDY-1603) |
+| Fixed an issue where the read\_ledger tool is not able to read the sovrin plugin ledger. |   | [INDY-1548](https://jira.hyperledger.org/browse/INDY-1548) |
+|   |   |   |   |
+
+### Changes - Additions - Known Issues
+
+| Description | Workaround | Ticket |
+| --- | --- | --- |
+| Made it so that the 3PC Batch should preserve the order of requests when applying PrePrepare on non-primary. |   | [INDY-1642](https://jira.hyperledger.org/browse/INDY-1642) |
+| Made it so that Monitor takes into account requests not passing the dynamic validation when triggering view change. |   | [INDY-1643](https://jira.hyperledger.org/browse/INDY-1643) |
+| Improved throughput calculation to reduce a chance of false positive View Changes. |   | [INDY-1565](https://jira.hyperledger.org/browse/INDY-1565) |
+| Made it so that the performance of monitor is improved. |   | [INDY-1660](https://jira.hyperledger.org/browse/INDY-1660) |
+| Made it so that Stewards, can have a script that can generates Proof of possession for their BLS key. That value can now be used in a NODE txn. |   | [INDY-1588](https://jira.hyperledger.org/browse/INDY-1588) |
+| Added Support Proof of Possession for BLS keys. |   | [INDY-1389](https://jira.hyperledger.org/browse/INDY-1389) |
+| Made it so that the average is not used when calculating total throughput/latency of backups. |   | [INDY-1582](https://jira.hyperledger.org/browse/INDY-1582) |
+| Made it so that any client requests are discarded during view change. |   | [INDY-1564](https://jira.hyperledger.org/browse/INDY-1564) |
+| Created a simple tool to show graphical representation of some common metrics. |   | [INDY-1568](https://jira.hyperledger.org/browse/INDY-1568) |
+| Changed default configs for better performance and stability. |   | [INDY-1549](https://jira.hyperledger.org/browse/INDY-1549) |
+|   |   |   | |
+| **Known Issue:** Upgrade failed on pool from 1.3.62 to 1.4.66. Note that INDY-1447 was fixed in indy-node 1.5.68, but it still presents in indy-node 1.3.62 and 1.4.66 code. | **So, some of the nodes may not to be upgraded during simultaneous pool-upgrade.** If this problem will appear, stewards should perform manual upgrade of indy-node in accordance with this [instruction:](https://docs.google.com/document/d/1vUvbioL5OsmZMSkwRcu0p0jdttJO5VS8K3GhDLdNaoI)**(!)** To reduce the risk of reproducing INDY-1447, it is **recommended to use old CLI for pool upgrade.** | [INDY-1447](https://jira.hyperledger.org/browse/INDY-1447) |
+|   |   |   |   |
+
+### Upgrade Scripts:
+
+**Pool upgrade from indy-node 1.3.62 to indy-node 1.6.73 should be performed simultaneously for all nodes due to txn format changes.**
+
+There must be sovrin package upgrade to 1.1.17 version after indy-node package upgrade. You need to specify package=sovrin in pool-upgrade command to do this.
+
+### Additional Information:
+
+**All indy-cli pools should be recreated with actual genesis files.**
+
+**For more details about txn format changes see** [**INDY-1421**](https://jira.hyperledger.org/browse/INDY-1421) **.**
+
+**There are possible OOM issues during 3+ hours of target load or large catch-ups at 8 GB RAM nodes pool so 32 GB is recommended.**
+
+
+## 1.1.13
+
+### Component Version Information
+
+| Components | Version Numbers |
+| --- | --- |
+| indy-plenum | 1.6.49 |
+| indy-anoncreds | 1.0.11 |
+| indy-node | 1.6.70 |
+| release version number | 1.1.13 |
+|   |   |    |
+
+### Major Fixes
+
+| Description | Additional Information | Ticket Number |
+| --- | --- | --- |
+| Fixed and issue where several nodes (less than f) were getting ahead the rest ones under load. |   | [INDY-1473](https://jira.hyperledger.org/browse/INDY-1473) |
+| Fixed an issue where the pool has stopped to write txns. |   | [INDY-1539](https://jira.hyperledger.org/browse/INDY-1539) |
+| Fixed an issue where re-send messages to disconnected remotes. |   | [INDY-1497](https://jira.hyperledger.org/browse/INDY-1497) |
+| Fixed an issue where the pool stopped writing under 20txns/sec load. |   | [INDY-1478](https://jira.hyperledger.org/browse/INDY-1478) |
+| Fixed an issue where 1.3.62 -\&gt; 1.5.67 forced upgrade without one node in schedule failed. |   | [INDY-1519](https://jira.hyperledger.org/browse/INDY-1519) |
+| Fixed an issue where tmp.log must have unique name. |   | [INDY-1502](https://jira.hyperledger.org/browse/INDY-1502) |
+| Fixed an issue where a node needed to hook up to a lower viewChange. |   | [INDY-1199](https://jira.hyperledger.org/browse/INDY-1199) |
+| Fixed an issue where the one of the nodes lagged behind others after forced view changes. |   | [INDY-1470](https://jira.hyperledger.org/browse/INDY-1470) |
+| Made it so that View Change should not be triggered by re-sending Primary disconnected if Primary is not disconnected anymore. |   | [INDY-1544](https://jira.hyperledger.org/browse/INDY-1544) |
+|   |   |   |   |
+
+### Changes - Additions - Known Issues
+
+| Description | Workaround | Ticket |
+| --- | --- | --- |
+| Made it so that as a Trustee running POOL\_UPGRADE txn, you can specify any package depending on indy-node, so that the package with the dependencies get upgraded. |   | [INDY-1491](https://jira.hyperledger.org/browse/INDY-1491) |
+| Made it so that Monitor is reset after the view change. |   | [INDY-1555](https://jira.hyperledger.org/browse/INDY-1555) |
+| Made it so that GC by Checkpoints are not triggered during View Change. |   | [INDY-1545](https://jira.hyperledger.org/browse/INDY-1545) |
+| Made it so that the validator info must show committed and uncommitted roots for all states. |   | [INDY-1542](https://jira.hyperledger.org/browse/INDY-1542) |
+| Explored timing and execution time. |   | [INDY-1475](https://jira.hyperledger.org/browse/INDY-1475) |
+| Memory leaks profiling. |   | [INDY-1493](https://jira.hyperledger.org/browse/INDY-1493) |
+| Bound connection socket to NODE\_IP |   | [INDY-1531](https://jira.hyperledger.org/browse/INDY-1531) |
+| Enable TRACK\_CONNECTED\_CLIENTS\_NUM option |   | [INDY-1496](https://jira.hyperledger.org/browse/INDY-1496) |
+| Updated revocation registry delta value during REG\_ENTRY\_REVOC writing. |   | [INDY-1378](https://jira.hyperledger.org/browse/INDY-1378) |
+| Support latest SDK in Indy Plenum and Node. |   | [INDY-1480](https://jira.hyperledger.org/browse/INDY-1480) |
+| Latency measurements in monitor are windowed. |   | [INDY-1468](https://jira.hyperledger.org/browse/INDY-1468) |
+| Trust anchor permissions are not needed for ledger writes. |   | [INDY-1528](https://jira.hyperledger.org/browse/INDY-1528) |
+|   |   |   |
+| **Known Issue:** Docker pool can&#39;t be built because of new python3-indy-crypto in sdk repo. The problem described in INDY-1517 will be fixed in the next release of indy-node. | Workaround for this problem is to add python3-indy-crypto=0.4.1 to the list of packages to be installed. | [INDY-1517](https://jira.hyperledger.org/browse/INDY-1517) |
+| **Known Issue:** Upgrade failed on pool from 1.3.62 to 1.4.66. Note that INDY-1447 was fixed in indy-node 1.5.68, but it still presents in indy-node 1.3.62 and 1.4.66 code. | **So, some of the nodes may not to be upgraded during simultaneous pool-upgrade.** If this problem will appear, stewards should perform manual upgrade of indy-node in accordance with this [instruction:](https://docs.google.com/document/d/1vUvbioL5OsmZMSkwRcu0p0jdttJO5VS8K3GhDLdNaoI)**(!)** To reduce the risk of reproducing INDY-1447, it is **recommended to use old CLI for pool upgrade.** | [INDY-1447](https://jira.hyperledger.org/browse/INDY-1447) |
+|   |   |   |  |
+
+### Upgrade Scripts:
+
+**Pool upgrade from indy-node 1.3.62 to indy-node 1.6.70 should be performed simultaneously for all nodes due to txn format changes.**
+
+There must be sovrin package upgrade to 1.1.13 version after indy-node package upgrade. You need to specify package=sovrin in pool-upgrade command to do this.
+
+### Additional Information:
+
+**All indy-cli pools should be recreated with actual genesis files.**
+
+**For more details about txn format changes see** [**INDY-1421**](https://jira.hyperledger.org/browse/INDY-1421) **.**
 
 
 ## 1.1.12
@@ -466,8 +588,9 @@ Mapping of all file/folder changes are located [here](https://docs.google.com/sp
 
 1. Generate a new 32-byte seed for the bls key (we recommend pwgen):
 
-``$ sudo apt install pwgen
-$ pwgen -s -y -B 32 1``
+``$ sudo apt install pwgen``
+
+``$ pwgen -s -y -B 32 1``
 
 If the output has a single-quote symbol ('), rerun until it doesn't.
 
@@ -481,13 +604,13 @@ If the output has a single-quote symbol ('), rerun until it doesn't.
 
 4. Configure the BLS key.
 
-``$ init_bls_keys --name <NODE_ALIAS> --seed'<SEED>'``
+``$ init_bls_keys --name <NODE_ALIAS> --seed '<SEED>'``
 
 The ``--seed`` is the seed you generated above, and will be used to create the BLS key.
 
 _Example with Seed:_
 
- ``$ init_bls_keys --name Node1 --seed'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'``
+ ``$ init_bls_keys --name Node1 --seed 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'``
 
 Capture the stdout at the end of the output, which looks like the following, and record it.
 
@@ -533,7 +656,9 @@ _Example:_
 
 _Example:_
 
-`indy@live< send NODE dest=Gw6pDLhcBcoQesN72qfotTgFa7cbuqZpkX3Xo6pLhPhv data={'alias':'Node1','blskey': '3AfkzUZVn2WT9mxW2zQXMgX39FXSY5qzohnMVpdvNS5KSath1YG5Ux4u9ubTFTaP6W55XX9Yx7xPWeYos489oyY53WzwNBG7X4o32ESnZ9xacLmNsQLBjqc6oqpWGTbEXv4edFTrZ88n93sEh4fjFhQMumaXxDfWJgd9aj7KCSpf38F'}`
+`indy@live> send NODE dest=Gw6pDLhcBcoQesN72qfotTgFa7cbuqZpkX3Xo6pLhPhv data={'alias':'Node1','blskey': '3AfkzUZVn2WT9mxW2zQXMgX39FXSY5qzohnMVpdvNS5KSath1YG5Ux4u9ubTFTaP6W55XX9Yx7xPWeYos489oyY53WzwNBG7X4o32ESnZ9xacLmNsQLBjqc6oqpWGTbEXv4edFTrZ88n93sEh4fjFhQMumaXxDfWJgd9aj7KCSpf38F'}`
+
+**Note:** The 'node_dest' value can be found on the node with `sudo read_ledger --type pool`.
 
 
 #### Questions and Answers
