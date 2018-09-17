@@ -39,6 +39,8 @@ else
     CMD="$4"
 fi
 
+docker build -t "${IMAGE_NAME}" -f Dockerfile .
+
 DOCKER_IMAGE_ID=$(docker image ls | grep ${IMAGE_NAME})
 
 if [ -z "${DOCKER_IMAGE_ID}" ] ; then
