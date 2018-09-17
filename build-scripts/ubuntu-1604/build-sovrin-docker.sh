@@ -40,7 +40,7 @@ else
 fi
 
 docker build -t "${IMAGE_NAME}" -f Dockerfile .
-docker volume create --name "${OUTPUT_VOLUME_NAME}"
+
 DOCKER_IMAGE_ID=$(docker image ls | grep ${IMAGE_NAME})
 
 if [ -z "${DOCKER_IMAGE_ID}" ] ; then
