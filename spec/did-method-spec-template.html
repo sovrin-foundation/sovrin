@@ -174,12 +174,12 @@
             </pre> The transaction must be signed by a Trust Anchor and must provide an un-registered DID and a document of data
             about that DID. Possible outcomes from the create operation include:
             <ul>
-                <li>NACK: “Malformed transaction or missing required fields”</li>
+                <li>NACK: "Malformed transaction or missing required fields"</li>
                 <li>REJECT: "Authorization rules are invalid. DID already registered or non Trust Anchor authored the transaction or signature did not match”</li>
                 <li>SUCCESS: "Contains the sequence number of the transaction and the merkle proof"</li>
             </ul>
         </p>
-        <p>The DID document stored on the ledger as follows
+        <p>The DID document is rendered as follows. The exact data structure persisted on the ledger does not have to match the following and can vary for each node. 
           <pre>
             {
               "id": "did:sov:mnjkl98uipsndg2hdjdjuf7",
