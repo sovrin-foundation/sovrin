@@ -7,6 +7,8 @@
 ![image alt text](banner.png)
 
 
+* [1.1.26](#1126)
+
 * [1.1.17](#1117)
 
 * [1.1.13](#1113)
@@ -37,6 +39,64 @@
 #### Disclosure
 
 Although every attempt has been made to make this information as accurate as possible, please know there may be things that are omitted, not fully developed yet, or updates since this publication that were not included in the information below. Only the most pressing or significant items have been listed. For the entire list of tickets and or specific information about any given item, please visit the list at [Hyperleder Indy's Jira](https://jira.hyperledger.org/). Once logged in, simply navigate to Projects > Indy.
+
+
+## 1.1.26
+
+
+### Component Version Information
+
+| Components | Version Numbers |
+| --- | --- |
+| indy-plenum | 1.6.52 |
+| indy-anoncreds | 1.0.11 |
+| indy-node | 1.6.74 |
+| release version number | 1.1.26 |
+|   |   |   |
+
+### Major Fixes
+
+| Description | Additional Information | Ticket Number |
+| --- | --- | --- |
+| Fixed and issue where the ledger statuses and maximal consistency proofs is not canceled. |   | [INDY-1740](https://jira.hyperledger.org/browse/INDY-1740) |
+| Fixed an issue where Bug in calling notifier methods in . |   | [INDY-1741](https://jira.hyperledger.org/browse/INDY-1741) |
+| Fixed an issue where 35 view changes were happened during 10 minutes after nodes failure because of an invalid request. |   | [INDY-1696](https://jira.hyperledger.org/browse/INDY-1696) |
+| Fixed an issue where the requests queue is not cleared in case of reject-nym transactions. |   | [INDY-1700](https://jira.hyperledger.org/browse/INDY-1700) |
+| Fixed an issue where throughput critically decreases without causing view\_change |   | [INDY-1672](https://jira.hyperledger.org/browse/INDY-1672) |
+| Fixed an issue where Node can&#39;t catch up large ledger. |   | [INDY-1595](https://jira.hyperledger.org/browse/INDY-1595) |
+| Fixed an issue where we were unable to demote node in STN. |   | [INDY-1621](https://jira.hyperledger.org/browse/INDY-1621) |
+| Fixed an issue where view changes happen when all responses should be rejected during load testing scenario. |   | [INDY-1653](https://jira.hyperledger.org/browse/INDY-1653) |
+| Fixed an issue where node doesn&#39;t write txns after disconnection from the rest nodes. |   | [INDY-1580](https://jira.hyperledger.org/browse/INDY-1580) |
+| Fixed an issue where throughput is degrading if backup primary is stopped. |   | [INDY-1618](https://jira.hyperledger.org/browse/INDY-1618) |
+|   |   |   |   |
+
+### Changes - Additions - Known Issues
+
+| Description | Workaround | Ticket |
+| --- | --- | --- |
+| Switch off a replica that stopped because disconnected from a backup primary. |   | [INDY-1681](https://jira.hyperledger.org/browse/INDY-1681) |
+| Extended load scripts emulating non-smooth load according to the changes in the core script. |   | [INDY-1667](https://jira.hyperledger.org/browse/INDY-1643) |
+| Proof of stability under load. |   | [INDY-1607](https://jira.hyperledger.org/browse/INDY-1607) |
+| Investigate Out of memory issues with the current load testing. |   | [INDY-1688](https://jira.hyperledger.org/browse/INDY-1688) |
+| Do not re-verify signature for Propagates with already verified requests. |   | [INDY-1649](https://jira.hyperledger.org/browse/INDY-1649) |
+| POA: Require multiple signatures for important transactions. |   | [INDY-1704](https://jira.hyperledger.org/browse/INDY-1704) |
+| Support all FEEs txns in the load script. |   | [INDY-1665](https://jira.hyperledger.org/browse/INDY-1665) |
+| Test domain transactions with FEEs. |   | [INDY-1661](https://jira.hyperledger.org/browse/INDY-1661) |
+| 3PC Batch should preserve the order of requests when applying PrePrepare on non-primary. |   | [INDY-1642](https://jira.hyperledger.org/browse/INDY-1642) |
+| Ability to switch off (remove) replicas with no changes of F value. |   | [INDY-1680](https://jira.hyperledger.org/browse/INDY-1680) |
+| A node should be able to participate in BLS multi-signature only if it has a valid proof of possession. |   | [INDY-1589](https://jira.hyperledger.org/browse/INDY-1589) |
+| Make validator info as a historical data. |   | [INDY-1637](https://jira.hyperledger.org/browse/INDY-1637) |
+|   |   |   |
+| **Known Issue:** There are possible OOM issues during 3+ hours of target load or large catch-ups at 8 GB RAM nodes pool so 32 GB is recommended. |   |   |
+|   |   |   |  |  
+
+### Upgrade Scripts:
+
+None at this time.
+
+### Additional Information:
+
+None at this time.
 
 
 ## 1.1.17
