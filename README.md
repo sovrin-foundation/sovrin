@@ -26,7 +26,7 @@ To report vulnerabilities against Sovrin, email security@sovrin.org or visit us 
 If you'd like to write code against Sovrin, we recommend that you check out
 [indy-sdk](https://github.com/hyperledger/indy-sdk); it offers a C-callable library
 plus convenience wrappers in java, python, .NET, and more. Documentation is currently
-light, but the [API](https://github.com/hyperledger/indy-sdk/tree/master/src/api) is
+light, but the [API](https://github.com/hyperledger/indy-sdk/tree/master/libindy/src/api) is
 liberally commented... You may also want to work through Indy's
 [Getting Started Guide](https://github.com/hyperledger/indy-node/blob/stable/getting-started.md),
 which was originally written for Sovrin and then genericized.
