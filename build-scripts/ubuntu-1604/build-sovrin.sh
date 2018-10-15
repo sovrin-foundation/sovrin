@@ -22,6 +22,7 @@ fpm --input-type "python" \
     --python-bin "/usr/bin/python3" \
     --exclude "*.pyc" \
     --exclude "*.pyo" \
+    --depends 'libindy-crypto = 0.4.5' \
     --maintainer "Sovrin Foundation <repo@sovrin.org>" \
     --before-install "preinst" \
     --after-install "postinst" \
