@@ -48,9 +48,9 @@ Although every attempt has been made to make this information as accurate as pos
 
 | Components | Version Numbers |
 | --- | --- |
-| indy-plenum | 1.6.52 |
+| indy-plenum | 1.6.53 |
 | indy-anoncreds | 1.0.11 |
-| indy-node | 1.6.74 |
+| indy-node | 1.6.78 |
 | release version number | 1.1.26 |
 |   |   |   |
 
@@ -88,15 +88,19 @@ Although every attempt has been made to make this information as accurate as pos
 | Make validator info as a historical data. |   | [INDY-1637](https://jira.hyperledger.org/browse/INDY-1637) |
 |   |   |   |
 | **Known Issue:** There are possible OOM issues during 3+ hours of target load or large catch-ups at 8 GB RAM nodes pool so 32 GB is recommended. |   |   |
-|   |   |   |  |  
+| **Known Issue:** [INDY-1447](https://jira.hyperledger.org/browse/INDY-1447) - **Upgrade failed on pool from 1.3.62 to 1.4.66**   | Note that [INDY-1447](https://jira.hyperledger.org/browse/INDY-1447) was fixed in indy-node 1.5.68, but it still presents in indy-node 1.3.62 and 1.4.66 code. So, some of the nodes may not to be upgraded during simultaneous pool-upgrade. If this problem will appear, stewards should perform manual upgrade of indy-node in accordance with this [instruction](https://docs.google.com/document/d/1vUvbioL5OsmZMSkwRcu0p0jdttJO5VS8K3GhDLdNaoI).   |   |  
+|   |    |    |   |
 
 ### Upgrade Scripts:
 
-None at this time.
+**Pool upgrade from indy-node 1.3.62 to indy-node 1.6.78 should be performed simultaneously for all nodes due to txn format changes.**
 
 ### Additional Information:
 
-None at this time.
+To reduce the risk of reproducing [INDY-1447](https://jira.hyperledger.org/browse/INDY-1447), it **is recommended to use the old CLI for pool upgrade** from indy-node 1.3.62.
+
+**All indy-cli pools should be recreated with actual genesis files.
+For more details about txn format changes see [INDY-1421]((https://jira.hyperledger.org/browse/INDY-1421).**
 
 
 ## 1.1.17
@@ -138,8 +142,8 @@ None at this time.
 | Made it so that any client requests are discarded during view change. |   | [INDY-1564](https://jira.hyperledger.org/browse/INDY-1564) |
 | Created a simple tool to show graphical representation of some common metrics. |   | [INDY-1568](https://jira.hyperledger.org/browse/INDY-1568) |
 | Changed default configs for better performance and stability. |   | [INDY-1549](https://jira.hyperledger.org/browse/INDY-1549) |
-|   |   |   | |
-| **Known Issue:** Upgrade failed on pool from 1.3.62 to 1.4.66. Note that INDY-1447 was fixed in indy-node 1.5.68, but it still presents in indy-node 1.3.62 and 1.4.66 code. | **So, some of the nodes may not to be upgraded during simultaneous pool-upgrade.** If this problem will appear, stewards should perform manual upgrade of indy-node in accordance with this [instruction:](https://docs.google.com/document/d/1vUvbioL5OsmZMSkwRcu0p0jdttJO5VS8K3GhDLdNaoI)**(!)** To reduce the risk of reproducing INDY-1447, it is **recommended to use old CLI for pool upgrade.** | [INDY-1447](https://jira.hyperledger.org/browse/INDY-1447) |
+|   |   |   |
+| **Known Issue:** Upgrade failed on pool from 1.3.62 to 1.4.66.  | Note that [INDY-1447](https://jira.hyperledger.org/browse/INDY-1447) was fixed in indy-node 1.5.68, but it still presents in indy-node 1.3.62 and 1.4.66 code. **So, some of the nodes may not to be upgraded during simultaneous pool-upgrade.** If this problem will appear, stewards should perform manual upgrade of indy-node in accordance with this [instruction](https://docs.google.com/document/d/1vUvbioL5OsmZMSkwRcu0p0jdttJO5VS8K3GhDLdNaoI) **(!)** To reduce the risk of reproducing [INDY-1447](https://jira.hyperledger.org/browse/INDY-1447), it is **recommended to use old CLI for pool upgrade.** | [INDY-1447](https://jira.hyperledger.org/browse/INDY-1447) |
 |   |   |   |   |
 
 ### Upgrade Scripts:
