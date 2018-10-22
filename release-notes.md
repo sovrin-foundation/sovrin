@@ -7,7 +7,7 @@
 ![image alt text](banner.png)
 
 
-* [1.1.26](#1126)
+* [1.1.30](#1130)
 
 * [1.1.17](#1117)
 
@@ -41,7 +41,7 @@
 Although every attempt has been made to make this information as accurate as possible, please know there may be things that are omitted, not fully developed yet, or updates since this publication that were not included in the information below. Only the most pressing or significant items have been listed. For the entire list of tickets and or specific information about any given item, please visit the list at [Hyperleder Indy's Jira](https://jira.hyperledger.org/). Once logged in, simply navigate to Projects > Indy.
 
 
-## 1.1.26
+## 1.1.30
 
 
 ### Component Version Information
@@ -51,7 +51,7 @@ Although every attempt has been made to make this information as accurate as pos
 | indy-plenum | 1.6.53 |
 | indy-anoncreds | 1.0.11 |
 | indy-node | 1.6.78 |
-| release version number | 1.1.26 |
+| release version number | 1.1.30 |
 |   |   |   |
 
 ### Major Fixes
