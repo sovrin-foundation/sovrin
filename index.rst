@@ -1,5 +1,4 @@
-![logo](banner.png)
-# The Sovrin Foundation
+.. image:: banner.png
 
 Sovrin is a global utility for self-sovereign identity--that is, an identity that nobody controls
 except its natural owner, that can't be taken away or stripped of its privacy or manipulated
@@ -11,9 +10,9 @@ Imagine if they logged in to you, instead of the other way around... Sovrin uses
 to make it all secure and private.
 
 Sovrin's technical underpinnings
-come from [Hyperledger](https://hyperledger.org)'s [Indy project](https://github.com/hyperledger/indy-node).
+come from `Hyperledger <https://hyperledger.org>`_'s `Indy project <https://github.com/hyperledger/indy-node>`_
 Sovrin is a specific instantiation of Indy, using a governance model
-described in the [Sovrin Provisional Trust Framework](http://bit.ly/svrn-ptrustfw).
+described in the `Sovrin Provisional Trust Framework <http://bit.ly/svrn-ptrustfw>`_.
 Thus, the code that's stored here is mostly a thin veneer on top of Indy--just enough to provide
 genesis transactions for the particular machines that bootstrapped Sovrin, plus some light
 utilities for those who run Sovrin.
@@ -36,4 +35,25 @@ If you want to contribute to
 Sovrin, it's likely that you'll want to do so via [indy-node](https://github.com/hyperledger/indy-node).
 Bugs, stories, and backlog for Indy are managed in
 [Hyperledger's Jira](https://jira.hyperledger.org/projects/INDY).
+
 Use project name `INDY` (or `IS` for the Indy SDK).
+
+.. toctree::
+   :caption: Sovrin
+   :maxdepth: 2
+   
+   Introduction <README.md>
+   Release Notes <release-notes.md>
+   Build Scripts <build-scripts/ubuntu-1604/README.md>
+
+
+
+
+
+
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
