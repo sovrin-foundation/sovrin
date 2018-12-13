@@ -6,6 +6,7 @@
 
 ![image alt text](banner.png)
 
+* [1.1.32](#1132)
 
 * [1.1.30](#1130)
 
@@ -39,6 +40,102 @@
 #### Disclosure
 
 Although every attempt has been made to make this information as accurate as possible, please know there may be things that are omitted, not fully developed yet, or updates since this publication that were not included in the information below. Only the most pressing or significant items have been listed. For the entire list of tickets and or specific information about any given item, please visit the list at [Hyperleder Indy's Jira](https://jira.hyperledger.org/). Once logged in, simply navigate to Projects > Indy.
+
+
+## 1.1.32
+
+
+### Notices for Stewards
+
+**Warning:** Embedded command-line tool _indy_ is **no longer available**. For further pool interaction use the _indy-cli_ package https://github.com/hyperledger/indy-sdk/tree/master/cli
+
+**There are possible OOM issues during 3+ hours of target load or large catch-ups at 8 GB RAM nodes pool so 32 GB is recommended.**
+
+**Validator-info output has been changed.** If you use validator-info as a data source make sure that you have done necessary changes for compatibility.
+
+**The** [**INDY-1818**](https://jira.hyperledger.org/browse/INDY-1818) **(Init Indy Node should output Base58-encrypted verkey already) affects nodes adding.**
+
+**Pool upgrade to sovrin 1.1.32 should be performed simultaneously for all nodes due to txn format changes.**
+
+**There are still some issues with token functionality.**
+
+### Component Version Information
+
+| Components | Version Numbers |
+| --- | --- |
+| indy-plenum | 1.6.54 |
+| indy-node | 1.6.79 |
+| release version number | 1.1.32 |
+|   |   |   |
+
+### Major Fixes
+
+| Description | Additional Information | Ticket Number |
+| --- | --- | --- |
+| Fixed an issue with Intermittent test failure: test\_primary\_selection\_increase\_f. |   | [INDY-1872](https://jira.hyperledger.org/browse/INDY-1872) |
+| Fixed an issue with the pool stopped writing after production load with fees. |   | [INDY-1867](https://jira.hyperledger.org/browse/INDY-1867) |
+| Node wasn&#39;t validating CLAIM\_DEF&#39;s filed ref. |   | [INDY-1862](https://jira.hyperledger.org/browse/INDY-1862) |
+| Fixed an issue where the Sovrin package couldn&#39;t be upgraded. |   | [INDY-1850](https://jira.hyperledger.org/browse/INDY-1850) |
+| There was an error with Expected object or value error during batch handling. |   | [INDY-1849](https://jira.hyperledger.org/browse/INDY-1849) |
+| Fixed an issue with a node that wasn&#39;t on the network was showing as &#39;unreachable&#39;. |   | [INDY-1842](https://jira.hyperledger.org/browse/INDY-1842) |
+| There wasn&#39;t enough information about upgrade in journalctl. |   | [INDY-1834](https://jira.hyperledger.org/browse/INDY-1834) |
+| Fixed &#39;aws\_manage&#39; playbook that was failing when inventory directory wasn&#39;t specified. |   | [INDY-1827](https://jira.hyperledger.org/browse/INDY-1827) |
+| A Validator on Sovrin MainNet was failing to upgrade, then was failing to revert. |   | [INDY-1824](https://jira.hyperledger.org/browse/INDY-1824) |
+| The pool stopped writing during load testing against domain and pool ledgers together. |   | [INDY-1823](https://jira.hyperledger.org/browse/INDY-1823) |
+| The node service was stopping during node key validation. |   | [INDY-1820](https://jira.hyperledger.org/browse/INDY-1820) |
+| Made it so that Init Indy Node outputs the Base58-encrypted verkey already. |   | [INDY-1818](https://jira.hyperledger.org/browse/INDY-1818) |
+| Investigated slowness on TestNet due to demotion. |   | [INDY-1816](https://jira.hyperledger.org/browse/INDY-1816) |
+| Fixed and issue where the new instance was removed after creating it. |   | [INDY-1815](https://jira.hyperledger.org/browse/INDY-1815) |
+| Fixed issues relating to upgrading from 1.6.645+ version resulting in errors about packages versions in journalctl. |   | [INDY-1781](https://jira.hyperledger.org/browse/INDY-1781) |
+| Fixed an issue with RequestQueue in Replica wasn&#39;t clearing after View Change. |   | [INDY-1765](https://jira.hyperledger.org/browse/INDY-1765) |
+|   |   |   |   |
+
+### Changes - Additions - Known Issues
+
+| Description | Workaround | Ticket |
+| --- | --- | --- |
+| Created a Diagram for Components. |   | [INDY-1870](https://jira.hyperledger.org/browse/INDY-1870) |
+| Created a Catch-up Sequence Diagram. |   | [INDY-1869](https://jira.hyperledger.org/browse/INDY-1869) |
+| Made a Write and Read request flow. |   | [INDY-1868](https://jira.hyperledger.org/browse/INDY-1868) |
+| Created a Plenum Consensus Protocol Diagram. |   | [INDY-1851](https://jira.hyperledger.org/browse/INDY-1851) |
+| Made it so that change pool state root hash for BLS-signature is in Commit messages. |   | [INDY-1846](https://jira.hyperledger.org/browse/INDY-1846) |
+| Made a 3rd party open source manifest. |   | [INDY-1839](https://jira.hyperledger.org/browse/INDY-1839) |
+| Enabled PreViewChange Strategy |   | [INDY-1835](https://jira.hyperledger.org/browse/INDY-1835) |
+| Added Names to AWS ec2 instances and security groups. |   | [INDY-1828](https://jira.hyperledger.org/browse/INDY-1828) |
+| Securely automated SSH authenticity checking. |   | [INDY-1826](https://jira.hyperledger.org/browse/INDY-1826) |
+| Limited RocksDB memory consumption. |   | [INDY-1822](https://jira.hyperledger.org/browse/INDY-1822) |
+| Ran a very long load test on a small local pool. |   | [INDY-1821](https://jira.hyperledger.org/browse/INDY-1821) |
+| Created AWS tags for pool automation AWS resources. |   | [INDY-1813](https://jira.hyperledger.org/browse/INDY-1813) |
+| Adjusted last\_ordered\_3pc and performed GC when detecting lag in checkpoints on backup. |   | [INDY-1795](https://jira.hyperledger.org/browse/INDY-1795) |
+| Improved usability of current pool automation PoC. |   | [INDY-1792](https://jira.hyperledger.org/browse/INDY-1792) |
+| Created the ability to refer different groups in the same namespace using one inventory. |   | [INDY-1788](https://jira.hyperledger.org/browse/INDY-1788) |
+|  Removed security groups at tear-down phase for both tests and playbooks. |   | [INDY-1784](https://jira.hyperledger.org/browse/INDY-1784) |
+| Cleared the Requests queue periodically. |   | [INDY-1780](https://jira.hyperledger.org/browse/INDY-1780) |
+| Tested ZMQ Memory Consumption with restarting of listener on every X connections. |   | [INDY-1776](https://jira.hyperledger.org/browse/INDY-1776) |
+| Got information about how many client connections is usually in progress. |   | [INDY-1775](https://jira.hyperledger.org/browse/INDY-1775) |
+| Did a long test with a load pool can handle. |   | [INDY-1774](https://jira.hyperledger.org/browse/INDY-1774) |
+| Found out why validation of PrePrepares with Fees takes so long. |   | [INDY-1773](https://jira.hyperledger.org/browse/INDY-1773) |
+| Checked why backup instances stop ordering so often. |   | [INDY-1772](https://jira.hyperledger.org/browse/INDY-1772) |
+| Made it so that you can perform tests on docker. |   | [INDY-1771](https://jira.hyperledger.org/browse/INDY-1771) |
+| Tested ZMQ Memory Consumption with restricted number of client connections. |   | [INDY-1770](https://jira.hyperledger.org/browse/INDY-1770) |
+| Ran load tests with file storage. |   | [INDY-1769](https://jira.hyperledger.org/browse/INDY-1769) |
+| Changed dependency building for upgrade procedure. |   | [I](https://jira.hyperledger.org/browse/INDY-1762)[NDY-1762](https://jira.hyperledger.org/browse/INDY-1762) |
+| Used persisted last\_pp\_seq\_no for recovery of backup primaries. |   | [INDY-1759](https://jira.hyperledger.org/browse/INDY-1759) |
+| Extended the Load Script with GET\_TXN. |   | [INDY-1756](https://jira.hyperledger.org/browse/INDY-1756) |
+| Avoided redundant static validation during signature verification. |   | [INDY-1753](https://jira.hyperledger.org/browse/INDY-1753) |
+| Found out why max node prod time increases during long load test. |   | [I](https://jira.hyperledger.org/browse/INDY-1747)[NDY-1747](https://jira.hyperledger.org/browse/INDY-1747) |
+|   |   |   | |
+
+
+### Sovrin-related Issues
+
+| Description | Additional Information | Ticket Number |
+| --- | --- | --- |
+| Upgrade to latest Sovrin doesn&#39;t work if it depends on a newer IndyNode. |   | [INDY-1764](https://jira.hyperledger.org/browse/INDY-1764) |
+| Verify Upgrade of the MainNet to the latest IndyNode. |   | [INDY-1763](https://jira.hyperledger.org/browse/INDY-1763) |
+| Failed to upgrade from Sovrin 1.1.24 to Sovrin 1.1.26. |   | [INDY-1748](https://jira.hyperledger.org/browse/INDY-1748) |
+|   |   |   |
+
 
 
 ## 1.1.30
