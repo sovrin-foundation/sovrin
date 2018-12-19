@@ -6,6 +6,8 @@
 
 ![image alt text](banner.png)
 
+* [1.1.33](#1133)
+
 * [1.1.32](#1132)
 
 * [1.1.30](#1130)
@@ -41,6 +43,32 @@
 
 Although every attempt has been made to make this information as accurate as possible, please know there may be things that are omitted, not fully developed yet, or updates since this publication that were not included in the information below. Only the most pressing or significant items have been listed. For the entire list of tickets and or specific information about any given item, please visit the list at [Hyperleder Indy's Jira](https://jira.hyperledger.org/). Once logged in, simply navigate to Projects > Indy.
 
+## 1.1.33
+
+### Notices for Stewards
+
+**There are possible OOM issues during 3+ hours of target load or large catch-ups at 8 GB RAM nodes pool so 32 GB is recommended.**
+
+**Pool upgrade to sovrin 1.1.32 should be performed simultaneously for all nodes due to txn format changes.**
+
+### Component Version Information
+
+| Components | Version Numbers |
+| --- | --- |
+| indy-plenum | 1.6.55 |
+| indy-node | 1.6.80 |
+| release version number | 1.1.33 |
+|   |   |   |
+
+### Major Fixes
+
+| Description | Additional Information | Ticket Number |
+| --- | --- | --- |
+| Fixed an issue with the pool doing a restart if there was no consensus. |   | [INDY-1896](https://jira.hyperledger.org/browse/INDY-1896) |
+| Fixed an issue with intermittent test failure: test_primary_selection_increase_f |   | [INDY-1872](https://jira.hyperledger.org/browse/INDY-1872) |
+| Fixed the throughput class creation bug. |   | [INDY-1888](https://jira.hyperledger.org/browse/INDY-1888) |
+|   |   |   |   |
+
 
 ## 1.1.32
 
@@ -72,7 +100,7 @@ Although every attempt has been made to make this information as accurate as pos
 
 | Description | Additional Information | Ticket Number |
 | --- | --- | --- |
-| Fixed an issue with Intermittent test failure: test\_primary\_selection\_increase\_f. |   | [INDY-1872](https://jira.hyperledger.org/browse/INDY-1872) |
+| Fixed an issue with intermittent test failure: test\_primary\_selection\_increase\_f. |   | [INDY-1872](https://jira.hyperledger.org/browse/INDY-1872) |
 | Fixed an issue with the pool stopped writing after production load with fees. |   | [INDY-1867](https://jira.hyperledger.org/browse/INDY-1867) |
 | Node wasn&#39;t validating CLAIM\_DEF&#39;s filed ref. |   | [INDY-1862](https://jira.hyperledger.org/browse/INDY-1862) |
 | Fixed an issue where the Sovrin package couldn&#39;t be upgraded. |   | [INDY-1850](https://jira.hyperledger.org/browse/INDY-1850) |
