@@ -6,6 +6,9 @@
 
 ![image alt text](banner.png)
 
+
+* [1.1.34](#1134)
+
 * [1.1.33](#1133)
 
 * [1.1.32](#1132)
@@ -42,6 +45,37 @@
 #### Disclosure
 
 Although every attempt has been made to make this information as accurate as possible, please know there may be things that are omitted, not fully developed yet, or updates since this publication that were not included in the information below. Only the most pressing or significant items have been listed. For the entire list of tickets and or specific information about any given item, please visit the list at [Hyperleder Indy's Jira](https://jira.hyperledger.org/). Once logged in, simply navigate to Projects > Indy.
+
+
+## 1.1.34
+
+### Notices for Stewards
+
+**(!) There are possible OOM issues during 3+ hours of target load or large catch-ups at 8 GB RAM nodes pool so 32 GB is recommended.**
+
+**(!) Pool upgrade to sovrin 1.1.32 should be performed simultaneously for all nodes due to txn format changes.**
+
+(!) indy-node 1.6.82 isn&#39;t using the latest versions of libindy-crypto (must be 0.9.5) and python3-indy-crypto(must be 0.9.5). Set these packages versions in case of new node manual installation.
+
+### Component Version Information
+
+| Components | Version Numbers |
+| --- | --- |
+| indy-plenum | 1.6.57 |
+| indy-node | 1.6.82 |
+| release version number | 1.1.34 |
+|   |   |    |
+
+### Major Fixes
+
+| Description | Additional Information | Ticket Number |
+| --- | --- | --- |
+| Added old instance change messages discarding. |   | [INDY-1909](https://jira.hyperledger.org/browse/INDY-1909) |
+| Increased ToleratePrimaryDisconnection and bind re-try time. |   | [INDY-1836](https://jira.hyperledger.org/browse/INDY-1836) |
+| Added check for None of replica&#39;s primary name during logging. |   | [INDY-1926](https://jira.hyperledger.org/browse/INDY-1926) |
+|   |   |   |    |
+
+
 
 ## 1.1.33
 
