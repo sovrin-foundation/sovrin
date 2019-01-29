@@ -44,6 +44,3 @@ Use project name `INDY` (or `IS` for the Indy SDK).
    :caption: Sovrin
    :maxdepth: 2
    
-   Introduction <README.md>
-   Release Notes <release-notes.md>
-   Build Scripts <build-scripts/ubuntu-1604/README.md>
