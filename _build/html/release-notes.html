@@ -83,6 +83,26 @@
 <li class="toctree-l1"><a class="reference internal" href="README.html">Introduction</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Release Notes</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#disclosure">Disclosure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#">1.1.34</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#notices-for-stewards">Notices for Stewards</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#component-version-information">Component Version Information</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#major-fixes">Major Fixes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#">1.1.33</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#notices-for-stewards">Notices for Stewards</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#component-version-information">Component Version Information</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#major-fixes">Major Fixes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#">1.1.32</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#notices-for-stewards">Notices for Stewards</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#component-version-information">Component Version Information</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#major-fixes">Major Fixes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#changes-additions-known-issues">Changes - Additions - Known Issues</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sovrin-related-issues">Sovrin-related Issues</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#">1.1.30</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#component-version-information">Component Version Information</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#major-fixes">Major Fixes</a></li>
@@ -255,6 +275,9 @@
 <span id="sovrin-release-notes"></span><h1>Sovrin Release Notes<a class="headerlink" href="#sovrin-release-notes" title="Permalink to this headline">¶</a></h1>
 <p><img alt="image alt text" src="_images/banner.png" /></p>
 <ul class="simple">
+<li><a class="reference external" href="#1134">1.1.34</a></li>
+<li><a class="reference external" href="#1133">1.1.33</a></li>
+<li><a class="reference external" href="#1132">1.1.32</a></li>
 <li><a class="reference external" href="#1130">1.1.30</a></li>
 <li><a class="reference external" href="#1117">1.1.17</a></li>
 <li><a class="reference external" href="#1113">1.1.13</a></li>
@@ -273,9 +296,164 @@
 <p>Although every attempt has been made to make this information as accurate as possible, please know there may be things that are omitted, not fully developed yet, or updates since this publication that were not included in the information below. Only the most pressing or significant items have been listed. For the entire list of tickets and or specific information about any given item, please visit the list at <a class="reference external" href="https://jira.hyperledger.org/">Hyperleder Indy’s Jira</a>. Once logged in, simply navigate to Projects &gt; Indy.</p>
 </div>
 <div class="section" id="">
-<span id="id1"></span><h2>1.1.30<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h2>
+<span id="id1"></span><h2>1.1.34<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="notices-for-stewards">
+<span id="notices-for-stewards"></span><h3>Notices for Stewards<a class="headerlink" href="#notices-for-stewards" title="Permalink to this headline">¶</a></h3>
+<p><strong>(!) There are possible OOM issues during 3+ hours of target load or large catch-ups at 8 GB RAM nodes pool so 32 GB is recommended.</strong></p>
+<p><strong>(!) Pool upgrade to sovrin 1.1.32 should be performed simultaneously for all nodes due to txn format changes.</strong></p>
+<p>(!) indy-node 1.6.82 isn<p>’</p>
+t using the latest versions of libindy-crypto (must be 0.9.5) and python3-indy-crypto(must be 0.9.5). Set these packages versions in case of new node manual installation.</p>
+</div>
 <div class="section" id="component-version-information">
 <span id="component-version-information"></span><h3>Component Version Information<a class="headerlink" href="#component-version-information" title="Permalink to this headline">¶</a></h3>
+<p>| Components | Version Numbers |
+| — | — |
+| indy-plenum | 1.6.57 |
+| indy-node | 1.6.82 |
+| release version number | 1.1.34 |
+|   |   |    |</p>
+</div>
+<div class="section" id="major-fixes">
+<span id="major-fixes"></span><h3>Major Fixes<a class="headerlink" href="#major-fixes" title="Permalink to this headline">¶</a></h3>
+<p>| Description | Additional Information | Ticket Number |
+| — | — | — |
+| Added old instance change messages discarding. |   | <a class="reference external" href="https://jira.hyperledger.org/browse/INDY-1909">INDY-1909</a> |
+| Increased ToleratePrimaryDisconnection and bind re-try time. |   | <a class="reference external" href="https://jira.hyperledger.org/browse/INDY-1836">INDY-1836</a> |
+| Added check for None of replica<p>’</p>
+s primary name during logging. |   | <a class="reference external" href="https://jira.hyperledger.org/browse/INDY-1926">INDY-1926</a> |
+|   |   |   |    |</p>
+</div>
+</div>
+<div class="section" id="">
+<span id="id2"></span><h2>1.1.33<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="notices-for-stewards">
+<span id="id3"></span><h3>Notices for Stewards<a class="headerlink" href="#notices-for-stewards" title="Permalink to this headline">¶</a></h3>
+<p><strong>There are possible OOM issues during 3+ hours of target load or large catch-ups at 8 GB RAM nodes pool so 32 GB is recommended.</strong></p>
+<p><strong>Pool upgrade to sovrin 1.1.32 should be performed simultaneously for all nodes due to txn format changes.</strong></p>
+</div>
+<div class="section" id="component-version-information">
+<span id="id4"></span><h3>Component Version Information<a class="headerlink" href="#component-version-information" title="Permalink to this headline">¶</a></h3>
+<p>| Components | Version Numbers |
+| — | — |
+| indy-plenum | 1.6.55 |
+| indy-node | 1.6.80 |
+| release version number | 1.1.33 |
+|   |   |   |</p>
+</div>
+<div class="section" id="major-fixes">
+<span id="id5"></span><h3>Major Fixes<a class="headerlink" href="#major-fixes" title="Permalink to this headline">¶</a></h3>
+<p>| Description | Additional Information | Ticket Number |
+| — | — | — |
+| Fixed an issue with the pool doing a restart if there was no consensus. |   | <a class="reference external" href="https://jira.hyperledger.org/browse/INDY-1896">INDY-1896</a> |
+| Fixed an issue with intermittent test failure: test_primary_selection_increase_f |   | <a class="reference external" href="https://jira.hyperledger.org/browse/INDY-1872">INDY-1872</a> |
+| Fixed the throughput class creation bug. |   | <a class="reference external" href="https://jira.hyperledger.org/browse/INDY-1888">INDY-1888</a> |
+|   |   |   |   |</p>
+</div>
+</div>
+<div class="section" id="">
+<span id="id6"></span><h2>1.1.32<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="notices-for-stewards">
+<span id="id7"></span><h3>Notices for Stewards<a class="headerlink" href="#notices-for-stewards" title="Permalink to this headline">¶</a></h3>
+<p><strong>Warning:</strong> Embedded command-line tool <em>indy</em> is <strong>no longer available</strong>. For further pool interaction use the <em>indy-cli</em> package https://github.com/hyperledger/indy-sdk/tree/master/cli</p>
+<p><strong>There are possible OOM issues during 3+ hours of target load or large catch-ups at 8 GB RAM nodes pool so 32 GB is recommended.</strong></p>
+<p><strong>Validator-info output has been changed.</strong> If you use validator-info as a data source make sure that you have done necessary changes for compatibility.</p>
+<p><strong>The</strong> <a class="reference external" href="https://jira.hyperledger.org/browse/INDY-1818"><strong>INDY-1818</strong></a> <strong>(Init Indy Node should output Base58-encrypted verkey already) affects nodes adding.</strong></p>
+<p><strong>Pool upgrade to sovrin 1.1.32 should be performed simultaneously for all nodes due to txn format changes.</strong></p>
+<p><strong>There are still some issues with token functionality.</strong></p>
+</div>
+<div class="section" id="component-version-information">
+<span id="id8"></span><h3>Component Version Information<a class="headerlink" href="#component-version-information" title="Permalink to this headline">¶</a></h3>
+<p>| Components | Version Numbers |
+| — | — |
+| indy-plenum | 1.6.54 |
+| indy-node | 1.6.79 |
+| release version number | 1.1.32 |
+|   |   |   |</p>
+</div>
+<div class="section" id="major-fixes">
+<span id="id9"></span><h3>Major Fixes<a class="headerlink" href="#major-fixes" title="Permalink to this headline">¶</a></h3>
+<p>| Description | Additional Information | Ticket Number |
+| — | — | — |
+| Fixed an issue with intermittent test failure: test_primary_selection_increase_f. |   | <a class="reference external" href="https://jira.hyperledger.org/browse/INDY-1872">INDY-1872</a> |
+| Fixed an issue with the pool stopped writing after production load with fees. |   | <a class="reference external" href="https://jira.hyperledger.org/browse/INDY-1867">INDY-1867</a> |
+| Node wasn<p>’</p>
+t validating CLAIM_DEF<p>’</p>
+s filed ref. |   | <a class="reference external" href="https://jira.hyperledger.org/browse/INDY-1862">INDY-1862</a> |
+| Fixed an issue where the Sovrin package couldn<p>’</p>
+t be upgraded. |   | <a class="reference external" href="https://jira.hyperledger.org/browse/INDY-1850">INDY-1850</a> |
+| There was an error with Expected object or value error during batch handling. |   | <a class="reference external" href="https://jira.hyperledger.org/browse/INDY-1849">INDY-1849</a> |
+| Fixed an issue with a node that wasn<p>’</p>
+t on the network was showing as <p>‘</p>
+unreachable<p>’</p>
+. |   | <a class="reference external" href="https://jira.hyperledger.org/browse/INDY-1842">INDY-1842</a> |
+| There wasn<p>’</p>
+t enough information about upgrade in journalctl. |   | <a class="reference external" href="https://jira.hyperledger.org/browse/INDY-1834">INDY-1834</a> |
+| Fixed <p>‘</p>
+aws_manage<p>’</p>
+ playbook that was failing when inventory directory wasn<p>’</p>
+t specified. |   | <a class="reference external" href="https://jira.hyperledger.org/browse/INDY-1827">INDY-1827</a> |
+| A Validator on Sovrin MainNet was failing to upgrade, then was failing to revert. |   | <a class="reference external" href="https://jira.hyperledger.org/browse/INDY-1824">INDY-1824</a> |
+| The pool stopped writing during load testing against domain and pool ledgers together. |   | <a class="reference external" href="https://jira.hyperledger.org/browse/INDY-1823">INDY-1823</a> |
+| The node service was stopping during node key validation. |   | <a class="reference external" href="https://jira.hyperledger.org/browse/INDY-1820">INDY-1820</a> |
+| Made it so that Init Indy Node outputs the Base58-encrypted verkey already. |   | <a class="reference external" href="https://jira.hyperledger.org/browse/INDY-1818">INDY-1818</a> |
+| Investigated slowness on TestNet due to demotion. |   | <a class="reference external" href="https://jira.hyperledger.org/browse/INDY-1816">INDY-1816</a> |
+| Fixed and issue where the new instance was removed after creating it. |   | <a class="reference external" href="https://jira.hyperledger.org/browse/INDY-1815">INDY-1815</a> |
+| Fixed issues relating to upgrading from 1.6.645+ version resulting in errors about packages versions in journalctl. |   | <a class="reference external" href="https://jira.hyperledger.org/browse/INDY-1781">INDY-1781</a> |
+| Fixed an issue with RequestQueue in Replica wasn<p>’</p>
+t clearing after View Change. |   | <a class="reference external" href="https://jira.hyperledger.org/browse/INDY-1765">INDY-1765</a> |
+|   |   |   |   |</p>
+</div>
+<div class="section" id="changes-additions-known-issues">
+<span id="changes-additions-known-issues"></span><h3>Changes - Additions - Known Issues<a class="headerlink" href="#changes-additions-known-issues" title="Permalink to this headline">¶</a></h3>
+<p>| Description | Workaround | Ticket |
+| — | — | — |
+| Created a Diagram for Components. |   | <a class="reference external" href="https://jira.hyperledger.org/browse/INDY-1870">INDY-1870</a> |
+| Created a Catch-up Sequence Diagram. |   | <a class="reference external" href="https://jira.hyperledger.org/browse/INDY-1869">INDY-1869</a> |
+| Made a Write and Read request flow. |   | <a class="reference external" href="https://jira.hyperledger.org/browse/INDY-1868">INDY-1868</a> |
+| Created a Plenum Consensus Protocol Diagram. |   | <a class="reference external" href="https://jira.hyperledger.org/browse/INDY-1851">INDY-1851</a> |
+| Made it so that change pool state root hash for BLS-signature is in Commit messages. |   | <a class="reference external" href="https://jira.hyperledger.org/browse/INDY-1846">INDY-1846</a> |
+| Made a 3rd party open source manifest. |   | <a class="reference external" href="https://jira.hyperledger.org/browse/INDY-1839">INDY-1839</a> |
+| Enabled PreViewChange Strategy |   | <a class="reference external" href="https://jira.hyperledger.org/browse/INDY-1835">INDY-1835</a> |
+| Added Names to AWS ec2 instances and security groups. |   | <a class="reference external" href="https://jira.hyperledger.org/browse/INDY-1828">INDY-1828</a> |
+| Securely automated SSH authenticity checking. |   | <a class="reference external" href="https://jira.hyperledger.org/browse/INDY-1826">INDY-1826</a> |
+| Limited RocksDB memory consumption. |   | <a class="reference external" href="https://jira.hyperledger.org/browse/INDY-1822">INDY-1822</a> |
+| Ran a very long load test on a small local pool. |   | <a class="reference external" href="https://jira.hyperledger.org/browse/INDY-1821">INDY-1821</a> |
+| Created AWS tags for pool automation AWS resources. |   | <a class="reference external" href="https://jira.hyperledger.org/browse/INDY-1813">INDY-1813</a> |
+| Adjusted last_ordered_3pc and performed GC when detecting lag in checkpoints on backup. |   | <a class="reference external" href="https://jira.hyperledger.org/browse/INDY-1795">INDY-1795</a> |
+| Improved usability of current pool automation PoC. |   | <a class="reference external" href="https://jira.hyperledger.org/browse/INDY-1792">INDY-1792</a> |
+| Created the ability to refer different groups in the same namespace using one inventory. |   | <a class="reference external" href="https://jira.hyperledger.org/browse/INDY-1788">INDY-1788</a> |
+|  Removed security groups at tear-down phase for both tests and playbooks. |   | <a class="reference external" href="https://jira.hyperledger.org/browse/INDY-1784">INDY-1784</a> |
+| Cleared the Requests queue periodically. |   | <a class="reference external" href="https://jira.hyperledger.org/browse/INDY-1780">INDY-1780</a> |
+| Tested ZMQ Memory Consumption with restarting of listener on every X connections. |   | <a class="reference external" href="https://jira.hyperledger.org/browse/INDY-1776">INDY-1776</a> |
+| Got information about how many client connections is usually in progress. |   | <a class="reference external" href="https://jira.hyperledger.org/browse/INDY-1775">INDY-1775</a> |
+| Did a long test with a load pool can handle. |   | <a class="reference external" href="https://jira.hyperledger.org/browse/INDY-1774">INDY-1774</a> |
+| Found out why validation of PrePrepares with Fees takes so long. |   | <a class="reference external" href="https://jira.hyperledger.org/browse/INDY-1773">INDY-1773</a> |
+| Checked why backup instances stop ordering so often. |   | <a class="reference external" href="https://jira.hyperledger.org/browse/INDY-1772">INDY-1772</a> |
+| Made it so that you can perform tests on docker. |   | <a class="reference external" href="https://jira.hyperledger.org/browse/INDY-1771">INDY-1771</a> |
+| Tested ZMQ Memory Consumption with restricted number of client connections. |   | <a class="reference external" href="https://jira.hyperledger.org/browse/INDY-1770">INDY-1770</a> |
+| Ran load tests with file storage. |   | <a class="reference external" href="https://jira.hyperledger.org/browse/INDY-1769">INDY-1769</a> |
+| Changed dependency building for upgrade procedure. |   | <a class="reference external" href="https://jira.hyperledger.org/browse/INDY-1762">I</a><a class="reference external" href="https://jira.hyperledger.org/browse/INDY-1762">NDY-1762</a> |
+| Used persisted last_pp_seq_no for recovery of backup primaries. |   | <a class="reference external" href="https://jira.hyperledger.org/browse/INDY-1759">INDY-1759</a> |
+| Extended the Load Script with GET_TXN. |   | <a class="reference external" href="https://jira.hyperledger.org/browse/INDY-1756">INDY-1756</a> |
+| Avoided redundant static validation during signature verification. |   | <a class="reference external" href="https://jira.hyperledger.org/browse/INDY-1753">INDY-1753</a> |
+| Found out why max node prod time increases during long load test. |   | <a class="reference external" href="https://jira.hyperledger.org/browse/INDY-1747">I</a><a class="reference external" href="https://jira.hyperledger.org/browse/INDY-1747">NDY-1747</a> |
+|   |   |   | |</p>
+</div>
+<div class="section" id="sovrin-related-issues">
+<span id="sovrin-related-issues"></span><h3>Sovrin-related Issues<a class="headerlink" href="#sovrin-related-issues" title="Permalink to this headline">¶</a></h3>
+<p>| Description | Additional Information | Ticket Number |
+| — | — | — |
+| Upgrade to latest Sovrin doesn<p>’</p>
+t work if it depends on a newer IndyNode. |   | <a class="reference external" href="https://jira.hyperledger.org/browse/INDY-1764">INDY-1764</a> |
+| Verify Upgrade of the MainNet to the latest IndyNode. |   | <a class="reference external" href="https://jira.hyperledger.org/browse/INDY-1763">INDY-1763</a> |
+| Failed to upgrade from Sovrin 1.1.24 to Sovrin 1.1.26. |   | <a class="reference external" href="https://jira.hyperledger.org/browse/INDY-1748">INDY-1748</a> |
+|   |   |   |</p>
+</div>
+</div>
+<div class="section" id="">
+<span id="id10"></span><h2>1.1.30<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="component-version-information">
+<span id="id11"></span><h3>Component Version Information<a class="headerlink" href="#component-version-information" title="Permalink to this headline">¶</a></h3>
 <p>| Components | Version Numbers |
 | — | — |
 | indy-plenum | 1.6.53 |
@@ -285,7 +463,7 @@
 |   |   |   |</p>
 </div>
 <div class="section" id="major-fixes">
-<span id="major-fixes"></span><h3>Major Fixes<a class="headerlink" href="#major-fixes" title="Permalink to this headline">¶</a></h3>
+<span id="id12"></span><h3>Major Fixes<a class="headerlink" href="#major-fixes" title="Permalink to this headline">¶</a></h3>
 <p>| Description | Additional Information | Ticket Number |
 | — | — | — |
 | Fixed and issue where the ledger statuses and maximal consistency proofs is not canceled. |   | <a class="reference external" href="https://jira.hyperledger.org/browse/INDY-1740">INDY-1740</a> |
@@ -303,7 +481,7 @@ t write txns after disconnection from the rest nodes. |   | <a class="reference 
 |   |   |   |   |</p>
 </div>
 <div class="section" id="changes-additions-known-issues">
-<span id="changes-additions-known-issues"></span><h3>Changes - Additions - Known Issues<a class="headerlink" href="#changes-additions-known-issues" title="Permalink to this headline">¶</a></h3>
+<span id="id13"></span><h3>Changes - Additions - Known Issues<a class="headerlink" href="#changes-additions-known-issues" title="Permalink to this headline">¶</a></h3>
 <p>| Description | Workaround | Ticket |
 | — | — | — |
 | Switch off a replica that stopped because disconnected from a backup primary. |   | <a class="reference external" href="https://jira.hyperledger.org/browse/INDY-1681">INDY-1681</a> |
@@ -334,10 +512,10 @@ For more details about txn format changes see [INDY-1421]((https://jira.hyperled
 </div>
 </div>
 <div class="section" id="">
-<span id="id2"></span><h2>1.1.17<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h2>
+<span id="id14"></span><h2>1.1.17<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h2>
 <p><strong>Important:</strong> Several iterations were done very rapidly between the last release and this one. All of the changes, upgrades, etc… are included in this new release. Simply upgrading will include them all from 1.1.13 until 1.1.17. To see further, specific numerous changes, please reference the appropriate tickets in the <a class="reference external" href="https://jira.hyperledger.org/">Hyperledger Jira ticketing system.</a></p>
 <div class="section" id="component-version-information">
-<span id="id3"></span><h3>Component Version Information<a class="headerlink" href="#component-version-information" title="Permalink to this headline">¶</a></h3>
+<span id="id15"></span><h3>Component Version Information<a class="headerlink" href="#component-version-information" title="Permalink to this headline">¶</a></h3>
 <p>| Components | Version Numbers |
 | — | — |
 | indy-plenum | 1.6.51 |
@@ -347,7 +525,7 @@ For more details about txn format changes see [INDY-1421]((https://jira.hyperled
 |   |   |   |</p>
 </div>
 <div class="section" id="major-fixes">
-<span id="id4"></span><h3>Major Fixes<a class="headerlink" href="#major-fixes" title="Permalink to this headline">¶</a></h3>
+<span id="id16"></span><h3>Major Fixes<a class="headerlink" href="#major-fixes" title="Permalink to this headline">¶</a></h3>
 <p>| Description | Additional Information | Ticket Number |
 | — | — | — |
 | Fixed and issue where the pool stopped writing after F change. |   | <a class="reference external" href="https://jira.hyperledger.org/browse/INDY-1583">INDY-1583</a> |
@@ -359,7 +537,7 @@ t catch up a large ledger. |   | <a class="reference external" href="https://jir
 |   |   |   |   |</p>
 </div>
 <div class="section" id="changes-additions-known-issues">
-<span id="id5"></span><h3>Changes - Additions - Known Issues<a class="headerlink" href="#changes-additions-known-issues" title="Permalink to this headline">¶</a></h3>
+<span id="id17"></span><h3>Changes - Additions - Known Issues<a class="headerlink" href="#changes-additions-known-issues" title="Permalink to this headline">¶</a></h3>
 <p>| Description | Workaround | Ticket |
 | — | — | — |
 | Made it so that the 3PC Batch should preserve the order of requests when applying PrePrepare on non-primary. |   | <a class="reference external" href="https://jira.hyperledger.org/browse/INDY-1642">INDY-1642</a> |
@@ -377,21 +555,21 @@ t catch up a large ledger. |   | <a class="reference external" href="https://jir
 |   |   |   |   |</p>
 </div>
 <div class="section" id="upgrade-scripts">
-<span id="id6"></span><h3>Upgrade Scripts:<a class="headerlink" href="#upgrade-scripts" title="Permalink to this headline">¶</a></h3>
+<span id="id18"></span><h3>Upgrade Scripts:<a class="headerlink" href="#upgrade-scripts" title="Permalink to this headline">¶</a></h3>
 <p><strong>Pool upgrade from indy-node 1.3.62 to indy-node 1.6.73 should be performed simultaneously for all nodes due to txn format changes.</strong></p>
 <p>There must be sovrin package upgrade to 1.1.17 version after indy-node package upgrade. You need to specify package=sovrin in pool-upgrade command to do this.</p>
 </div>
 <div class="section" id="additional-information">
-<span id="id7"></span><h3>Additional Information:<a class="headerlink" href="#additional-information" title="Permalink to this headline">¶</a></h3>
+<span id="id19"></span><h3>Additional Information:<a class="headerlink" href="#additional-information" title="Permalink to this headline">¶</a></h3>
 <p><strong>All indy-cli pools should be recreated with actual genesis files.</strong></p>
 <p><strong>For more details about txn format changes see</strong> <a class="reference external" href="https://jira.hyperledger.org/browse/INDY-1421"><strong>INDY-1421</strong></a> <strong>.</strong></p>
 <p><strong>There are possible OOM issues during 3+ hours of target load or large catch-ups at 8 GB RAM nodes pool so 32 GB is recommended.</strong></p>
 </div>
 </div>
 <div class="section" id="">
-<span id="id8"></span><h2>1.1.13<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h2>
+<span id="id20"></span><h2>1.1.13<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="component-version-information">
-<span id="id9"></span><h3>Component Version Information<a class="headerlink" href="#component-version-information" title="Permalink to this headline">¶</a></h3>
+<span id="id21"></span><h3>Component Version Information<a class="headerlink" href="#component-version-information" title="Permalink to this headline">¶</a></h3>
 <p>| Components | Version Numbers |
 | — | — |
 | indy-plenum | 1.6.49 |
@@ -401,7 +579,7 @@ t catch up a large ledger. |   | <a class="reference external" href="https://jir
 |   |   |    |</p>
 </div>
 <div class="section" id="major-fixes">
-<span id="id10"></span><h3>Major Fixes<a class="headerlink" href="#major-fixes" title="Permalink to this headline">¶</a></h3>
+<span id="id22"></span><h3>Major Fixes<a class="headerlink" href="#major-fixes" title="Permalink to this headline">¶</a></h3>
 <p>| Description | Additional Information | Ticket Number |
 | — | — | — |
 | Fixed and issue where several nodes (less than f) were getting ahead the rest ones under load. |   | <a class="reference external" href="https://jira.hyperledger.org/browse/INDY-1473">INDY-1473</a> |
@@ -416,7 +594,7 @@ t catch up a large ledger. |   | <a class="reference external" href="https://jir
 |   |   |   |   |</p>
 </div>
 <div class="section" id="changes-additions-known-issues">
-<span id="id11"></span><h3>Changes - Additions - Known Issues<a class="headerlink" href="#changes-additions-known-issues" title="Permalink to this headline">¶</a></h3>
+<span id="id23"></span><h3>Changes - Additions - Known Issues<a class="headerlink" href="#changes-additions-known-issues" title="Permalink to this headline">¶</a></h3>
 <p>| Description | Workaround | Ticket |
 | — | — | — |
 | Made it so that as a Trustee running POOL_UPGRADE txn, you can specify any package depending on indy-node, so that the package with the dependencies get upgraded. |   | <a class="reference external" href="https://jira.hyperledger.org/browse/INDY-1491">INDY-1491</a> |
@@ -438,20 +616,20 @@ t be built because of new python3-indy-crypto in sdk repo. The problem described
 |   |   |   |  |</p>
 </div>
 <div class="section" id="upgrade-scripts">
-<span id="id12"></span><h3>Upgrade Scripts:<a class="headerlink" href="#upgrade-scripts" title="Permalink to this headline">¶</a></h3>
+<span id="id24"></span><h3>Upgrade Scripts:<a class="headerlink" href="#upgrade-scripts" title="Permalink to this headline">¶</a></h3>
 <p><strong>Pool upgrade from indy-node 1.3.62 to indy-node 1.6.70 should be performed simultaneously for all nodes due to txn format changes.</strong></p>
 <p>There must be sovrin package upgrade to 1.1.13 version after indy-node package upgrade. You need to specify package=sovrin in pool-upgrade command to do this.</p>
 </div>
 <div class="section" id="additional-information">
-<span id="id13"></span><h3>Additional Information:<a class="headerlink" href="#additional-information" title="Permalink to this headline">¶</a></h3>
+<span id="id25"></span><h3>Additional Information:<a class="headerlink" href="#additional-information" title="Permalink to this headline">¶</a></h3>
 <p><strong>All indy-cli pools should be recreated with actual genesis files.</strong></p>
 <p><strong>For more details about txn format changes see</strong> <a class="reference external" href="https://jira.hyperledger.org/browse/INDY-1421"><strong>INDY-1421</strong></a> <strong>.</strong></p>
 </div>
 </div>
 <div class="section" id="">
-<span id="id14"></span><h2>1.1.12<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h2>
+<span id="id26"></span><h2>1.1.12<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="component-version-information">
-<span id="id15"></span><h3>Component Version Information<a class="headerlink" href="#component-version-information" title="Permalink to this headline">¶</a></h3>
+<span id="id27"></span><h3>Component Version Information<a class="headerlink" href="#component-version-information" title="Permalink to this headline">¶</a></h3>
 <p>| Components | Version Numbers |
 | — | — |
 | indy-plenum | 1.5.47 |
@@ -461,7 +639,7 @@ t be built because of new python3-indy-crypto in sdk repo. The problem described
 |   |   |    |</p>
 </div>
 <div class="section" id="major-fixes">
-<span id="id16"></span><h3>Major Fixes<a class="headerlink" href="#major-fixes" title="Permalink to this headline">¶</a></h3>
+<span id="id28"></span><h3>Major Fixes<a class="headerlink" href="#major-fixes" title="Permalink to this headline">¶</a></h3>
 <p>| Description | Additional Information | Ticket Number |
 | — | — | — |
 | Fixed and issue where logs were appearing in the old CLI. |   | <a class="reference external" href="https://jira.hyperledger.org/browse/INDY-1471">INDY-1471</a> |
@@ -479,7 +657,7 @@ t be built because of new python3-indy-crypto in sdk repo. The problem described
 | Fixed an issue where the upgrade failed on pool from 1.3.62 to 1.4.66.  |   |<a class="reference external" href="https://jira.hyperledger.org/browse/INDY-1447">INDY-1447</a>   ||Fixed an issue where a forced upgrade from 1.3.62 -&gt; 1.5.67 without one node in schedule  failed.   |  |<a class="reference external" href="https://jira.hyperledger.org/browse/INDY-1519">INDY-1519</a>  ||   |  |  |  |</p>
 </div>
 <div class="section" id="changes-additions-known-issues">
-<span id="id17"></span><h3>Changes - Additions - Known Issues<a class="headerlink" href="#changes-additions-known-issues" title="Permalink to this headline">¶</a></h3>
+<span id="id29"></span><h3>Changes - Additions - Known Issues<a class="headerlink" href="#changes-additions-known-issues" title="Permalink to this headline">¶</a></h3>
 <p>| Description | Workaround | Ticket |
 | — | — | — |
 | Implemented periodic restart of client stack to allow new clients to connect. |   | <a class="reference external" href="https://jira.hyperledger.org/browse/INDY-1431">INDY-1431</a> |
@@ -502,19 +680,19 @@ t be built because of new python3-indy-crypto in sdk repo. The problem described
 |   |   |   | |</p>
 </div>
 <div class="section" id="upgrade-scripts">
-<span id="id18"></span><h3>Upgrade Scripts:<a class="headerlink" href="#upgrade-scripts" title="Permalink to this headline">¶</a></h3>
+<span id="id30"></span><h3>Upgrade Scripts:<a class="headerlink" href="#upgrade-scripts" title="Permalink to this headline">¶</a></h3>
 <p><strong>Pool upgrade from indy-node 1.3.62 should be performed simultaneously for all nodes due to txn format changes.</strong></p>
 </div>
 <div class="section" id="additional-information">
-<span id="id19"></span><h3>Additional Information:<a class="headerlink" href="#additional-information" title="Permalink to this headline">¶</a></h3>
+<span id="id31"></span><h3>Additional Information:<a class="headerlink" href="#additional-information" title="Permalink to this headline">¶</a></h3>
 <p><strong>All indy-cli pools should be recreated with actual genesis files.
 For more details about txn format changes see INDY-1421.</strong></p>
 </div>
 </div>
 <div class="section" id="">
-<span id="id20"></span><h2>1.1.11<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h2>
+<span id="id32"></span><h2>1.1.11<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="component-version-information">
-<span id="id21"></span><h3>Component Version Information<a class="headerlink" href="#component-version-information" title="Permalink to this headline">¶</a></h3>
+<span id="id33"></span><h3>Component Version Information<a class="headerlink" href="#component-version-information" title="Permalink to this headline">¶</a></h3>
 <p>| Components | Version Numbers |
 | — | — |
 | indy-plenum | 1.4.45 |
@@ -524,7 +702,7 @@ For more details about txn format changes see INDY-1421.</strong></p>
 |   |   |   |</p>
 </div>
 <div class="section" id="major-fixes">
-<span id="id22"></span><h3>Major Fixes<a class="headerlink" href="#major-fixes" title="Permalink to this headline">¶</a></h3>
+<span id="id34"></span><h3>Major Fixes<a class="headerlink" href="#major-fixes" title="Permalink to this headline">¶</a></h3>
 <p>| Description | Additional Information | Ticket Number |
 | — | — | — |
 | Fixed and issues where one of the nodes stopped writing after 44287 txns with errors in status. |   | <a class="reference external" href="https://jira.hyperledger.org/browse/INDY-1410">INDY-1410</a> |
@@ -546,7 +724,7 @@ For more details about txn format changes see INDY-1421.</strong></p>
 |   |   |   |   |</p>
 </div>
 <div class="section" id="changes-additions-known-issues">
-<span id="id23"></span><h3>Changes - Additions - Known Issues<a class="headerlink" href="#changes-additions-known-issues" title="Permalink to this headline">¶</a></h3>
+<span id="id35"></span><h3>Changes - Additions - Known Issues<a class="headerlink" href="#changes-additions-known-issues" title="Permalink to this headline">¶</a></h3>
 <p>| Description | Workaround | Ticket |
 | — | — | — |
 | Reviewed and replaced <code class="docutils literal notranslate"><span class="pre">assert</span></code> with exceptions in indy-plenum where needed. |   | <a class="reference external" href="https://jira.hyperledger.org/browse/INDY-810">INDY-810</a> |
@@ -575,7 +753,7 @@ For more details about txn format changes see INDY-1421.</strong></p>
 | <strong>List of breaking changes for migration from indy-node 1.3 to 1.4:</strong> |   | <a class="reference external" href="https://github.com/hyperledger/indy-node/blob/master/docs/1.3_to_1.4_migration_guide.md">1.3-1.4 Migration Guide</a> |</p>
 </div>
 <div class="section" id="upgrade-scripts">
-<span id="id24"></span><h3>Upgrade Scripts:<a class="headerlink" href="#upgrade-scripts" title="Permalink to this headline">¶</a></h3>
+<span id="id36"></span><h3>Upgrade Scripts:<a class="headerlink" href="#upgrade-scripts" title="Permalink to this headline">¶</a></h3>
 <p><strong>Pool upgrade should be performed simultaneously for all nodes due to txn format changes.</strong></p>
 <p><strong>All indy-cli pools should be recreated with actual genesis files.</strong></p>
 <div class="section" id="cli-upgrading">
@@ -590,7 +768,7 @@ recreate indy-cli pool using 1.4 pool genesis file (from 1.4 node or from sovrin
 </div>
 </div>
 <div class="section" id="additional-information">
-<span id="id25"></span><h3>Additional Information:<a class="headerlink" href="#additional-information" title="Permalink to this headline">¶</a></h3>
+<span id="id37"></span><h3>Additional Information:<a class="headerlink" href="#additional-information" title="Permalink to this headline">¶</a></h3>
 <p><strong>List of breaking changes for migration from indy-node 1.3 to 1.4:</strong></p>
 <p>https://github.com/hyperledger/indy-node/blob/master/docs/1.3_to_1.4_migration_guide.md</p>
 <p><strong>IndyNode 1.4 and LibIndy 1.5 compatibility:</strong></p>
@@ -605,9 +783,9 @@ recreate indy-cli pool using 1.4 pool genesis file (from 1.4 node or from sovrin
 </div>
 </div>
 <div class="section" id="">
-<span id="id26"></span><h2>1.1.10<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h2>
+<span id="id38"></span><h2>1.1.10<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="component-version-information">
-<span id="id27"></span><h3>Component Version Information<a class="headerlink" href="#component-version-information" title="Permalink to this headline">¶</a></h3>
+<span id="id39"></span><h3>Component Version Information<a class="headerlink" href="#component-version-information" title="Permalink to this headline">¶</a></h3>
 <p>| Components | Version Numbers |
 | — | — |
 | indy-plenum | 1.2.42 |
@@ -617,7 +795,7 @@ recreate indy-cli pool using 1.4 pool genesis file (from 1.4 node or from sovrin
 |   |   |    |</p>
 </div>
 <div class="section" id="major-fixes">
-<span id="id28"></span><h3>Major Fixes<a class="headerlink" href="#major-fixes" title="Permalink to this headline">¶</a></h3>
+<span id="id40"></span><h3>Major Fixes<a class="headerlink" href="#major-fixes" title="Permalink to this headline">¶</a></h3>
 <p>| Description | Additional Information | Ticket Number |
 | — | — | — |
 | Fixed an issue where the STN was losing consensus. |   | <a class="reference external" href="https://jira.hyperledger.org/browse/INDY-1256">INDY-1256</a> |
@@ -626,7 +804,7 @@ recreate indy-cli pool using 1.4 pool genesis file (from 1.4 node or from sovrin
 |   |   |   |    |</p>
 </div>
 <div class="section" id="changes-additions-known-issues">
-<span id="id29"></span><h3>Changes - Additions - Known Issues<a class="headerlink" href="#changes-additions-known-issues" title="Permalink to this headline">¶</a></h3>
+<span id="id41"></span><h3>Changes - Additions - Known Issues<a class="headerlink" href="#changes-additions-known-issues" title="Permalink to this headline">¶</a></h3>
 <p>| Description | Workaround | Ticket |
 | — | — | — |
 | Support was added for supervisord. |   | <a class="reference external" href="https://jira.hyperledger.org/browse/INDY-1186">https://github.com/hyperledger/indy-node/pull/588</a> |
@@ -634,18 +812,18 @@ recreate indy-cli pool using 1.4 pool genesis file (from 1.4 node or from sovrin
 |   |   |   |    |</p>
 </div>
 <div class="section" id="upgrade-scripts">
-<span id="id30"></span><h3>Upgrade Scripts:<a class="headerlink" href="#upgrade-scripts" title="Permalink to this headline">¶</a></h3>
+<span id="id42"></span><h3>Upgrade Scripts:<a class="headerlink" href="#upgrade-scripts" title="Permalink to this headline">¶</a></h3>
 <p>None for this release.</p>
 </div>
 <div class="section" id="additional-information">
-<span id="id31"></span><h3>Additional Information:<a class="headerlink" href="#additional-information" title="Permalink to this headline">¶</a></h3>
+<span id="id43"></span><h3>Additional Information:<a class="headerlink" href="#additional-information" title="Permalink to this headline">¶</a></h3>
 <p>None at this time.</p>
 </div>
 </div>
 <div class="section" id="">
-<span id="id32"></span><h2>1.1.9<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h2>
+<span id="id44"></span><h2>1.1.9<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="component-version-information">
-<span id="id33"></span><h3>Component Version Information<a class="headerlink" href="#component-version-information" title="Permalink to this headline">¶</a></h3>
+<span id="id45"></span><h3>Component Version Information<a class="headerlink" href="#component-version-information" title="Permalink to this headline">¶</a></h3>
 <p>| Components | Version Numbers |
 | — | — |
 | indy-node | 1.3.56 |
@@ -653,7 +831,7 @@ recreate indy-cli pool using 1.4 pool genesis file (from 1.4 node or from sovrin
 |   |   |   |</p>
 </div>
 <div class="section" id="major-fixes">
-<span id="id34"></span><h3>Major Fixes<a class="headerlink" href="#major-fixes" title="Permalink to this headline">¶</a></h3>
+<span id="id46"></span><h3>Major Fixes<a class="headerlink" href="#major-fixes" title="Permalink to this headline">¶</a></h3>
 <p>| Description | Additional Information | Ticket Number |
 | — | — | — |
 | The Node was restarting because of an <p>&amp;quot;</p>
@@ -678,7 +856,7 @@ unhandled exception (KeyError)<p>&amp;quot;</p>
 | Fixed a bug where you were unable to install indy-node if sdk repo is in sources.list   |   |<a class="reference external" href="https://jira.hyperledger.org/browse/INDY-1269">INDY-1269</a>   ||   |   |   |   |</p>
 </div>
 <div class="section" id="changes-additions-known-issues">
-<span id="id35"></span><h3>Changes - Additions - Known Issues<a class="headerlink" href="#changes-additions-known-issues" title="Permalink to this headline">¶</a></h3>
+<span id="id47"></span><h3>Changes - Additions - Known Issues<a class="headerlink" href="#changes-additions-known-issues" title="Permalink to this headline">¶</a></h3>
 <p>| Description | Workaround | Ticket |
 | — | — | — |
 | Made it so that a developer can distinguish logs of each replica. |   | <a class="reference external" href="https://jira.hyperledger.org/browse/INDY-1186">INDY-1186</a> |
@@ -703,19 +881,19 @@ s stashing all the reqs and there is a risk of running out of memory. |   | <a c
 |   |   |   |    |</p>
 </div>
 <div class="section" id="upgrade-scripts">
-<span id="id36"></span><h3>Upgrade Scripts<a class="headerlink" href="#upgrade-scripts" title="Permalink to this headline">¶</a></h3>
+<span id="id48"></span><h3>Upgrade Scripts<a class="headerlink" href="#upgrade-scripts" title="Permalink to this headline">¶</a></h3>
 <p>None for this release.</p>
 </div>
 <div class="section" id="additional-information">
-<span id="id37"></span><h3>Additional Information:<a class="headerlink" href="#additional-information" title="Permalink to this headline">¶</a></h3>
+<span id="id49"></span><h3>Additional Information:<a class="headerlink" href="#additional-information" title="Permalink to this headline">¶</a></h3>
 <p>None at this time.</p>
 </div>
 </div>
 <div class="section" id="">
-<span id="id38"></span><h2>1.1.8<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h2>
+<span id="id50"></span><h2>1.1.8<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h2>
 <p><strong>Important: Upgrade to this version should be performed simultaneously for all nodes (with <code class="docutils literal notranslate"><span class="pre">force=True</span></code>).</strong></p>
 <div class="section" id="component-version-information">
-<span id="id39"></span><h3>Component Version Information<a class="headerlink" href="#component-version-information" title="Permalink to this headline">¶</a></h3>
+<span id="id51"></span><h3>Component Version Information<a class="headerlink" href="#component-version-information" title="Permalink to this headline">¶</a></h3>
 <p>| Components | Version Numbers |
 | — | — |
 | indy-plenum | 1.2.34 |
@@ -725,7 +903,7 @@ s stashing all the reqs and there is a risk of running out of memory. |   | <a c
 |   |   |    |</p>
 </div>
 <div class="section" id="major-fixes">
-<span id="id40"></span><h3>Major Fixes<a class="headerlink" href="#major-fixes" title="Permalink to this headline">¶</a></h3>
+<span id="id52"></span><h3>Major Fixes<a class="headerlink" href="#major-fixes" title="Permalink to this headline">¶</a></h3>
 <p>| Description | Additional Information | Ticket Number |
 | — | — | — |
 | Transactions were missing from the config ledger after the upgrade. |   | <a class="reference external" href="https://jira.hyperledger.org/browse/INDY-799">INDY-799</a> |
@@ -760,7 +938,7 @@ t working. |   | <a class="reference external" href="https://jira.hyperledger.or
 | Newly upgraded STN fails to accept transactions (pool has been broken after upgrade because of one not upgraded node).  |   |<a class="reference external" href="https://jira.hyperledger.org/browse/INDY-1183">INDY-1183</a>   ||We were unable to submit upgrade transactions to STN.   |    |<a class="reference external" href="https://jira.hyperledger.org/browse/INDY-1190">INDY-1190</a>|   |    |    |    |</p>
 </div>
 <div class="section" id="changes-additions-known-issues">
-<span id="id41"></span><h3>Changes - Additions - Known Issues<a class="headerlink" href="#changes-additions-known-issues" title="Permalink to this headline">¶</a></h3>
+<span id="id53"></span><h3>Changes - Additions - Known Issues<a class="headerlink" href="#changes-additions-known-issues" title="Permalink to this headline">¶</a></h3>
 <p>| Description | Workaround | Ticket |
 | — | — | — |
 | Added indy-sdk test dependency to plenum and use indy-sdk for plenum tests. |   | <a class="reference external" href="https://jira.hyperledger.org/browse/INDY-900">INDY-900</a> <a class="reference external" href="https://jira.hyperledger.org/browse/INDY-901">INDY-901</a> |
@@ -789,15 +967,15 @@ Setting Up a Test Indy Network in VMs<p>&amp;quot;</p>
 |   |   |     |     |</p>
 </div>
 <div class="section" id="additional-information">
-<span id="id42"></span><h3>Additional Information:<a class="headerlink" href="#additional-information" title="Permalink to this headline">¶</a></h3>
+<span id="id54"></span><h3>Additional Information:<a class="headerlink" href="#additional-information" title="Permalink to this headline">¶</a></h3>
 <p>Node promoting is not recommended for 1.3.52 version according to known issues because backup protocol instances may work incorrectly until next view change.</p>
 <p>As mentioned above, upgrade to this version should be performed simultaneously for all nodes (with <code class="docutils literal notranslate"><span class="pre">force=True</span></code>).</p>
 </div>
 </div>
 <div class="section" id="">
-<span id="id43"></span><h2>1.1.7<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h2>
+<span id="id55"></span><h2>1.1.7<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="component-version-information">
-<span id="id44"></span><h3>Component Version Information<a class="headerlink" href="#component-version-information" title="Permalink to this headline">¶</a></h3>
+<span id="id56"></span><h3>Component Version Information<a class="headerlink" href="#component-version-information" title="Permalink to this headline">¶</a></h3>
 <p>| Components | Version Numbers |
 | — | — |
 | indy-plenum | 1.2.29 |
@@ -807,7 +985,7 @@ Setting Up a Test Indy Network in VMs<p>&amp;quot;</p>
 |   |   |   |</p>
 </div>
 <div class="section" id="major-fixes">
-<span id="id45"></span><h3>Major Fixes<a class="headerlink" href="#major-fixes" title="Permalink to this headline">¶</a></h3>
+<span id="id57"></span><h3>Major Fixes<a class="headerlink" href="#major-fixes" title="Permalink to this headline">¶</a></h3>
 <p>| Description | Additional Information | Ticket Number |
 | — | — | — |
 | A node was maintaining a pace with the network exactly 12 transactions behind. |   | <a class="reference external" href="https://jira.hyperledger.org/browse/INDY-759">INDY-759</a> |
@@ -830,7 +1008,7 @@ NodeRequestSuspiciousSpike suspicious spike has been noticed.<p>&amp;quot;</p>
 |   |   |   |    |</p>
 </div>
 <div class="section" id="changes-additions-known-issues">
-<span id="id46"></span><h3>Changes - Additions - Known Issues<a class="headerlink" href="#changes-additions-known-issues" title="Permalink to this headline">¶</a></h3>
+<span id="id58"></span><h3>Changes - Additions - Known Issues<a class="headerlink" href="#changes-additions-known-issues" title="Permalink to this headline">¶</a></h3>
 <p>| Description | Workaround | Ticket |
 | — | — | — |
 | Signed State implementation |   | <a class="reference external" href="https://jira.hyperledger.org/browse/INDY-670">INDY-670</a> |
@@ -850,7 +1028,7 @@ NodeRequestSuspiciousSpike suspicious spike has been noticed.<p>&amp;quot;</p>
 |    |    |    |    |</p>
 </div>
 <div class="section" id="additional-information">
-<span id="id47"></span><h3>Additional Information:<a class="headerlink" href="#additional-information" title="Permalink to this headline">¶</a></h3>
+<span id="id59"></span><h3>Additional Information:<a class="headerlink" href="#additional-information" title="Permalink to this headline">¶</a></h3>
 <p>Mapping of all file/folder changes are located <a class="reference external" href="https://docs.google.com/spreadsheets/d/1A84H8knCtn8rrTirzxta8XC1jpHBjvQiqrxquTv6bpc/edit#gid=0">here</a>.</p>
 <div class="section" id="upgrade-steps">
 <span id="upgrade-steps"></span><h4>Upgrade Steps<a class="headerlink" href="#upgrade-steps" title="Permalink to this headline">¶</a></h4>
@@ -954,7 +1132,7 @@ The genesis files are now located in their own directory based off the network n
 <div class="section" id="hot-fix">
 <span id="hot-fix"></span><h2>1.1.6 Hot Fix<a class="headerlink" href="#hot-fix" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="component-version-information">
-<span id="id48"></span><h3>Component Version Information<a class="headerlink" href="#component-version-information" title="Permalink to this headline">¶</a></h3>
+<span id="id60"></span><h3>Component Version Information<a class="headerlink" href="#component-version-information" title="Permalink to this headline">¶</a></h3>
 <p>| Components | Version Numbers |
 | — | — |
 | indy-plenum | 1.1.27 |
@@ -964,7 +1142,7 @@ The genesis files are now located in their own directory based off the network n
 |   |   |   |</p>
 </div>
 <div class="section" id="major-fixes">
-<span id="id49"></span><h3>Major Fixes<a class="headerlink" href="#major-fixes" title="Permalink to this headline">¶</a></h3>
+<span id="id61"></span><h3>Major Fixes<a class="headerlink" href="#major-fixes" title="Permalink to this headline">¶</a></h3>
 <p>| Description | Additional Information | Ticket Number |
 | — | — | — |
 | Added a migration script which eliminates redundant fields with <code class="docutils literal notranslate"><span class="pre">null</span></code> values from legacy transactions in the domain ledger. |   | <a class="reference external" href="https://jira.hyperledger.org/browse/INDY-895">INDY-895</a> <a class="reference external" href="https://jira.hyperledger.org/browse/INDY-869">INDY-869</a> |
@@ -977,9 +1155,9 @@ The genesis files are now located in their own directory based off the network n
 </div>
 </div>
 <div class="section" id="">
-<span id="id50"></span><h2>1.1.6<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h2>
+<span id="id62"></span><h2>1.1.6<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="component-version-information">
-<span id="id51"></span><h3>Component Version Information<a class="headerlink" href="#component-version-information" title="Permalink to this headline">¶</a></h3>
+<span id="id63"></span><h3>Component Version Information<a class="headerlink" href="#component-version-information" title="Permalink to this headline">¶</a></h3>
 <p>| Components | Version Numbers |
 | — | — |
 | indy-plenum | 1.1.27 |
@@ -989,7 +1167,7 @@ The genesis files are now located in their own directory based off the network n
 |   |   | |</p>
 </div>
 <div class="section" id="major-fixes">
-<span id="id52"></span><h3>Major Fixes<a class="headerlink" href="#major-fixes" title="Permalink to this headline">¶</a></h3>
+<span id="id64"></span><h3>Major Fixes<a class="headerlink" href="#major-fixes" title="Permalink to this headline">¶</a></h3>
 <p>| Description | Additional Information | Ticket Number |
 | — | — | — |
 | Stewards can now demote and promote their own nodes. |   | <a class="reference external" href="https://jira.hyperledger.org/browse/INDY-410">INDY-410</a> |
@@ -1011,7 +1189,7 @@ t come back to consensus in cases when less than n-f nodes are alive. |   | <a c
 |   |   |   | |</p>
 </div>
 <div class="section" id="changes-additions-known-issues">
-<span id="id53"></span><h3>Changes - Additions - Known Issues<a class="headerlink" href="#changes-additions-known-issues" title="Permalink to this headline">¶</a></h3>
+<span id="id65"></span><h3>Changes - Additions - Known Issues<a class="headerlink" href="#changes-additions-known-issues" title="Permalink to this headline">¶</a></h3>
 <p>| Description | Workaround | Ticket |
 | — | — | — |
 | <strong>New ledger serialization is supported and Leveldb is used as a storage for all ledgers</strong> : msgpack is used for the ledger serialization (both transaction log and merkle tree). |   |   |
@@ -1038,7 +1216,7 @@ Debug<p>&amp;quot;</p>
 </div>
 </div>
 <div class="section" id="">
-<span id="id54"></span><h2>1.0<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h2>
+<span id="id66"></span><h2>1.0<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="major-features">
 <span id="major-features"></span><h3>Major Features<a class="headerlink" href="#major-features" title="Permalink to this headline">¶</a></h3>
 <p>| Description |Additional Information |
@@ -1102,10 +1280,12 @@ DID<p>&amp;quot;</p>
 <span id="emergencies"></span><h3>Emergencies<a class="headerlink" href="#emergencies" title="Permalink to this headline">¶</a></h3>
 <p>For emergencies where the Network is under a DOS attack, there is a new command for Trustees only that will put the Pool into a read-only mode.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">send</span> <span class="n">POOL</span>\<span class="n">_CONFIG</span> <span class="n">writes</span><span class="o">=</span><span class="kc">False</span>
+<span class="n">send</span> <span class="n">POOL</span>\<span class="n">_CONFIG</span> <span class="n">writes</span><span class="o">=</span><span class="kc">False</span>
 </pre></div>
 </div>
 <p>or optional</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">send</span> <span class="n">POOL</span>\<span class="n">_CONFIG</span> <span class="n">writes</span><span class="o">=</span><span class="kc">False</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span>
+<span class="n">send</span> <span class="n">POOL</span>\<span class="n">_CONFIG</span> <span class="n">writes</span><span class="o">=</span><span class="kc">False</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span>
 </pre></div>
 </div>
 <p>The following are bool parameters: writes and force. Writes is required. Force is not required. The default for force is False.</p>
@@ -1125,6 +1305,7 @@ ll have to start the CLI and connect to live just once for the wallet directory 
 <span id="time-stamps"></span><h4>Time Stamps<a class="headerlink" href="#time-stamps" title="Permalink to this headline">¶</a></h4>
 <p>With the latest builds (which will be on your new stable) you will start to see a time stamp in the ledger for the transactions. It will look like the following:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">V4SGRU86Z58d6TV7PBUe6f</span><span class="o">|</span><span class="mi">1500090331922505</span><span class="o">|</span><span class="mi">5</span><span class="n">iBLSL3iujkNsX4RiGN7RjDk5UVtE8GHsn8XHsRsmhUUN9Jz8GEmYtpPrso8e96jo3YafhYSwPkd9QXYA3wYyst4</span><span class="o">|</span><span class="mi">1500090332</span><span class="o">|</span><span class="mi">1</span><span class="o">|</span><span class="n">Pqs6Tyj1huDsjKYsiF8w4f</span><span class="o">|~</span><span class="n">WwZD24Fk4ka7ZY47MPopoo</span><span class="o">||||||</span><span class="mi">2</span><span class="o">||</span>
+<span class="n">V4SGRU86Z58d6TV7PBUe6f</span><span class="o">|</span><span class="mi">1500090331922505</span><span class="o">|</span><span class="mi">5</span><span class="n">iBLSL3iujkNsX4RiGN7RjDk5UVtE8GHsn8XHsRsmhUUN9Jz8GEmYtpPrso8e96jo3YafhYSwPkd9QXYA3wYyst4</span><span class="o">|</span><span class="mi">1500090332</span><span class="o">|</span><span class="mi">1</span><span class="o">|</span><span class="n">Pqs6Tyj1huDsjKYsiF8w4f</span><span class="o">|~</span><span class="n">WwZD24Fk4ka7ZY47MPopoo</span><span class="o">||||||</span><span class="mi">2</span><span class="o">||</span>
 </pre></div>
 </div>
 <p>The time stamp is the entry that shows <em>1500090332</em>.</p>
