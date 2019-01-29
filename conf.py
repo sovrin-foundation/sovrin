@@ -15,6 +15,7 @@
 #
 
 import os
+import traceback
 import sys
 import sphinx_rtd_theme
 from recommonmark.transform import AutoStructify
@@ -33,7 +34,7 @@ author = 'The Sovrin Foundation'
 version = ''
 # The full version, including alpha/beta/rc tags
 release = ''
-
+nickname = 'sovrin'
 
 # -- General configuration ---------------------------------------------------
 
@@ -225,8 +226,9 @@ if(on_rtd):
         intersphinx_mapping = remote_conf.get_intersphinx_mapping(rtd_version)
         master_doc = "toc"
     
-    except:
+    except Exception:
         e = sys.exc_info()[0]
+        print(traceback.format_exc())
         print e
     finally:      
         os.system("rm -rf remote_conf/ __pycache__/ remote_conf.py")
