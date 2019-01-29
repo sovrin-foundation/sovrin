@@ -1,4 +1,6 @@
 .. image:: banner.png
+Sovrin
+======
 
 Sovrin is a global utility for self-sovereign identity--that is, an identity that nobody controls
 except its natural owner, that can't be taken away or stripped of its privacy or manipulated
