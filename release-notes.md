@@ -7,6 +7,8 @@
 ![image alt text](banner.png)
 
 
+* [1.1.35](#1135)
+
 * [1.1.34](#1134)
 
 * [1.1.33](#1133)
@@ -40,11 +42,59 @@
 
 
 
-
-
 #### Disclosure
 
 Although every attempt has been made to make this information as accurate as possible, please know there may be things that are omitted, not fully developed yet, or updates since this publication that were not included in the information below. Only the most pressing or significant items have been listed. For the entire list of tickets and or specific information about any given item, please visit the list at [Hyperleder Indy's Jira](https://jira.hyperledger.org/). Once logged in, simply navigate to Projects > Indy.
+
+
+## 1.1.35
+
+### Notices for Stewards
+
+** (!) There are possible OOM issues during 3+ hours of target load or large catch-ups at 8 GB RAM nodes pool so 32 GB is recommended.**
+
+** (!) Pool upgrade to sovrin 1.1.32 should be performed simultaneously for all nodes due to txn format changes.**
+
+### Component Version Information
+
+| Components | Version Numbers |
+| --- | --- |
+| indy-plenum | 1.6.58 |
+| indy-node | 1.6.83 |
+| sovrin | 1.1.35 |
+
+
+### Major Fixes
+
+| Description | Ticket Number |
+| --- | --- |
+| validator-info to client times out if there are many upgrade attempts by node | [INDY-1922](https://jira.hyperledger.org/browse/INDY-1922) |
+| Node on Sovrin TestNet did not upgrade automatically | [INDY-1919](https://jira.hyperledger.org/browse/INDY-1919) |
+| Node that does not upgrade spams the config ledger | [INDY-1918](https://jira.hyperledger.org/browse/INDY-1918) |
+| Incorrect pool upgrade txn validation  | [INDY-1953](https://jira.hyperledger.org/browse/INDY-1953)  |
+| Upgrade appears to have broken "validator-info --nagios"  | [INDY-1920](https://jira.hyperledger.org/browse/INDY-1920) |
+| Node can't order after view change and catch up  | [INDY-1955](https://jira.hyperledger.org/browse/INDY-1955) |
+| Unclear error messages when Trustee send a NYM with the same verkey  | [INDY-1963](https://jira.hyperledger.org/browse/INDY-1963)  |
+| A role that has been removed can't be added back  | [INDY-1971](https://jira.hyperledger.org/browse/INDY-1971)  |
+
+### Changes and Additions
+
+| Description | Ticket Number |
+| --- | --- |
+| Limit the number of attributes in schema  | [INDY-1914](https://jira.hyperledger.org/browse/INDY-1914)  |
+| Enable Clear Request Queue strategy  | [INDY-1836](https://jira.hyperledger.org/browse/INDY-1836)  |
+| A Node needs to be able to order requests received during catch-up  | [INDY-1876](https://jira.hyperledger.org/browse/INDY-1876)  |
+| Network maintenance role  | [INDY-1916](https://jira.hyperledger.org/browse/INDY-1916)  |
+| There should always be fresh enough signature of a state   | [INDY-933](https://jira.hyperledger.org/browse/INDY-933)  |
+| Node stops working without any services failure  | [INDY-1949](https://jira.hyperledger.org/browse/INDY-1949)  |
+| As a user of Valdiator Info script, I need to know whether the pool has write consensus and when the state was updated the last time  | [INDY-1928](https://jira.hyperledger.org/browse/INDY-1928)  |
+| Trust anchor permission not needed for ledger writes  | [INDY-1528](https://jira.hyperledger.org/browse/INDY-1528)  |
+
+### Known issues
+
+| Description | Ticket Number |
+| --- | --- |
+| Some of the nodes lagging behind during the load test  | [INDY-1965](https://jira.hyperledger.org/browse/INDY-1965)  |
 
 
 ## 1.1.34
@@ -247,7 +297,7 @@ Although every attempt has been made to make this information as accurate as pos
 | Make validator info as a historical data. |   | [INDY-1637](https://jira.hyperledger.org/browse/INDY-1637) |
 |   |   |   |
 | **Known Issue:** There are possible OOM issues during 3+ hours of target load or large catch-ups at 8 GB RAM nodes pool so 32 GB is recommended. |   |   |
-| **Known Issue:** [INDY-1447](https://jira.hyperledger.org/browse/INDY-1447) - **Upgrade failed on pool from 1.3.62 to 1.4.66**   | Note that [INDY-1447](https://jira.hyperledger.org/browse/INDY-1447) was fixed in indy-node 1.5.68, but it still presents in indy-node 1.3.62 and 1.4.66 code. So, some of the nodes may not to be upgraded during simultaneous pool-upgrade. If this problem will appear, stewards should perform manual upgrade of indy-node in accordance with this [instruction](https://docs.google.com/document/d/1vUvbioL5OsmZMSkwRcu0p0jdttJO5VS8K3GhDLdNaoI).   |   |  
+| **Known Issue:** [INDY-1447](https://jira.hyperledger.org/browse/INDY-1447) - **Upgrade failed on pool from 1.3.62 to 1.4.66**   | Note that [INDY-1447](https://jira.hyperledger.org/browse/INDY-1447) was fixed in indy-node 1.5.68, but it still presents in indy-node 1.3.62 and 1.4.66 code. So, some of the nodes may not to be upgraded during simultaneous pool-upgrade. If this problem will appear, stewards should perform manual upgrade of indy-node in accordance with this [instruction](https://docs.google.com/document/d/1vUvbioL5OsmZMSkwRcu0p0jdttJO5VS8K3GhDLdNaoI).   |   |
 |   |    |    |   |
 
 ### Upgrade Scripts:
@@ -410,8 +460,8 @@ There must be sovrin package upgrade to 1.1.13 version after indy-node package u
 | Fixed an issue where the node crashes on \_remove\_stashed\_checkpoints. |   | [INDY-1427](https://jira.hyperledger.org/browse/INDY-1427) |
 | Fixed an issue where memory was running out during non-completed viewChange process (under load). |   | [INDY-1360](https://jira.hyperledger.org/browse/INDY-1360) |
 | Fixed an issue where part of nodes continued ordering txns after `incorrect state trie` under load. |   | [INDY-1422](https://jira.hyperledger.org/browse/INDY-1422) |
-| Fixed an issue where the upgrade failed on pool from 1.3.62 to 1.4.66.  |   |[INDY-1447](https://jira.hyperledger.org/browse/INDY-1447)   |   
-|Fixed an issue where a forced upgrade from 1.3.62 -> 1.5.67 without one node in schedule  failed.   |  |[INDY-1519](https://jira.hyperledger.org/browse/INDY-1519)  |  
+| Fixed an issue where the upgrade failed on pool from 1.3.62 to 1.4.66.  |   |[INDY-1447](https://jira.hyperledger.org/browse/INDY-1447)   |
+|Fixed an issue where a forced upgrade from 1.3.62 -> 1.5.67 without one node in schedule  failed.   |  |[INDY-1519](https://jira.hyperledger.org/browse/INDY-1519)  |
 |   |  |  |  |
 
 
@@ -579,7 +629,7 @@ Use https://github.com/hyperledger/indy-sdk/blob/b4a2bb82087e2eafe5e55bddb20a306
 | Fixed an issue where the STN was losing consensus. |   | [INDY-1256](https://jira.hyperledger.org/browse/INDY-1256) |
 | Fixed an issue where we were unable to use the read\_ledger tool with the parameter "to". |   | [INDY-1284](https://jira.hyperledger.org/browse/INDY-1284) |
 |Fixed the upgrade from 1.2.223 (1.3.55 stable analogue) to 1.3.410 (rocksdb) wasn't working.|    |[INDY-1330](https://jira.hyperledger.org/browse/INDY-1330)  |
-|   |   |   |    |   
+|   |   |   |    |
 
 ### Changes - Additions - Known Issues
 
@@ -623,7 +673,7 @@ None at this time.
 | One of the nodes were not responding to libindy after several running load tests. |   | [INDY-1180](https://jira.hyperledger.org/browse/INDY-1180) |
 | When returning N-F nodes to the pool, &quot;View change&quot; was not occurring if the Primary node was stopped. |   | [INDY-1151](https://jira.hyperledger.org/browse/INDY-1151) |
 | There was a failed restart after getting the &quot;unhandled exception (KeyError)&quot;. |   | [INDY-1152](https://jira.hyperledger.org/browse/INDY-1152) |
-| Fixed a bug where you were unable to install indy-node if sdk repo is in sources.list   |   |[INDY-1269](https://jira.hyperledger.org/browse/INDY-1269)   |  
+| Fixed a bug where you were unable to install indy-node if sdk repo is in sources.list   |   |[INDY-1269](https://jira.hyperledger.org/browse/INDY-1269)   |
 |   |   |   |   |
 
 ### Changes - Additions - Known Issues
@@ -703,8 +753,8 @@ None at this time.
 | ATTRIB transaction with ENC and HASH wasn&#39;t working. |   | [INDY-1074](https://jira.hyperledger.org/browse/INDY-1074) |
 | When returning N-F nodes to the pool, View Change does not occur if Primary node is stopped. |   | [INDY-1151](https://jira.hyperledger.org/browse/INDY-1151) |
 | We were unable to recover write consensus at n-f after f+1 descent. |   | [INDY-1166](https://jira.hyperledger.org/browse/INDY-1166) |
-| Newly upgraded STN fails to accept transactions (pool has been broken after upgrade because of one not upgraded node).  |   |[INDY-1183](https://jira.hyperledger.org/browse/INDY-1183)   |   
-|We were unable to submit upgrade transactions to STN.   |    |[INDY-1190](https://jira.hyperledger.org/browse/INDY-1190)     
+| Newly upgraded STN fails to accept transactions (pool has been broken after upgrade because of one not upgraded node).  |   |[INDY-1183](https://jira.hyperledger.org/browse/INDY-1183)   |
+|We were unable to submit upgrade transactions to STN.   |    |[INDY-1190](https://jira.hyperledger.org/browse/INDY-1190)
 |   |    |    |    |
 
 ### Changes - Additions - Known Issues
@@ -729,7 +779,7 @@ None at this time.
 | **Known Issue:** Pool has lost consensus after primary demotion (with 4 nodes setup only). |   | [INDY-1163](https://jira.hyperledger.org/browse/INDY-1163) |
 | **Known Issue:** Ambiguous behavior after node demotion. |   | [INDY-1179](https://jira.hyperledger.org/browse/INDY-1179) |
 | **Known Issue:** One of the nodes does not respond to libindy after several running load test. |   | [INDY-1180](https://jira.hyperledger.org/browse/INDY-1180) |
-|**Known Issue:** Pool does not work after not simultaneous manual pool upgrades.   |   |[INDY-1197](https://jira.hyperledger.org/browse/INDY-1197)   |   
+|**Known Issue:** Pool does not work after not simultaneous manual pool upgrades.   |   |[INDY-1197](https://jira.hyperledger.org/browse/INDY-1197)   |
 |**Known Issue:** Pool stops working if the primary node was not included to schedule in the upgrade transaction.   |   |[INDY-1198](https://jira.hyperledger.org/browse/INDY-1198)  |
 |   |   |     |     |
 
