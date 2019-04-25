@@ -32,7 +32,9 @@ fi
 
 echo -e "\n\nReplace postfixes"
 sed -i -r "s~sovrin-[a-z]+~sovrin~" "$repo/setup.py"
-sed -i -r "s~indy-node-[a-z]+~indy-node~" "$repo/setup.py"
+
+echo -e "\n\nPrepare indy-node debian package version"
+sed -i -r "s~indy-node==([0-9\.]+[0-9])(\.)?([a-z]+)~indy-node==\1\~\3~" "$repo/setup.py"
 
 # create manifest file
 repourl=$(git --git-dir $repo/.git --work-tree $repo config --get remote.origin.url)
