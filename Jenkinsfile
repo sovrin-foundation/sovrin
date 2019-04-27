@@ -1,6 +1,6 @@
 #!groovy
 
-@Library('SovrinHelpers') _
+@Library('SovrinHelpers@v1.2.1') _
 
 def name = 'sovrin'
 
