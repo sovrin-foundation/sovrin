@@ -7,7 +7,7 @@
 ![image alt text](banner.png)
 
 * [1.1.41](#1141)
-*
+
 * [1.1.35](#1135)
 
 * [1.1.34](#1134)
@@ -52,11 +52,11 @@ Although every attempt has been made to make this information as accurate as pos
 
 ### Notices for Stewards
 
-** (!) There are possible OOM issues during 3+ hours of target load or large catch-ups at 8 GB RAM nodes pool so 32 GB is recommended.**
+**(!) There are possible OOM issues during 3+ hours of target load or large catch-ups at 8 GB RAM nodes pool so 32 GB is recommended.**
 
-** (!) Pool upgrade to sovrin 1.1.32 should be performed simultaneously for all nodes due to txn format changes.**
+**(!) Pool upgrade to sovrin 1.1.32 should be performed simultaneously for all nodes due to txn format changes.**
 
-** (!) Pool upgrade to indy-node 1.7.1 should be performed simultaneously for all nodes due to audit ledger.
+**(!) Pool upgrade to indy-node 1.7.1 should be performed simultaneously for all nodes due to audit ledger.
 There should be no fees set up.**
 
 ### Component Version Information
@@ -130,9 +130,9 @@ None listed
 
 ### Notices for Stewards
 
-** (!) There are possible OOM issues during 3+ hours of target load or large catch-ups at 8 GB RAM nodes pool so 32 GB is recommended.**
+**(!) There are possible OOM issues during 3+ hours of target load or large catch-ups at 8 GB RAM nodes pool so 32 GB is recommended.**
 
-** (!) Pool upgrade to sovrin 1.1.32 should be performed simultaneously for all nodes due to txn format changes.**
+**(!) Pool upgrade to sovrin 1.1.32 should be performed simultaneously for all nodes due to txn format changes.**
 
 ### Component Version Information
 
