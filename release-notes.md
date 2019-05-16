@@ -52,6 +52,8 @@ Although every attempt has been made to make this information as accurate as pos
 
 ### Notices for Stewards
 
+** (!) Don't use GET_AUTH_RULE txn - it will cause the service crash.**
+
 ** (!) There are possible OOM issues during 3+ hours of target load or large catch-ups at 8 GB RAM nodes pool so 32 GB is recommended.**
 
 ** (!) Pool upgrade to sovrin 1.1.32 should be performed simultaneously for all nodes due to txn format changes.**
@@ -124,6 +126,8 @@ There should be no fees set up.**
 
 ### Known issues
 
+| Description | Ticket Number |
+| --- | --- |
 | Get auth rule txn breaks the indy-node service if plugins are on  | [ST-566](https://sovrin.atlassian.net/browse/ST-566)  |
 
 
