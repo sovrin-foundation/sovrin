@@ -59,6 +59,7 @@ Although every attempt has been made to make this information as accurate as pos
 ** (!) Pool upgrade to indy-node 1.7.1 should be performed simultaneously for all nodes due to audit ledger.
 There should be no fees set up.**
 
+
 ### Component Version Information
 
 | Components | Version Numbers |
@@ -123,7 +124,7 @@ There should be no fees set up.**
 
 ### Known issues
 
-None listed
+| Get auth rule txn breaks the indy-node service if plugins are on  | [ST-566](https://sovrin.atlassian.net/browse/ST-566)  |
 
 
 ## 1.1.35
