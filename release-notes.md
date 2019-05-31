@@ -6,6 +6,8 @@
 
 ![image alt text](banner.png)
 
+* [1.1.45](#1145)
+
 * [1.1.41](#1141)
 
 * [1.1.35](#1135)
@@ -46,6 +48,58 @@
 #### Disclosure
 
 Although every attempt has been made to make this information as accurate as possible, please know there may be things that are omitted, not fully developed yet, or updates since this publication that were not included in the information below. Only the most pressing or significant items have been listed. For the entire list of tickets and or specific information about any given item, please visit the list at [Hyperleder Indy's Jira](https://jira.hyperledger.org/). Once logged in, simply navigate to Projects > Indy.
+
+
+## 1.1.45
+
+### Notices for Stewards
+
+**Payment transaction can return NACK from the pool but in fact it will be eventually ordered (see more details below).**
+
+**There are possible OOM issues during 3+ hours of target load or large catch-ups at 8 GB RAM nodes pool so 32 GB is recommended.**
+
+**Pool upgrade to sovrin 1.1.32 and above should be performed simultaneously for all nodes due to txn format changes.**
+
+**Pool upgrade to indy-node 1.8.0 should be performed simultaneously for all nodes due to audit ledger.**
+
+
+### Component Version Information
+| Components | Version Numbers |
+| --- | --- |
+| indy-plenum | 1.8.0 |
+| indy-node | 1.8.0 |
+| sovrin | 1.1.45 |
+
+### Major Changes
+- Add Transaction Author Agreement Acceptance Mechanisms and Transaction Author Agreement support
+- Configurable Auth rules improvements
+- Stability fixes
+
+### Major Fixes
+| Description | Additional Information | Ticket Number |
+| --- | --- | --- |
+| Issues with catch up and ordering under the load |  | [INDY-2064](https://jira.hyperledger.org/browse/INDY-2064) |
+| Editing of CLAIM_DEF uses auth rules for Adding a Claim Def |  | [INDY-2078](https://jira.hyperledger.org/browse/INDY-2078) |
+| Faulty primary can order and write already ordered and written request |  | [INDY-1709](https://jira.hyperledger.org/browse/INDY-1709) |
+
+### Changes and Additions
+| Description | Additional Information | Ticket Number |
+| --- | --- | --- |
+| As a Network Admin, I would like to use GET_AUTH_RULE output as an input for AUTH_RULE |  | [INDY-2102](https://jira.hyperledger.org/browse/INDY-2102) |
+| Get Transaction Author Agreement Acceptance Mechanisms from the Config Ledger |  | [INDY-2071](https://jira.hyperledger.org/browse/INDY-2071) |
+| Support Transaction Author Agreement in Write Requests |  | [INDY-2072](https://jira.hyperledger.org/browse/INDY-2072) |
+| Validate transaction author agreement as part of consensus |  | [INDY-2073](https://jira.hyperledger.org/browse/INDY-2073) |
+| Write Transaction Author Agreement to Config Ledger |  | [INDY-2066](https://jira.hyperledger.org/browse/INDY-2066) |
+| Get Transaction Author Agreement from the config ledger |  | [INDY-2067](https://jira.hyperledger.org/browse/INDY-2067) |
+| Write Transaction Author Agreement Acceptance Mechanisms to the Config Ledger |  | [INDY-2068](https://jira.hyperledger.org/browse/INDY-2068) |
+| Catch-up should take into account state of other nodes when sending requests |  | [INDY-2053](https://jira.hyperledger.org/browse/INDY-2053) |
+
+### Known Issues
+| Description | Additional Information | Ticket Number |
+| --- | --- | --- |
+| A client may receive NACK for a payment transfer request, but the transaction will be eventually ordered (payment transferred) |  | [INDY-2122](https://jira.hyperledger.org/browse/INDY-2122) |
+| Incorrect auth constraint for node demotion |  | [INDY-2024](https://jira.hyperledger.org/browse/INDY-2024) |
+| Request GET_UTXO may fail if payment address contains too many UTXOs |  | [ST-566](https://sovrin.atlassian.net/browse/ST-566) |
 
 
 ## 1.1.41
