@@ -93,6 +93,11 @@ Although every attempt has been made to make this information as accurate as pos
 | Get Transaction Author Agreement from the config ledger |  | [INDY-2067](https://jira.hyperledger.org/browse/INDY-2067) |
 | Write Transaction Author Agreement Acceptance Mechanisms to the Config Ledger |  | [INDY-2068](https://jira.hyperledger.org/browse/INDY-2068) |
 | Catch-up should take into account state of other nodes when sending requests |  | [INDY-2053](https://jira.hyperledger.org/browse/INDY-2053) |
+| Added FeesAuthorizer| | [ST-535](https://sovrin.atlassian.net/browse/ST-535) [ST-529](https://sovrin.atlassian.net/browse/ST-529)|
+| Update SET_FEES and GET_FEES logic for Auth Rules| | [ST-531](https://sovrin.atlassian.net/browse/ST-531) |
+| Update GET_FEES to use aliases| GET_FEE request was added| [ST-559](https://sovrin.atlassian.net/browse/ST-559)|
+| Support TAA for XFER txn| | [ST-557](https://sovrin.atlassian.net/browse/ST-557)|
+| Register auth rule for MINT, XFER_PUBLIC and SET_FEES requests in auth_map| | [ST-536](https://sovrin.atlassian.net/browse/ST-536)|
 
 ### Known Issues
 | Description | Additional Information | Ticket Number |
