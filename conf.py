@@ -18,8 +18,8 @@ import os
 import traceback
 import sys
 import sphinx_rtd_theme
-from recommonmark.transform import AutoStructify
 from recommonmark.parser import CommonMarkParser
+from recommonmark.states import DummyStateMachine
 
 sys.path.insert(0, os.path.abspath('.'))
 
@@ -58,7 +58,7 @@ templates_path = ['_templates']
 #
 
 source_parsers = {
-    '.md' : CommonMarkParser,
+    '.md': CommonMarkParser,
 }
 
 source_suffix = ['.rst', '.md']
@@ -201,16 +201,19 @@ epub_exclude_files = ['search.html']
 # -------------- Additional fix for Markdown parsing support ---------------
 # Once Recommonmark is fixed, remove this hack.
 # Monkey patch to fix recommonmark 0.4 doc reference issues.
-from recommonmark.states import DummyStateMachine
 orig_run_role = DummyStateMachine.run_role
+
+
 def run_role(self, name, options=None, content=None):
     if name == 'doc':
         name = 'any'
     return orig_run_role(self, name, options, content)
+
+
 DummyStateMachine.run_role = run_role
 
 # ------------ Remote Documentation Builder Config -----------
-# Note: this is a hacky way of maintaining a consistent sidebar amongst all the repositories. 
+# Note: this is a hacky way of maintaining a consistent sidebar amongst all the repositories.
 # Do you have a better way to do it?
 on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
 
@@ -225,11 +228,10 @@ if(on_rtd):
         remote_conf.generate_sidebar(globals(), nickname)
         intersphinx_mapping = remote_conf.get_intersphinx_mapping(rtd_version)
         master_doc = "toc"
-    
+
     except Exception:
         e = sys.exc_info()[0]
         print(traceback.format_exc())
-        print e
-    finally:      
+        print(e)
+    finally:
         os.system("rm -rf remote_conf/ __pycache__/ remote_conf.py")
-

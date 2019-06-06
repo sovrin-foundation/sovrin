@@ -1,0 +1,12 @@
+{"reqSignature":{},"txn":{"data":{"alias":"Phil Windley","dest":"NMjQb59rKTJXKNqVYfcZFi","role":"0","verkey":"Ce9jZ2bQcLRCrY3eT5AbjsU5mXFa4jMF6dDSF21tyeFJ"},"metadata":{},"type":"1"},"txnMetadata":{"seqNo":1},"ver":"1"}
+{"reqSignature":{},"txn":{"data":{"alias":"Jason Law","dest":"K2ze2xR8MAxkQscdkboKnD","role":"0","verkey":"~KhvZWs1QSS8bS1RxB55NE3"},"metadata":{},"type":"1"},"txnMetadata":{"seqNo":2},"ver":"1"}
+{"reqSignature":{},"txn":{"data":{"alias":"Drummond Reed","dest":"Jv4afJBghiuJ2tiZDduarJ","role":"0","verkey":"AmKnoVceCaEHBCaDjtSYqwLLpmVQLBbZMgAZHfSyv936"},"metadata":{},"type":"1"},"txnMetadata":{"seqNo":3},"ver":"1"}
+{"reqSignature":{},"txn":{"data":{"alias":"Peter Simpson","dest":"JX29L7h6UpDNEThiaTYx9N","role":"0","verkey":"AYmPQJTcpsH1YxRQUwwRgGzQVLFf8JRvmuS5LKNZN1gA"},"metadata":{},"type":"1"},"txnMetadata":{"seqNo":4},"ver":"1"}
+{"reqSignature":{},"txn":{"data":{"alias":"Ron Amstutz","dest":"7jJe9ArRfRchSKL2sYgFDj","role":"0","verkey":"4fjHSUqU9RmeXWXHV6MnKFDtEyEcBUipovhNCDuei5XW"},"metadata":{},"type":"1"},"txnMetadata":{"seqNo":5},"ver":"1"}
+{"reqSignature":{},"txn":{"data":{"alias":"Mawaki Chango","dest":"CPU9r7iLSXcSdn79FzbUvQ","role":"0","verkey":"7CyhcN7gsqo9VxAV1V7ZhiqTetAadY2S4QYcUdo3Uh4p"},"metadata":{},"type":"1"},"txnMetadata":{"seqNo":6},"ver":"1"}
+{"reqSignature":{},"txn":{"data":{"alias":"Mike Bailey","dest":"6feBTywcmJUriqqnGc1zSJ","role":"0","verkey":"~EpnvDMWiFSSu1YksE1Cg3n"},"metadata":{},"type":"1"},"txnMetadata":{"seqNo":7},"ver":"1"}
+{"reqSignature":{},"txn":{"data":{"alias":"Lynn Bendixsen","dest":"5M3i1PbpvEQmTk25EmAY6N","role":"0","verkey":"~7iwFwParUgTffA22Q5Tgvg"},"metadata":{},"type":"1"},"txnMetadata":{"seqNo":8},"ver":"1"}
+{"reqSignature":{},"txn":{"data":{"dest":"V5qJo72nMeF7x3ci8Zv2WP","role":"2","verkey":"~8gjR6mxPymhQV5pEERHYLJ"},"metadata":{"from":"5M3i1PbpvEQmTk25EmAY6N"},"type":"1"},"txnMetadata":{"seqNo":9},"ver":"1"}
+{"reqSignature":{},"txn":{"data":{"dest":"FzAaV9Waa1DccDa72qwg13","role":"2","verkey":"~D5bNaxMVhMzi2bFVzZRtmG"},"metadata":{"from":"5M3i1PbpvEQmTk25EmAY6N"},"type":"1"},"txnMetadata":{"seqNo":10},"ver":"1"}
+{"reqSignature":{},"txn":{"data":{"dest":"QuCBjYx4CbGCiMcoqQg1y","role":"2","verkey":"~NqriEDc1sz9yiY2ft2QGmx"},"metadata":{"from":"5M3i1PbpvEQmTk25EmAY6N"},"type":"1"},"txnMetadata":{"seqNo":11},"ver":"1"}
+{"reqSignature":{},"txn":{"data":{"dest":"VbPQNHsvoLZdaNU7fTBeFx","role":"2","verkey":"~C8m3zsBqvEu1sHoeiGZpht"},"metadata":{"from":"5M3i1PbpvEQmTk25EmAY6N"},"type":"1"},"txnMetadata":{"seqNo":12},"ver":"1"}
