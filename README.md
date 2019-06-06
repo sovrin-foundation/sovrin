@@ -10,9 +10,9 @@ Sovrin is a specific instantiation of Indy, using a [governance framework](https
 
 The code that's stored here operates as a thin veneer on top of Indy--just enough to provide genesis transactions for the particular machines that bootstrapp Sovrin, plus some light utilities for those who run Sovrin as stewards.
 
-To interact with the vibrant 1,000+ member Sovrin community, visit us on our [Rocket Chat instances](https://chat.sovrin.org). If you are a developer, please join the [Hyperledger Indy community forum](https://chat.hyperledger.org) to learn and build together. We're happy to have you here.
+To interact with the vibrant 1,000+ member Sovrin community, visit us on our [Rocket Chat forum](https://chat.sovrin.org). If you are a developer, please join the [Hyperledger Indy community forum](https://chat.hyperledger.org) to learn and build together. We're happy to have you here.
 
-To report vulnerabilities against Sovrin, email security@sovrin.org or visit us on
+To report vulnerabilities against Sovrin, please email security@sovrin.org or visit us on
 [hackerone](https://hackerone.com/sovrin_foundation).
 
 If you'd like to use Sovrin's identity toolset in your system, we recommend that you first check out the [indy-sdk](https://github.com/hyperledger/indy-sdk); it offers a C-callable library plus convenience wrappers in java, python, .NET, and more. Documentation is currently light, but the [API](https://github.com/hyperledger/indy-sdk/tree/master/libindy/src/api) is liberally commented.
