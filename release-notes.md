@@ -816,7 +816,7 @@ None at this time.
 
 | Components | Version Numbers |
 | --- | --- |
-| indy-node | 1.3.56 |
+| indy-node | 1.3.57 |
 | release version number | 1.1.9 |
 |   |   |   |
 
