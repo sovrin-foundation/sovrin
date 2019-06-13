@@ -602,7 +602,7 @@ There must be sovrin package upgrade to 1.1.13 version after indy-node package u
 | --- | --- |
 | indy-plenum | 1.5.47 |
 | indy-anoncreds | 1.0.11 |
-| indy-node | 1.5.67 |
+| indy-node | 1.5.68 |
 | release version number | 1.1.12 |
 |   |   |    |
 
