@@ -76,10 +76,10 @@
         <p>
           The Sovrin DID scheme is defined by the following <a href="ftp://ftp.rfc-editor.org/in-notes/std/std68.txt">ABNF</a>:<br><br>
           <code>
-            sovrin-did    = "did:sov:idstring" *(":" subnamespace)<br>
-            idstring      = 21*22(char)<br>
+            sovrin-did    = "did:sov:" idstring *(":" subnamespace)<br>
+            idstring      = 21*22(base58char)<br>
             subnamespace  = ALPHA *(ALPHA / DIGIT / "_" / "-")<br>
-            char          = "1" / "2" / "3" / "4" / "5" / "6" / "7" / "8" / "9" / "A" / "B" / "C"<br/>
+            base58char          = "1" / "2" / "3" / "4" / "5" / "6" / "7" / "8" / "9" / "A" / "B" / "C"<br/>
               &nbsp;&nbsp;&nbsp;&nbsp;/ "D" / "E" / "F" / "G" / "H" / "J" / "K" / "L" / "M" / "N" / "P" / "Q"<br/>
               &nbsp;&nbsp;&nbsp;&nbsp;/ "R" / "S" / "T" / "U" / "V" / "W" / "X" / "Y" / "Z" / "a" / "b" / "c"<br/>
               &nbsp;&nbsp;&nbsp;&nbsp;/ "d" / "e" / "f" / "g" / "h" / "i" / "j" / "k" / "m" / "n" / "o" / "p"<br/>
