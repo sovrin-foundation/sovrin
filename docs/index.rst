@@ -30,7 +30,7 @@ If you'd like to write code against Sovrin, we recommend that you check out
 plus convenience wrappers in java, python, .NET, and more. Documentation is currently
 light, but the `API <https://github.com/hyperledger/indy-sdk/tree/master/libindy/src/api>`_ is
 liberally commented... You may also want to work through Indy's
-`Getting Started Guide <https://github.com/hyperledger/indy-node/blob/stable/getting-started.md>`_,
+`Getting Started Guide <https://github.com/hyperledger/indy-sdk/blob/master/docs/getting-started/indy-walkthrough.md>`_,
 which was originally written for Sovrin and then genericized.
 
 If you want to contribute to
