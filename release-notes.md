@@ -6,6 +6,8 @@
 
 ![image alt text](banner.png)
 
+* [1.1.50](#1150)
+
 * [1.1.46](#1146)
 
 * [1.1.45](#1145)
@@ -66,6 +68,8 @@ Although every attempt has been made to make this information as accurate as pos
 | indy-plenum | 1.9.0 |
 | indy-node | 1.9.0 |
 | sovrin | 1.1.50 |
+| sovtoken | 1.0.0 |
+| sovtokefees | 1.0.0 |
 
 ### Major Changes
 - Pluggable Request Handlers have been implemented
