@@ -76,10 +76,10 @@
         <p>
           The Sovrin DID scheme is defined by the following <a href="ftp://ftp.rfc-editor.org/in-notes/std/std68.txt">ABNF</a>:<br><br>
           <code>
-            sovrin-did    = "did:sov:idstring" *(":" subnamespace)<br>
-            idstring      = 21*22(char)<br>
+            sovrin-did    = "did:sov:" idstring *(":" subnamespace)<br>
+            idstring      = 21*22(base58char)<br>
             subnamespace  = ALPHA *(ALPHA / DIGIT / "_" / "-")<br>
-            char          = "1" / "2" / "3" / "4" / "5" / "6" / "7" / "8" / "9" / "A" / "B" / "C"<br/>
+            base58char          = "1" / "2" / "3" / "4" / "5" / "6" / "7" / "8" / "9" / "A" / "B" / "C"<br/>
               &nbsp;&nbsp;&nbsp;&nbsp;/ "D" / "E" / "F" / "G" / "H" / "J" / "K" / "L" / "M" / "N" / "P" / "Q"<br/>
               &nbsp;&nbsp;&nbsp;&nbsp;/ "R" / "S" / "T" / "U" / "V" / "W" / "X" / "Y" / "Z" / "a" / "b" / "c"<br/>
               &nbsp;&nbsp;&nbsp;&nbsp;/ "d" / "e" / "f" / "g" / "h" / "i" / "j" / "k" / "m" / "n" / "o" / "p"<br/>
@@ -116,7 +116,14 @@
         <h2>CRUD Operation Definitions</h2>
 
         <h3>Create (Register)</h3>
-        <p>The DID method specification must specify how a client creates a DID record—the combination of a DID and its associated document—on the target system, including all cryptographic operations necessary to establish proof of ownership.</p>
+        <p>
+            The DID method specification must specify how a client creates a DID record—the combination of a DID and its associated document—on the 
+            target system, including all cryptographic operations necessary to establish proof of ownership.
+            The Sovrin spec adds a new entry under <code>publicKey</code> called <code>authorizations</code>. 
+            This is used to indicate possible authorisations the public key is supposed to have. The keyword <code>ALL</code> means that the public key can make whatever change it wants to the DID doc.
+            While creating a new DID doc, the field <code>authorizations</code> cannot be left empty. It has to either contain the keyword <code>ALL</code> or be ommitted, 
+            in that case it is assumed that the key has all authorisations.
+        </p>
         <p>For example:</p>
         <p>To create a DID, you must submit a transaction that looks like this: <br>
           <pre>
@@ -129,13 +136,14 @@
                         "did": &lt;new DID that is being registered&gt;,
                         "document": {
                             "publicKey": [{
-                                "id": &lt;a valid unique identifier&gt;
-                                "type": &lt;ed25519, defined in appendix&gt;
-                                "publicKeyBase58": &lt;Key material encoded&gt;
+                                "id": &lt;a valid unique identifier&gt;,
+                                "type": &lt;ed25519, defined in appendix&gt;,
+                                "publicKeyBase58": &lt;Key material encoded&gt;,
+                                "authorizations": ["ALL"]
                             }],
                             "authentication": [{
-                                "type": &lt;type of DID authentication&gt;
-                                "publicKey": "&lt;reference to a publicKey object&gt;"
+                                "type": &lt;type of DID authentication&gt;,
+                                "publicKey": "&lt;reference to a publicKey object&gt;",
                             }],
                             "service": [{
                               "type": &lt;agentService, emailService, apiService, dnsService, etc&gt;,
@@ -174,19 +182,20 @@
             </pre> The transaction must be signed by a Trust Anchor and must provide an un-registered DID and a document of data
             about that DID. Possible outcomes from the create operation include:
             <ul>
-                <li>NACK: “Malformed transaction or missing required fields”</li>
+                <li>NACK: "Malformed transaction or missing required fields"</li>
                 <li>REJECT: "Authorization rules are invalid. DID already registered or non Trust Anchor authored the transaction or signature did not match”</li>
                 <li>SUCCESS: "Contains the sequence number of the transaction and the merkle proof"</li>
             </ul>
         </p>
-        <p>The DID document stored on the ledger as follows
+        <p>The DID document is rendered as follows. The exact data structure persisted on the ledger does not have to match the following and can vary for each node. 
           <pre>
             {
               "id": "did:sov:mnjkl98uipsndg2hdjdjuf7",
               "publicKey": [{
                   "id": "key1"
                   "type": "ED25519SignatureVerification",
-                  "publicKeyBase58": "..."
+                  "publicKeyBase58": "...",
+                  "authorizations": ["all"]
                 }],
               "authentication": [{
                   "type": "ED25519SigningAuthentication",
@@ -237,7 +246,8 @@
                             "publicKey": [{
                                 "id": &lt;a valid unique identifier&gt;
                                 "type": &lt;ED25519&gt;
-                                "publicKeyBase58": &lt;Key material encoded in format&gt;
+                                "publicKeyBase58": &lt;Key material encoded in format&gt;,
+                                "authorizations": ["all"]
                             },{
                                 "id": &lt;a valid unique identifier&gt;
                                 "type": &lt;ED25519&gt;
@@ -452,5 +462,19 @@
       <h2>Appendix B: Ed25519 Signature Suite</h2>
       A description to the Ed25519 Signature Suite can be found <a href="https://w3c-dvcg.github.io/lds-ed255192018/">here</a>.
     </section>
+    <section>
+        <h2>Appendix C: Public Key Authorizations</h2>
+        The following authorizations are supported:
+        <li>
+            <code>ADD_KEY</code>: Add new key to the DID doc. The new key can only have ADD_KEY authorization.
+        </li>
+        <li>
+            <code>REM_KEY</code>: Remove existing keys from the DID doc.
+        </li>
+        <li>
+            <code>ALL</code>: All possible authorizations. The key submitted during creation of DID doc has this authorisations. 
+            The key with this authorization can add keys with ADD_KEY, REM_KEY and ALL authorization
+        </li>
+      </section>
   </body>
 </html>
