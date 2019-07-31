@@ -1,0 +1,119 @@
+#!groovy
+
+@Library('SovrinHelpers@v2.2.2') _
+
+String pkgName = 'sovrin'
+String repoChannel = 'master'
+String clientRepoChannel = null
+Map serverEnv = [:]
+Map clientEnv = [:]
+
+String emailRecipients = params.INDY_NODE_RECIPIENTS ?: env.INDY_NODE_RECIPIENTS ?: ''
+Boolean gatherLogs = (params.GATHER_LOGS ?: env.GATHER_LOGS) != 'false'
+
+def localLib
+def err
+
+String scmRepoUrl
+String scmSha1
+
+try {
+    nodeWrapper('ubuntu') {
+        stage('Load local shared library') {
+            checkout scm
+            localLib = load 'build/pipeline.groovy'
+
+            scmRepoUrl = gitHelper.repoUrl()
+            scmSha1 = gitHelper.sha1()
+        }
+
+        stage("Get server env") {
+            serverEnv = localLib.resolveServerEnv(repoChannel)
+            echo "Server env: $serverEnv"
+        }
+
+        stage("Get client env") {
+            clientEnv = localLib.resolveClientEnv(serverEnv.sovtoken.src) 
+            echo "Client env: $clientEnv"
+
+            clientRepoChannel = (clientEnv.libindy.ver == clientEnv.libindy.src) ? 'stable' : 'master'
+        }
+    }
+
+    localLib.systemTests {
+        delegate.repoChannel = repoChannel
+        sovrinVer = serverEnv.sovrin.ver
+        sovtokenfeesVer = serverEnv.sovtokenfees.ver
+        sovtokenVer = serverEnv.sovtoken.ver
+        indyNodeVer = serverEnv.indyNode.ver
+        indyPlenumVer = serverEnv.indyPlenum.ver
+        libindyCryptoVer = serverEnv.libindyCrypto.ver
+        libsovtokenVer = clientEnv.libsovtoken.ver
+        libindyVer = clientEnv.libindy.ver
+        libindyPypiVer = clientEnv.libindy.pypi
+        testSchema = [
+            ['test_ledger.py'],
+            ['test_vc.py'],
+            ['test_consensus.py', 'TestTAASuite.py'],
+            ['test_upgrade.py', 'test_roles.py', 'test_freshness.py', 'TestMultiSigSuite.py'],
+            ['TestAuditSuite.py'],
+            // TODO might be groupped in parts once https://github.com/docker/docker-py/issues/2278 is resolved
+            ['TestAuthMapAttribSuite.py'],
+            ['TestAuthMapCredDefSuite.py'],
+            ['TestAuthMapMiscSuite.py'],
+            ['TestAuthMapNymSuite.py'],
+            ['TestAuthMapPluginsSuite.py'],
+            ['TestAuthMapRevocRegDefSuite.py'],
+            ['TestAuthMapRevocRegEntrySuite.py'],
+            ['TestAuthMapSchemaSuite.py'],
+            ['TestAuthMapUpgradeSuite.py'],
+            ['test_libsovtoken.py', 'TestFeesSuite.py'],
+        ]
+        testVersion = 'v0.8.9'
+        testVersionByTag = true
+        delegate.gatherLogs = gatherLogs
+    }
+} catch(Exception _err) {
+    currentBuild.result = "FAILED"
+    err = _err
+    throw _err
+} finally {
+    stage('Build result notification') {
+        String envVersions = [serverEnv.sovrin?.ver, serverEnv.sovtoken?.ver, serverEnv.indyNode?.ver].join(', ')
+        sendNotification.email {
+            to = emailRecipients
+            subject = "[${pkgName}][nightly] Build #${this.env.BUILD_NUMBER} ${err ? 'failed' : 'succeed'} for versions [$envVersions]"
+            body = """
+                |Build:
+                |   Project: \$PROJECT_NAME
+                |   Url: ${this.env.BUILD_URL}
+                |   Number: ${this.env.BUILD_NUMBER}
+                |
+                |Source:
+                |   Url: ${scmRepoUrl}/tree/${scmSha1}
+                |
+                |Environment:
+                |   Server:
+                |       channel: $repoChannel
+                |       sovrin: ${serverEnv.sovrin}
+                |       sovtoken: ${serverEnv.sovtoken}
+                |       sovtokenfees: ${serverEnv.sovtokenfees}
+                |       indy-node: ${serverEnv.indyNode}
+                |       indy-plenum: ${serverEnv.indyPlenum}
+                |       libindy-crypto: ${serverEnv.libindyCrypto}
+                |   Client:
+                |       channel: ${clientRepoChannel}
+                |       libsovtoken: ${clientEnv.libsovtoken}
+                |       libindy: ${clientEnv.libindy}
+                |       
+                |Check console output at ${this.env.BUILD_URL}console to view the details.
+            """.stripMargin()
+        }
+    }
+
+    if (err) {
+        stage('Error dump') {
+            echo "Pipeline failed: $err"
+        }
+    }
+}
