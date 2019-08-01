@@ -82,6 +82,7 @@ Although every attempt has been made to make this information as accurate as pos
 | Incorrect request validation | | [INDY-2164](https://jira.hyperledger.org/browse/INDY-2164) |
 | Need to make "reask_ledger_status" repeatable | | [INDY-2112](https://jira.hyperledger.org/browse/INDY-2112) |
 | When view change takes too long instance change should be sent periodically | | [INDY-2143](https://jira.hyperledger.org/browse/INDY-2143) |
+| Hotfix: Request GET_UTXO needs to take into account max limit for a message | | [ST-600](https://sovrin.atlassian.net/browse/ST-600) |
 
 ### Changes and Additions
 | Description | Additional Information | Ticket Number |
@@ -95,6 +96,8 @@ Although every attempt has been made to make this information as accurate as pos
 | Extract and integrate ConsensusDataProvider from Replica | | [INDY-2139](https://jira.hyperledger.org/browse/INDY-2139) |
 | TAA acceptance should use date, not time | | [INDY-2157](https://jira.hyperledger.org/browse/INDY-2157) |
 | Clean-up Pluggable Request Handlers | | [INDY-2154](https://jira.hyperledger.org/browse/INDY-2154) |
+| GET_UTXO needs to use pagination to be able to return all unspent UTXOs regardless of max message size | | [ST-602](https://sovrin.atlassian.net/browse/ST-602) |
+| Extended State Proof verification for GET_UTXO | | [ST-604](https://sovrin.atlassian.net/browse/ST-604) |
 
 
 ## 1.1.50
