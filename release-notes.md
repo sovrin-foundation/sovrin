@@ -6,7 +6,7 @@
 
 ![image alt text](banner.png)
 
-* [1.1.51](#1151)
+* [1.1.52](#1152)
 
 * [1.1.50](#1150)
 
@@ -55,7 +55,7 @@
 
 Although every attempt has been made to make this information as accurate as possible, please know there may be things that are omitted, not fully developed yet, or updates since this publication that were not included in the information below. Only the most pressing or significant items have been listed. For the entire list of tickets and or specific information about any given item, please visit the list at [Hyperleder Indy's Jira](https://jira.hyperledger.org/). Once logged in, simply navigate to Projects > Indy.
 
-## 1.1.51
+## 1.1.52
 
 ### Notices for Stewards
 
@@ -66,7 +66,7 @@ Although every attempt has been made to make this information as accurate as pos
 | --- | --- |
 | indy-plenum | 1.9.1 |
 | indy-node | 1.9.1 |
-| sovrin | 1.1.51 |
+| sovrin | 1.1.52 |
 | sovtoken | 1.0.1 |
 | sovtokefees | 1.0.1 |
 
