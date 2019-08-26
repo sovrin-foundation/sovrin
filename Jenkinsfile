@@ -79,7 +79,7 @@ def systemTests = { component, releaseVersion ->
             ['TestAuthMapUpgradeSuite.py'],
             ['test_libsovtoken.py', 'TestFeesSuite.py'],
         ]
-        testVersion = 'v0.8.11'
+        testVersion = 'v0.8.12'
         testVersionByTag = true
         delegate.gatherLogs = gatherLogs
     }
