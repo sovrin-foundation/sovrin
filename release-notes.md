@@ -6,7 +6,7 @@
 
 ![image alt text](banner.png)
 
-* [1.1.53](#1153)
+* [1.1.56](#1156)
 
 * [1.1.52](#1152)
 
@@ -57,10 +57,11 @@
 
 Although every attempt has been made to make this information as accurate as possible, please know there may be things that are omitted, not fully developed yet, or updates since this publication that were not included in the information below. Only the most pressing or significant items have been listed. For the entire list of tickets and or specific information about any given item, please visit the list at [Hyperleder Indy's Jira](https://jira.hyperledger.org/). Once logged in, simply navigate to Projects > Indy.
 
-## 1.1.53
+## 1.1.56
 
 ### Notices for Stewards
 
+**Migration script will be applied for buildernet only and will return error message in python shell for any other pools (if manual migration will be performed).**
 **There are possible OOM issues during 3+ hours of target load or large catch-ups at 8 GB RAM nodes pool so 32 GB is recommended.**
 
 ### Component Version Information
@@ -68,7 +69,7 @@ Although every attempt has been made to make this information as accurate as pos
 | --- | --- |
 | indy-plenum | 1.9.2 |
 | indy-node | 1.9.2 |
-| sovrin | 1.1.53 |
+| sovrin | 1.1.56 |
 | sovtoken | 1.0.2 |
 | sovtokefees | 1.0.2 |
 
