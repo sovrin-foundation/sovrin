@@ -62,12 +62,12 @@ def systemTests = { component, releaseVersion ->
         libindyVer = clientEnv.libindy.ver
         libindyPypiVer = clientEnv.libindy.pypi
         testSchema = [
-            ['test_ledger.py', 'test_state_proof'],
-            ['test_vc.py', 'test_off_ledger_signature'],
+            ['test_ledger.py', 'test_state_proof.py'],
+            ['test_vc.py', 'test_off_ledger_signature.py'],
             ['test_consensus.py', 'TestTAASuite.py'],
             ['test_roles.py', 'test_freshness.py', 'TestMultiSigSuite.py'],
             ['TestAuditSuite.py'],
-            ['TestCatchUpSuite'],
+            ['TestCatchUpSuite.py'],
             // TODO might be groupped in parts once https://github.com/docker/docker-py/issues/2278 is resolved
             ['TestAuthMapAttribSuite.py'],
             ['TestAuthMapCredDefSuite.py'],
