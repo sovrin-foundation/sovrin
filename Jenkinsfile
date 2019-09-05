@@ -62,8 +62,10 @@ def systemTests = { component, releaseVersion ->
         libindyVer = clientEnv.libindy.ver
         libindyPypiVer = clientEnv.libindy.pypi
         testSchema = [
-            ['test_ledger.py', 'test_state_proof.py'],
-            ['test_vc.py', 'test_off_ledger_signature.py'],
+            ['test_ledger.py'],
+            ['test_state_proof.py'],
+            ['test_vc.py'],
+            ['test_off_ledger_signature.py'],
             ['test_consensus.py', 'TestTAASuite.py'],
             ['test_roles.py', 'test_freshness.py', 'TestMultiSigSuite.py'],
             ['TestAuditSuite.py'],
