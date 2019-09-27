@@ -70,6 +70,7 @@ def systemTests = { component, releaseVersion ->
             ['test_roles.py', 'test_freshness.py', 'TestMultiSigSuite.py'],
             ['TestAuditSuite.py'],
             ['TestCatchUpSuite.py'],
+            ['TestCatchUpSuiteExtended.py'],
             // TODO might be groupped in parts once https://github.com/docker/docker-py/issues/2278 is resolved
             ['TestAuthMapAttribSuite.py'],
             ['TestAuthMapCredDefSuite.py'],
@@ -82,7 +83,7 @@ def systemTests = { component, releaseVersion ->
             ['TestAuthMapUpgradeSuite.py'],
             ['test_libsovtoken.py', 'TestFeesSuite.py'],
         ]
-        testVersion = 'v0.8.13'
+        testVersion = 'v0.8.14'
         testVersionByTag = true
         delegate.gatherLogs = gatherLogs
     }
