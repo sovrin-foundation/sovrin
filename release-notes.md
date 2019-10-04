@@ -76,8 +76,9 @@ Although every attempt has been made to make this information as accurate as pos
 | sovtokefees | 1.0.3 |
 
 ### Major Changes
-- PBFT View Change implementation
-- BLS fixes and improvements
+- PBFT View Change implementation (not enabled yet) and corresponding code improvements 
+- BLS multi-signature fixes and improvements
+- The latest version of ZMQ library support
 - Stability fixes
 
 ### Major Fixes
@@ -87,6 +88,8 @@ Although every attempt has been made to make this information as accurate as pos
 | Need to improve error message with invalid signature | | [INDY-2103](https://jira.hyperledger.org/browse/INDY-2103) |
 | A node may not be able to connect to another node if another node was able to connect | | [INDY-2183](https://jira.hyperledger.org/browse/INDY-2183) |
 | ZMQError: Address already in use when restarting client stack | | [INDY-2212](https://jira.hyperledger.org/browse/INDY-2212) |
+| State proofs and audit proofs are not working for token ledger after transaction with FEEs is written | | [ST-623](https://sovrin.atlassian.net/browse/ST-623) |
+| Unexpected change to file access permissions | | [ST-621](https://sovrin.atlassian.net/browse/ST-621) |
 
 ### Changes and Additions
 | Description | Additional Information | Ticket Number |
@@ -119,8 +122,6 @@ Although every attempt has been made to make this information as accurate as pos
 | Description | Additional Information | Ticket Number |
 | --- | --- | --- |
 | One node doesn't catch up after promotion | | [INDY-2222](https://jira.hyperledger.org/browse/INDY-2222) |
-| State proofs and audit proofs are not working for token ledger after transaction with FEEs is written | | [ST-623](https://sovrin.atlassian.net/browse/ST-623) |
-| Unexpected change to file access permissions | | [ST-621](https://sovrin.atlassian.net/browse/ST-621) |
 
 
 ## 1.1.56
