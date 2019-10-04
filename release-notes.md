@@ -113,11 +113,14 @@ Although every attempt has been made to make this information as accurate as pos
 | Modify WriteReqManager to meet Executor interface needs | | [INDY-1337](https://jira.hyperledger.org/browse/INDY-1337) |
 | Stop resetting ppSeqNo (and relying on this) in new view | | [INDY-1336](https://jira.hyperledger.org/browse/INDY-1336) |
 | Enable full ordering of batches from last view that have been already ordered, make execution on replicas that executed them no-op | | [INDY-1335](https://jira.hyperledger.org/browse/INDY-1335) |
+| Balance checker script | | [ST-620](https://sovrin.atlassian.net/browse/ST-620) |
 
 ### Known Issues
 | Description | Additional Information | Ticket Number |
 | --- | --- | --- |
 | One node doesn't catch up after promotion | | [INDY-2222](https://jira.hyperledger.org/browse/INDY-2222) |
+| State proofs and audit proofs are not working for token ledger after transaction with FEEs is written | | [ST-623](https://sovrin.atlassian.net/browse/ST-623) |
+| Unexpected change to file access permissions | | [ST-621](https://sovrin.atlassian.net/browse/ST-621) |
 
 
 ## 1.1.56
