@@ -38,5 +38,5 @@ setup(
              '*.css', '*.ico', '*.png', 'LICENSE', 'LEGAL', '*.indy']},
     include_package_data=True,
 
-    install_requires=['indy-node==1.10.0', 'sovtoken==1.0.3', 'sovtokenfees==1.0.3'],
+    install_requires=['indy-node==1.11.0.rc1', 'sovtoken==1.0.4.rc22', 'sovtokenfees==1.0.4.rc22'],
 )
