@@ -19,8 +19,7 @@ LIVE_NETWORK='live'
 DEFAULT_NETWORK=$SANDBOX_NETWORK
 
 ANYONE_CAN_WRITE=False
-INDY_VERSION_MATCHING='{"1.1.52": "1.9.1", "1.1.24": "0.9.3"}'
-
+INDY_VERSION_MATCHING='{"1.1.52": "1.9.1", "1.1.24": "0.9.3", "1.1.35": "1.6.83"}'
 
 mkdir -p $GENERAL_CONFIG_DIR
 mkdir -p /var/lib/indy
