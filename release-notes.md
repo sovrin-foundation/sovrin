@@ -6,7 +6,7 @@
 
 ![image alt text](banner.png)
 
-* [1.1.62](#1162)
+* [1.1.63](#1163)
 
 * [1.1.60](#1160)
 
@@ -74,7 +74,7 @@ Although every attempt has been made to make this information as accurate as pos
 | --- | --- |
 | indy-plenum | 1.12.0 |
 | indy-node | 1.12.0 |
-| sovrin | 1.1.62 |
+| sovrin | 1.1.63 |
 | sovtoken | 1.0.5 |
 | sovtokefees | 1.0.5 |
 
