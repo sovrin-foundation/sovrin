@@ -64,13 +64,13 @@ def systemTests = { component, releaseVersion ->
         testSchema = [
             ['test_ledger.py'],
             ['test_state_proof.py'],
-            ['test_vc.py'],
+            ['TestViewChangeSuite.py'],
             ['test_off_ledger_signature.py'],
-            ['test_consensus.py', 'TestTAASuite.py'],
+            ['TestConsensusSuite.py', 'TestTAASuite.py'],
             ['test_roles.py', 'test_freshness.py', 'TestMultiSigSuite.py'],
-            // ['TestAuditSuite.py'],
-            // ['TestCatchUpSuite.py'],
-            // ['TestCatchUpSuiteExtended.py'],
+            ['TestAuditSuite.py'],
+            ['TestCatchUpSuite.py'],
+            ['TestCatchUpSuiteExtended.py'],
             // TODO might be groupped in parts once https://github.com/docker/docker-py/issues/2278 is resolved
             ['TestAuthMapAttribSuite.py'],
             ['TestAuthMapCredDefSuite.py'],
@@ -82,8 +82,10 @@ def systemTests = { component, releaseVersion ->
             ['TestAuthMapSchemaSuite.py'],
             ['TestAuthMapUpgradeSuite.py'],
             ['test_libsovtoken.py', 'TestFeesSuite.py'],
+            ['TestAdHocSuite.py'],
+            ['TestProductionSuite.py']
         ]
-        testVersion = 'v0.8.15'
+        testVersion = 'v0.8.28'
         testVersionByTag = true
         delegate.gatherLogs = gatherLogs
     }
