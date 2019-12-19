@@ -37,5 +37,5 @@ setup(
         '': ['*.txt', '*.md', '*.rst', '*.json', '*.conf', '*.html',
              '*.css', '*.ico', '*.png', 'LICENSE', 'LEGAL', '*.indy']},
     include_package_data=True,
-    install_requires=['indy-node==1.12.1.dev1163', 'sovtoken==1.0.6.dev134', 'sovtokenfees==1.0.6.dev134'],
+    install_requires=['indy-node==1.12.1.dev1165', 'sovtoken==1.0.6.dev135', 'sovtokenfees==1.0.6.dev135'],
 )
