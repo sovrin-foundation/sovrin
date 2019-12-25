@@ -86,6 +86,7 @@ def systemTests = { component, releaseVersion ->
             ['TestProductionSuite.py']
         ]
         testVersion = 'v0.8.28'
+        testVersion = 'v0.8.35'
         testVersionByTag = true
         delegate.gatherLogs = gatherLogs
     }
