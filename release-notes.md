@@ -6,7 +6,7 @@
 
 ![image alt text](banner.png)
 
-* [1.1.65](#1165)
+* [1.1.66](#1166)
 
 * [1.1.63](#1163)
 
@@ -65,9 +65,13 @@
 
 Although every attempt has been made to make this information as accurate as possible, please know there may be things that are omitted, not fully developed yet, or updates since this publication that were not included in the information below. Only the most pressing or significant items have been listed. For the entire list of tickets and or specific information about any given item, please visit the list at [Hyperleder Indy's Jira](https://jira.hyperledger.org/). Once logged in, simply navigate to Projects > Indy.
 
-## 1.1.65
+## 1.1.66
 
 ### Notices for Stewards
+
+**Use forced simultaneous pool upgrade.**
+
+**Please be careful with demoting/promoting/adding nodes (see Known Issues for details).**
 
 **There are possible OOM issues during 3+ hours of target load or large catch-ups at 8 GB RAM nodes pool so 32 GB is recommended.**
 
@@ -76,7 +80,7 @@ Although every attempt has been made to make this information as accurate as pos
 | --- | --- |
 | indy-plenum | 1.12.1 |
 | indy-node | 1.12.1 |
-| sovrin | 1.1.65 |
+| sovrin | 1.1.66 |
 | sovtoken | 1.0.6 |
 | sovtokefees | 1.0.6 |
 
@@ -113,6 +117,7 @@ Although every attempt has been made to make this information as accurate as pos
 | A node lagging behind may not be able to finish view change if nodes have been added/demoted | | [INDY-2308](https://jira.hyperledger.org/browse/INDY-2308) |
 | Up to F Nodes may not be able to finish View Change if there are uncommitted NODE txns | | [INDY-2319](https://jira.hyperledger.org/browse/INDY-2319) |
 | A node may start re-sending messages in a loop in case of connection issues | | [INDY-2318](https://jira.hyperledger.org/browse/INDY-2318) |
+| A lagging node may use wrong N and F quorum values and never finish view change if there are NODE txns being processed | | [INDY-2320](https://jira.hyperledger.org/browse/INDY-2320) |
 
 
 ## 1.1.63
