@@ -1,4 +1,4 @@
-﻿﻿# Transaction Author Agreement V2
+﻿# Transaction Author Agreement V2
 https://sovrin.org/
 
 
@@ -83,50 +83,50 @@ ACKNOWLEDGED, THE PARTIES AGREE AS FOLLOWS:
 ## 1) Definitions
 
 
-- a. "**Data Protection Laws**" means the GDPR and any other data protection and
-  privacy laws, regulations, and regulatory requirements applicable to a party
-  under this Agreement.
+a. "**Data Protection Laws**" means the GDPR and any other data protection and
+privacy laws, regulations, and regulatory requirements applicable to a party
+under this Agreement.
 
 
-- b. "**GDPR**" means the General Data Protection Regulation (EU) 2016/679
-  on the protection of natural persons with regard to the Processing of personal
-  data and on the free movement of such data, and repealing Directive 95/46/EC,
-  and any amendment or replacement to it.
+b. "**GDPR**" means the General Data Protection Regulation (EU) 2016/679
+on the protection of natural persons with regard to the Processing of personal
+data and on the free movement of such data, and repealing Directive 95/46/EC,
+and any amendment or replacement to it.
 
 
-- c. "**Impermissible Personal Data**" means the Personal Data that
-  Transaction Author writes to the Sovrin Ledger Networks that is not
-  Permissible Personal Data.
+c. "**Impermissible Personal Data**" means the Personal Data that
+Transaction Author writes to the Sovrin Ledger Networks that is not
+Permissible Personal Data.
 
 
-- d. "**Personal Data Transactions**" has the meaning set forth in Section 3
-  below.
+d. "**Personal Data Transactions**" has the meaning set forth in Section 3
+below.
 
 
-- e. "**Permissible Personal Data**" means Personal Data that Transaction
-  Author writes to the Sovrin Ledger Networks that is permitted under this
-  Agreement and the Sovrin Governance Framework (including the
-  [Sovrin Ledger Access Policies](https://sovrin.org/wp-content/uploads/Sovrin-Ledger-Access-Policies-V1.pdf)).
+e. "**Permissible Personal Data**" means Personal Data that Transaction
+Author writes to the Sovrin Ledger Networks that is permitted under this
+Agreement and the Sovrin Governance Framework (including the
+[Sovrin Ledger Access Policies](https://sovrin.org/wp-content/uploads/Sovrin-Ledger-Access-Policies-V1.pdf)).
 
 
-- f. "**Personal Data**" means information that relates, directly or
-  indirectly, to a data subject, including without limitation, names, email
-  addresses, postal addresses, identification numbers, location data, online
-  identifiers or one or more factors specific to the physical, physiological,
-  genetic, mental, economic, cultural or social identity of the data subject.
+f. "**Personal Data**" means information that relates, directly or
+indirectly, to a data subject, including without limitation, names, email
+addresses, postal addresses, identification numbers, location data, online
+identifiers or one or more factors specific to the physical, physiological,
+genetic, mental, economic, cultural or social identity of the data subject.
 
 
-- g. "**Process**" or "**Processing**" means any operation or set of
-  operations which is performed on Transactions data, whether or not by
-  automated means, such as the access, collection, use, storage, disclosure,
-  dissemination, combination, recording, organization, structuring, adaption,
-  alteration, copying, transfer, retrieval, consultation, disposal, restriction,
-  erasure and/or destruction of Transactions data.
+g. "**Process**" or "**Processing**" means any operation or set of
+operations which is performed on Transactions data, whether or not by
+automated means, such as the access, collection, use, storage, disclosure,
+dissemination, combination, recording, organization, structuring, adaption,
+alteration, copying, transfer, retrieval, consultation, disposal, restriction,
+erasure and/or destruction of Transactions data.
 
 
-- h. "**Sovrin Governance Framework**" means Sovrin Foundation’s
-  governance policies and rules available at
-  https://sovrin.org/governance-framework/ or any successor website.
+h. "**Sovrin Governance Framework**" means Sovrin Foundation’s
+governance policies and rules available at
+https://sovrin.org/governance-framework/ or any successor website.
 
 
 Unless otherwise defined above, all capitalized terms used in this Agreement
@@ -141,29 +141,29 @@ only for purposes of use of such defined terms.
 ## 2) Permission to Write to the Sovrin Ledger Networks
 
 
-- a. Sovrin Foundation hereby grants to Transaction Author a non-exclusive,
-  non-assignable, non-sublicensable, royalty free, revocable license to write to
-  and use the Sovrin Ledger Networks in accordance with this Agreement and the
-  Sovrin Governance Framework.
+a. Sovrin Foundation hereby grants to Transaction Author a non-exclusive,
+non-assignable, non-sublicensable, royalty free, revocable license to write to
+and use the Sovrin Ledger Networks in accordance with this Agreement and the
+Sovrin Governance Framework.
 
 
-- b. When authoring Transactions under the policy of Permissioned Write Access,
-  a Transaction Author may only write to the Sovrin Ledger Networks by using an
-  authorized Transaction Endorser. In the event that Sovrin Foundation enables
-  Public Write Access to the Sovrin Ledger Networks, Transaction Author will
-  not need a Transaction Endorser to endorse a Transaction.
+b. When authoring Transactions under the policy of Permissioned Write Access,
+a Transaction Author may only write to the Sovrin Ledger Networks by using an
+authorized Transaction Endorser. In the event that Sovrin Foundation enables
+Public Write Access to the Sovrin Ledger Networks, Transaction Author will
+not need a Transaction Endorser to endorse a Transaction.
 
 
-- c. Once an initial Transaction has been written to one of the Sovrin Ledger
-  Networks by Transaction Author ("**Initial Transaction**"), the
-  Transaction Author is granted permission to make additional Transactions to
-  update the state of a previous Transaction ("**Update Transactions**"). Please
-  note, an Update Transaction does not remove the Initial Transaction, which
-  will remain on the Sovrin Ledger due to its immutability and may remain on
-  Sovrin Test Networks unless they are reset. Transaction Author may make Update
-  Transactions if and only if Transaction Author was the author of the
-  Initial Transaction. Update Transactions are Transactions and are subject to
-  all the terms of this Agreement.
+c. Once an initial Transaction has been written to one of the Sovrin Ledger
+Networks by Transaction Author ("**Initial Transaction**"), the
+Transaction Author is granted permission to make additional Transactions to
+update the state of a previous Transaction ("**Update Transactions**"). Please
+note, an Update Transaction does not remove the Initial Transaction, which
+will remain on the Sovrin Ledger due to its immutability and may remain on
+Sovrin Test Networks unless they are reset. Transaction Author may make Update
+Transactions if and only if Transaction Author was the author of the
+Initial Transaction. Update Transactions are Transactions and are subject to
+all the terms of this Agreement.
 
 
 
@@ -247,28 +247,28 @@ agrees that:
 ## 4) Term and Termination
 
 
-- a. This Agreement commences on the Effective Date and shall remain in force
-  until terminated by either Party pursuant to this **Section 4 (Term and
-  Termination)**.
+a. This Agreement commences on the Effective Date and shall remain in force
+until terminated by either Party pursuant to this **Section 4 (Term and
+Termination)**.
 
 
-- b. Either Party may terminate this Agreement: (i) if the other Party has
-  materially defaulted in the performance of any of its obligations under this
-  Agreement and has not cured such default within fifteen (15) business days of
-  receipt of written notice from the non-defaulting Party of such default or
-  (ii) immediately in the event of any government sanctions or other legal
-  measures that make it unlawful for Transaction Author to write Transactions to
-  the Sovrin Ledger Networks.
+b. Either Party may terminate this Agreement: (i) if the other Party has
+materially defaulted in the performance of any of its obligations under this
+Agreement and has not cured such default within fifteen (15) business days of
+receipt of written notice from the non-defaulting Party of such default or
+(ii) immediately in the event of any government sanctions or other legal
+measures that make it unlawful for Transaction Author to write Transactions to
+the Sovrin Ledger Networks.
 
 
-- c. Additionally, Transaction Author may terminate this Agreement upon 30 days'
-  advance written notice to Sovrin Foundation and ceasing all use of the
-  Sovrin Ledger Networks.
+c. Additionally, Transaction Author may terminate this Agreement upon 30 days'
+advance written notice to Sovrin Foundation and ceasing all use of the
+Sovrin Ledger Networks.
 
 
-- d. Upon termination or expiration of this Agreement for any reason the rights
-  granted to Transaction Author by Sovrin Foundation under this Agreement
-  automatically terminate.
+d. Upon termination or expiration of this Agreement for any reason the rights
+granted to Transaction Author by Sovrin Foundation under this Agreement
+automatically terminate.
 
 
 
@@ -276,37 +276,37 @@ agrees that:
 ## 5) Representations and Warranties; Disclaimer
 
 
-- a. By Sovrin Foundation.
+a. By Sovrin Foundation.
 
 
   1. THE SOVRIN LEDGER NETWORKS AND THE SOVRIN NETWORK ARE PROVIDED AS-IS WITH
-     ALL FAULTS. TO THE FULLEST EXTENT PERMITTED BY APPLICABLE LAW, THE SOVRIN
-     FOUNDATION MAKES NO REPRESENTATION OR WARRANTY CONCERNING THE ACCURACY,
-     RELIABILITY, OR COMPLETENESS OF ANY INFORMATION OR DATA OBTAINED OR DERIVED
-     THROUGH THE USE OF THE SOVRIN LEDGER NETWORKS AS THE SOVRIN LEDGER NETWORKS
-     OPERATE ON A DISTRIBUTED NETWORK AND SOVRIN FOUNDATION DOES NOT CONTROL
-     THE INFORMATION OR DATA WRITTEN TO THE SOVRIN LEDGER NETWORKS. THE SOVRIN
-     FOUNDATION DISCLAIMS ANY OTHER REPRESENTATIONS OR WARRANTIES, EXPRESS OR
-     IMPLIED, INCLUDING WITHOUT LIMITATION, ANY WARRANTIES OF MERCHANTABILITY OR
-     FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT, ACCURACY OR
-     COMPLETENESS OF DATA.
+  ALL FAULTS. TO THE FULLEST EXTENT PERMITTED BY APPLICABLE LAW, THE SOVRIN
+  FOUNDATION MAKES NO REPRESENTATION OR WARRANTY CONCERNING THE ACCURACY,
+  RELIABILITY, OR COMPLETENESS OF ANY INFORMATION OR DATA OBTAINED OR DERIVED
+  THROUGH THE USE OF THE SOVRIN LEDGER NETWORKS AS THE SOVRIN LEDGER NETWORKS
+  OPERATE ON A DISTRIBUTED NETWORK AND SOVRIN FOUNDATION DOES NOT CONTROL
+  THE INFORMATION OR DATA WRITTEN TO THE SOVRIN LEDGER NETWORKS. THE SOVRIN
+  FOUNDATION DISCLAIMS ANY OTHER REPRESENTATIONS OR WARRANTIES, EXPRESS OR
+  IMPLIED, INCLUDING WITHOUT LIMITATION, ANY WARRANTIES OF MERCHANTABILITY OR
+  FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT, ACCURACY OR
+  COMPLETENESS OF DATA.
 
 
   2. As the architect of the Sovrin Network and administrator of the Sovrin
-     Governance Framework, Sovrin Foundation is an independent controller of
-     the Personal Data Transactions. In no event will Sovrin Foundation be
-     held liable for the actions or omissions of Transaction Author arising out
-     any Personal Data that Transaction Author writes to the Sovrin Ledger
-     Networks in breach of this Agreement and the Sovrin Governance Framework,
-     including but not limited to any Impermissible Personal Data.
-     Notwithstanding the foregoing, if Transaction Author writes Permissible
-     Personal Data to the Sovrin Ledger Networks in express compliance with this
-     Agreement and the Sovrin Governance Framework, Sovrin Foundation is
-     responsible for the lawfulness of such Processing once such Permissible
-     Personal Data is written to the Sovrin Ledger Networks.
+  Governance Framework, Sovrin Foundation is an independent controller of
+  the Personal Data Transactions. In no event will Sovrin Foundation be
+  held liable for the actions or omissions of Transaction Author arising out
+  any Personal Data that Transaction Author writes to the Sovrin Ledger
+  Networks in breach of this Agreement and the Sovrin Governance Framework,
+  including but not limited to any Impermissible Personal Data.
+  Notwithstanding the foregoing, if Transaction Author writes Permissible
+  Personal Data to the Sovrin Ledger Networks in express compliance with this
+  Agreement and the Sovrin Governance Framework, Sovrin Foundation is
+  responsible for the lawfulness of such Processing once such Permissible
+  Personal Data is written to the Sovrin Ledger Networks.
 
 
-- b. By Transaction Author. Transaction Author represents and warrants:
+b. By Transaction Author. Transaction Author represents and warrants:
 
 
   1. if a natural person, he or she is 16 years of age or older;
@@ -319,40 +319,40 @@ agrees that:
 
 
   4. the Transactions will not contain data or information that infringes or
-     misappropriates the intellectual property rights of any third party;
+  misappropriates the intellectual property rights of any third party;
 
 
   5. it understands that the Sovrin Ledger Networks operate on a distributed
-     network and that Sovrin Foundation disclaims any responsibilities with
-     respect to access of data from the Sovrin Ledger Networks;
+  network and that Sovrin Foundation disclaims any responsibilities with
+  respect to access of data from the Sovrin Ledger Networks;
 
 
   6. it understands and acknowledges that Sovrin Foundation does not control the
-     transfer of data between Nodes and over communications facilities,
-     including the internet, and that the Sovrin Ledger Networks may be subject
-     to limitations, delays, and other problems inherent in the use of such
-     communications facilities;
+  transfer of data between Nodes and over communications facilities,
+  including the internet, and that the Sovrin Ledger Networks may be subject
+  to limitations, delays, and other problems inherent in the use of such
+  communications facilities;
 
 
   7. it understands and acknowledges that there is regulatory uncertainty
-     regarding the Sovrin Ledger Networks’ compliance with Data Protection Laws
-     as it relates to Permissioned Write Access, Public Write Access, and
-     Personal Data, including cross-border transfers of data, Processing of
-     Personal Data, the right to effective erasure of data, as well as the scope
-     and nature of Personal Data itself;
+  regarding the Sovrin Ledger Networks’ compliance with Data Protection Laws
+  as it relates to Permissioned Write Access, Public Write Access, and
+  Personal Data, including cross-border transfers of data, Processing of
+  Personal Data, the right to effective erasure of data, as well as the scope
+  and nature of Personal Data itself;
 
 
   8. it understands and acknowledges that Sovrin Foundation may modify, at any
-     time, its Sovrin Ledger Access Policies and the terms of this Agreement and
-     any other agreement or document related to the Sovrin Ledger Networks based
-     on new information, guidance, or Data Protection Laws; and
+  time, its Sovrin Ledger Access Policies and the terms of this Agreement and
+  any other agreement or document related to the Sovrin Ledger Networks based
+  on new information, guidance, or Data Protection Laws; and
 
 
   9. it understands and acknowledges that a Steward and/or Sovrin Foundation
-     may obscure a Transaction if (i) the Steward or Sovrin Foundation is
-     required to do so by a court order or applicable law or (ii) the Steward or
-     Sovrin Foundation has evidence that the Transaction violates the terms of
-     this Agreement or any applicable law.
+  may obscure a Transaction if (i) the Steward or Sovrin Foundation is
+  required to do so by a court order or applicable law or (ii) the Steward or
+  Sovrin Foundation has evidence that the Transaction violates the terms of
+  this Agreement or any applicable law.
 
 
 
@@ -360,26 +360,26 @@ agrees that:
 ## 6) Indemnification
 
 
-- a. To the fullest extent permitted by applicable law, Transaction Author will
-  indemnify and hold harmless Sovrin Foundation, and each of its respective
-  officers, directors, agents, partners and employees (individually and
-  collectively, the "**Sovrin Parties**") from and against any losses,
-  liabilities, claims, demands, damages, expenses or costs ("**Claims**")
-  brought by a third party arising out of or related to (i) Transaction Author’s
-  access to or use of the Sovrin Ledger Networks in violation of this Agreement;
-  (ii) Transaction Author’s violation, misappropriation or infringement of any
-  rights of another (including intellectual property rights or privacy rights);
-  or (iii) Transaction Author’s violation of applicable law.
+a. To the fullest extent permitted by applicable law, Transaction Author will
+indemnify and hold harmless Sovrin Foundation, and each of its respective
+officers, directors, agents, partners and employees (individually and
+collectively, the "**Sovrin Parties**") from and against any losses,
+liabilities, claims, demands, damages, expenses or costs ("**Claims**")
+brought by a third party arising out of or related to (i) Transaction Author’s
+access to or use of the Sovrin Ledger Networks in violation of this Agreement;
+(ii) Transaction Author’s violation, misappropriation or infringement of any
+rights of another (including intellectual property rights or privacy rights);
+or (iii) Transaction Author’s violation of applicable law.
 
 
-- b. Transaction Author agrees to promptly notify the Sovrin Parties in writing
-  of any Claims, cooperate with the Sovrin Parties in defending such Claims and
-  pay all fees, costs and expenses associated with defending such Claims
-  (including attorneys’ fees). Transaction Author also agrees that the Sovrin
-  Parties will have sole control of the defense or settlement, at the Sovrin
-  Foundation’s sole option, of any Claims. This indemnity is in addition to, and
-  not in lieu of, any other indemnities set forth in a written agreement between
-  Transaction Author and Sovrin Foundation or the other Sovrin Parties.
+b. Transaction Author agrees to promptly notify the Sovrin Parties in writing
+of any Claims, cooperate with the Sovrin Parties in defending such Claims and
+pay all fees, costs and expenses associated with defending such Claims
+(including attorneys’ fees). Transaction Author also agrees that the Sovrin
+Parties will have sole control of the defense or settlement, at the Sovrin
+Foundation’s sole option, of any Claims. This indemnity is in addition to, and
+not in lieu of, any other indemnities set forth in a written agreement between
+Transaction Author and Sovrin Foundation or the other Sovrin Parties.
 
 
 
@@ -447,90 +447,90 @@ UNDER THIS AGREEMENT.
 ## 9) Miscellaneous
 
 
-- a. Notice. Any notice, payment, demand or communication required or permitted
-  to be delivered or given by the provisions of this Agreement shall be deemed
-  to have been effectively delivered or given and received on the date
-  personally or electronically delivered to the respective Party to whom it is
-  directed, or when deposited by registered or certified mail, with postage and
-  charges prepaid and addressed to each respective Party. For the Transaction
-  Author, notices will be sent to the agent service endpoint of the Transaction
-  Author’s DID as long as Transaction Author authorizes such a connection or
-  sent via other mechanism agreed to by the parties. For Sovrin Foundation,
-  notices will be sent to Attn: Legal, 86 N University Ave, Suite 110, Provo, UT
-  84601.
+a. Notice. Any notice, payment, demand or communication required or permitted
+to be delivered or given by the provisions of this Agreement shall be deemed
+to have been effectively delivered or given and received on the date
+personally or electronically delivered to the respective Party to whom it is
+directed, or when deposited by registered or certified mail, with postage and
+charges prepaid and addressed to each respective Party. For the Transaction
+Author, notices will be sent to the agent service endpoint of the Transaction
+Author’s DID as long as Transaction Author authorizes such a connection or
+sent via other mechanism agreed to by the parties. For Sovrin Foundation,
+notices will be sent to Attn: Legal, 86 N University Ave, Suite 110, Provo, UT
+84601.
 
 
-- b. Severability. If any provision of this Agreement is held invalid, illegal,
-  or unenforceable, the validity, legality, and enforceability of any of the
-  remaining provisions of this Agreement shall not in any way be affected or
-  impaired.
+b. Severability. If any provision of this Agreement is held invalid, illegal,
+or unenforceable, the validity, legality, and enforceability of any of the
+remaining provisions of this Agreement shall not in any way be affected or
+impaired.
 
 
-- c. Relationship of the Parties. This Agreement does not create a partnership,
-  franchise, joint venture, agency, fiduciary or employment relationship between
-  the Parties. Neither Party will represent that it has any authority to assume
-  or create any obligation, express or implied, on behalf of the other Party,
-  nor to represent the other Party as agent, employee, franchisee, or in any
-  other capacity. There are no third-party beneficiaries to this Agreement.
-  Neither Party shall make any proposals, promises, warranties, guarantees, or
-  representations on behalf of the other Party or in the other Party’s name.
+c. Relationship of the Parties. This Agreement does not create a partnership,
+franchise, joint venture, agency, fiduciary or employment relationship between
+the Parties. Neither Party will represent that it has any authority to assume
+or create any obligation, express or implied, on behalf of the other Party,
+nor to represent the other Party as agent, employee, franchisee, or in any
+other capacity. There are no third-party beneficiaries to this Agreement.
+Neither Party shall make any proposals, promises, warranties, guarantees, or
+representations on behalf of the other Party or in the other Party’s name.
 
 
-- d. Assignment. Neither Party will voluntarily, or by operation of law, assign
-  or otherwise transfer this Agreement without the other Party’s express prior
-  written consent which will not be unreasonably withheld, provided that no such
-  consent is required for an assignment or transfer to a wholly or majority
-  owned subsidiary or to a successor in interest by reason of merger or
-  consolidation or sale of all or substantially all of the assets of such Party
-  relating to the subject matter of this Agreement.
+d. Assignment. Neither Party will voluntarily, or by operation of law, assign
+or otherwise transfer this Agreement without the other Party’s express prior
+written consent which will not be unreasonably withheld, provided that no such
+consent is required for an assignment or transfer to a wholly or majority
+owned subsidiary or to a successor in interest by reason of merger or
+consolidation or sale of all or substantially all of the assets of such Party
+relating to the subject matter of this Agreement.
 
 
-- e. Waiver. The waiver by either Party of a breach, default, delay or omission
-  of any of the provisions of this Agreement by the other Party will not be
-  construed as a waiver of any subsequent breach of the same or other
-  provisions.
+e. Waiver. The waiver by either Party of a breach, default, delay or omission
+of any of the provisions of this Agreement by the other Party will not be
+construed as a waiver of any subsequent breach of the same or other
+provisions.
 
 
-- f. Entire Agreement. This Agreement, including all documents incorporated into
-  this Agreement by reference, constitutes the entire agreement of the Parties
-  with respect to the subject matter of this Agreement, and supersedes any and
-  all prior agreements and understandings of the Parties, whether written or
-  oral, with respect to such subject matter. This Agreement supersedes all prior
-  Transaction Author Agreements between Sovrin Foundation and Transaction Author
-  with respect to the subject matter hereof.
+f. Entire Agreement. This Agreement, including all documents incorporated into
+this Agreement by reference, constitutes the entire agreement of the Parties
+with respect to the subject matter of this Agreement, and supersedes any and
+all prior agreements and understandings of the Parties, whether written or
+oral, with respect to such subject matter. This Agreement supersedes all prior
+Transaction Author Agreements between Sovrin Foundation and Transaction Author
+with respect to the subject matter hereof.
 
 
-- g. Modification of This Agreement. Sovrin Foundation reserves the right to
-  modify this Agreement at any time in accordance with this provision,
-  including, but not limited to, changes in applicable law or guidance from any
-  jurisdiction. Sovrin Foundation will post an amended version of this Agreement
-  on its website at least forty-five (45) days prior to the date on which all
-  Transaction Authors must begin operating under the amendment (the "**Amendment
-  Cutover Date**"). If Transaction Author continues to Author Transactions to
-  the Sovrin Ledger Networks after the Amendment Cutover Date, such continued
-  use will constitute acceptance of the amended Agreement.
+g. Modification of This Agreement. Sovrin Foundation reserves the right to
+modify this Agreement at any time in accordance with this provision,
+including, but not limited to, changes in applicable law or guidance from any
+jurisdiction. Sovrin Foundation will post an amended version of this Agreement
+on its website at least forty-five (45) days prior to the date on which all
+Transaction Authors must begin operating under the amendment (the "**Amendment
+Cutover Date**"). If Transaction Author continues to Author Transactions to
+the Sovrin Ledger Networks after the Amendment Cutover Date, such continued
+use will constitute acceptance of the amended Agreement.
 
 
-- h. Counterparts. This Agreement may be executed in two or more counterparts,
-  each of which will be deemed an original, but all of which taken together will
-  constitute one and the same instrument
+h. Counterparts. This Agreement may be executed in two or more counterparts,
+each of which will be deemed an original, but all of which taken together will
+constitute one and the same instrument
 
 
-- i. Survival. Any terms that by their nature survive termination or expiration
-  of this Agreement shall survive.
+i. Survival. Any terms that by their nature survive termination or expiration
+of this Agreement shall survive.
 
 
-- j. Governmental Entities. If Transaction Author is a governmental entity and
-  it determines that GDPR does not apply to it and its Processing of
-  Transactions, then:
+j. Governmental Entities. If Transaction Author is a governmental entity and
+it determines that GDPR does not apply to it and its Processing of
+Transactions, then:
   - a. to the extent that the GDPR requirements referenced in this Agreement are
-    equivalent to the requirements under Data Protection Laws in its own
-    jurisdiction, it will comply with any such requirements; and
+  equivalent to the requirements under Data Protection Laws in its own
+  jurisdiction, it will comply with any such requirements; and
 
 
   - b. to the extent that GDPR requirements referenced in this Agreement differ
-    from requirements under Data Protection Laws in its own jurisdiction, it
-    will comply with the requirements under its own legislation.
+  from requirements under Data Protection Laws in its own jurisdiction, it
+  will comply with the requirements under its own legislation.
 
 
 
