@@ -1,4 +1,4 @@
-﻿# Transaction Author Agreement V2
+﻿﻿# Transaction Author Agreement V2
 https://sovrin.org/
 
 
@@ -171,7 +171,7 @@ only for purposes of use of such defined terms.
 ## 3) Transaction Author Obligations
 
 
-- a. With regard to all Transactions, Transaction Author will:
+a. With regard to all Transactions, Transaction Author will:
 
 
   1. comply with any requirements imposed by the Transaction Endorser on the
@@ -184,10 +184,10 @@ only for purposes of use of such defined terms.
   Data pursuant to Section 3(b) below.
 
 
-- b. If Sovrin Foundation approves Public Write Access and permits
-  Transaction Authors to write Transactions that contain Permissible Personal
-  Data ("**Personal Data Transactions**"), then Transaction Author expressly
-  agrees that:
+b. If Sovrin Foundation approves Public Write Access and permits
+Transaction Authors to write Transactions that contain Permissible Personal
+Data ("**Personal Data Transactions**"), then Transaction Author expressly
+agrees that:
 
 
   1. It will not write any Transactions that contain Impermissible Personal
