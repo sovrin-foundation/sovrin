@@ -33,7 +33,7 @@ try {
         }
 
         stage("Get client env") {
-            clientEnv = localLib.resolveClientEnv(serverEnv.sovtoken.src) 
+            clientEnv = localLib.resolveClientEnv(serverEnv.sovtoken.src)
             echo "Client env: $clientEnv"
 
             clientRepoChannel = (clientEnv.libindy.ver == clientEnv.libindy.src) ? 'stable' : 'master'
@@ -75,7 +75,7 @@ try {
             ['TestAdHocSuite.py'],
             ['TestProductionSuite.py']
         ]
-        testVersion = 'v0.8.35'
+        testVersion = 'v0.8.36'
         testVersionByTag = true
         delegate.gatherLogs = gatherLogs
     }
