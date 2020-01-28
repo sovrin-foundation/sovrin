@@ -10,11 +10,12 @@
    "on_file":"An authorized person accepted the agreement, and such acceptance is on file with the user’s organization."
 }
 ```
-#General Guidance#
+# General Guidance
 A Transaction Author needs to review and accept the Transaction Author Agreement (TAA) before submitting write transactions to the ledger. This acceptance is indicated by including in the transaction a hash of the TAA, the date that it was accepted, and an indication of the method used to accept the agreement. The method used to accept the agreement must correspond to an entry in this Acceptance Mechanism List (AML).
 
 The various AML choices represent different user interaction (UX) patterns. A single software package may utilize multiple acceptance mechanisms based on the UX flow followed by the user. In many cases, the user will be representing an organization who is the actual Transaction Author and may not be authorized to accept legal agreements on behalf of the organization. In these cases, an Acceptance Mechanism that is appropriate for organizational acceptance must be used and the TAA date should reflect when an authorized agent of the organization agreed to the terms (often upon completing legal review). It may be necessary for the user to enter this date through the software interface.
-After the Transaction Author has accepted a version of the agreement, the Author does not need to be presented with the full text of an updated agreement. It is sufficient to notify the user of the software that the agreement was updated because the user is under the obligation to stop writing to the ledger if the Transaction Author cannot accept the updated terms. Future write transactions will include a hash of the updated agreement and the acceptance date should reflect when the notification was provided to the user.
+
+After the Transaction Author has accepted a version of the agreement, the Author does not need to be presented with the full text of the updated agreement. It is sufficient to notify the user of the software that the agreement was updated because the user is under the obligation to stop writing to the ledger if the Transaction Author cannot accept the updated terms. Future write transactions will include a hash of the updated agreement and the acceptance date should reflect when the notification was provided to the user.
 
 # Mechanisms Descriptions
 1. **Product Eula**: *The agreement was included in the software product’s terms and conditions as part of the license to the user.* The client software incorporates the TAA into the license provided to the user. This could be as part of the product’s End-User License Agreement (EULA), or it could be as part of the commercial terms provided to an organization for legal review before purchasing the software package. The acceptance date should reflect when the TAA was reviewed and accepted, whether at software installation or during software procurement.
