@@ -4,7 +4,3 @@ The transaction author agreement digest is the concatenation of the `version` an
 - MainNet :
 - StagingNet :
 - BuilderNet : `"920e68ff43bf157d657e35fca291baa00f8b14c395cddf6e4b4e156391baf7cd"`
-
-
-
-###### by Lynn Bendixsen
