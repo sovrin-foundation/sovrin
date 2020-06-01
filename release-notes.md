@@ -6,6 +6,8 @@
 
 ![image alt text](banner.png)
 
+* [1.1.81](#1181)
+
 * [1.1.71](#1171)
 
 * [1.1.67](#1167)
@@ -66,6 +68,30 @@
 #### Disclosure
 
 Although every attempt has been made to make this information as accurate as possible, please know there may be things that are omitted, not fully developed yet, or updates since this publication that were not included in the information below. Only the most pressing or significant items have been listed. For the entire list of tickets and or specific information about any given item, please visit the list at [Hyperleder Indy's Jira](https://jira.hyperledger.org/). Once logged in, simply navigate to Projects > Indy.
+
+## 1.1.81
+
+### Notices for Stewards
+
+**There are possible OOM issues during 3+ hours of target load or large catch-ups at 8 GB RAM nodes pool so 32 GB is recommended.**
+
+### Component Version Information
+| Components | Version Numbers |
+| --- | --- |
+| indy-plenum | 1.12.3 |
+| indy-node | 1.12.3 |
+| sovrin | 1.1.81 |
+| sovtoken | 1.0.8 |
+| sovtokefees | 1.0.8 |
+
+### Major Changes
+- Stability fixes
+
+### Major Fixes
+| Description | Additional Information | Ticket Number |
+| --- | --- | --- |
+| TAA signature's validation fix (milliseconds sending broke the primary) | | |
+
 
 ## 1.1.71
 
