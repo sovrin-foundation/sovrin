@@ -6,6 +6,8 @@
 
 ![image alt text](banner.png)
 
+* [1.1.89](#1189)
+
 * [1.1.81](#1181)
 
 * [1.1.71](#1171)
@@ -68,6 +70,30 @@
 #### Disclosure
 
 Although every attempt has been made to make this information as accurate as possible, please know there may be things that are omitted, not fully developed yet, or updates since this publication that were not included in the information below. Only the most pressing or significant items have been listed. For the entire list of tickets and or specific information about any given item, please visit the list at [Hyperleder Indy's Jira](https://jira.hyperledger.org/). Once logged in, simply navigate to Projects > Indy.
+
+## 1.1.89
+
+### Notices for Stewards
+
+**There are possible OOM issues during 3+ hours of target load or large catch-ups at 8 GB RAM nodes pool so 32 GB is recommended.**
+
+### Component Version Information
+| Components | Version Numbers |
+| --- | --- |
+| indy-plenum | 1.12.4 |
+| indy-node | 1.12.4 |
+| sovrin | 1.1.89 |
+| sovtoken | 1.0.9 |
+| sovtokefees | 1.0.9 |
+
+### Major Changes
+- NYM dynamic validation check transaction w/out verkey or role
+
+### Changes and Additions
+| Description | Additional Information | Ticket Number |
+| --- | --- | --- |
+| NYM dynamic validation check transaction w/out verkey or role | | |
+
 
 ## 1.1.81
 
