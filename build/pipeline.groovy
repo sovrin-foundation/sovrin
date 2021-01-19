@@ -97,8 +97,6 @@ String pkgManifestData(String pkgName) {
 String resolveServerEnv(String repoChannel, String sovrinVersion=null) {
     Map res = [
         sovrin: [:],
-        sovtokenfees: [:],
-        sovtoken: [:],
         indyNode: [:],
         indyPlenum: [:],
         libindyCrypto: [:]
@@ -116,21 +114,11 @@ String resolveServerEnv(String repoChannel, String sovrinVersion=null) {
 
         res.sovrin.ver = sovrinVersion ?: getDebianCandidate('sovrin')
 
-        // sovtoken is not pinned in master for now
-        if (repoChannel == 'master') {
-            res.sovtoken.ver = getDebianCandidate('sovtoken')
-        } else {
-            res.sovtoken.ver = getPinnedDebianDependencyVersion(
-                'sovrin', 'sovtoken', res.sovrin.ver
-            )
-        }
-
         // FIXME: for now it's not possible to resolve src version of plugins from debian packages
-        res.sovtoken.src = (repoChannel == 'rc' ? 'stable' : repoChannel)
-
-        res.sovtokenfees.ver = res.sovtoken.ver
+        res.indyNode.src = (repoChannel == 'rc' ? 'stable' : repoChannel)
+        
         res.indyNode.ver = getPinnedDebianDependencyVersion(
-            'sovtoken', 'indy-node', res.sovtoken.ver
+            'sovrin', 'indy-node', res.sovrin.ver
         )
         res.indyPlenum.ver = getPinnedDebianDependencyVersion(
             'indy-node', 'indy-plenum', res.indyNode.ver
@@ -142,8 +130,6 @@ String resolveServerEnv(String repoChannel, String sovrinVersion=null) {
         sh """
             apt-get install -y \
                 sovrin=${res.sovrin.ver} \
-                sovtoken=${res.sovtoken.ver} \
-                sovtokenfees=${res.sovtokenfees.ver} \
                 indy-node=${res.indyNode.ver} \
                 indy-plenum=${res.indyPlenum.ver} \
                 python3-indy-crypto=${res.libindyCrypto.ver}
@@ -159,17 +145,16 @@ String resolveServerEnv(String repoChannel, String sovrinVersion=null) {
 }
 
 String resolveClientEnv(
-    String sovtokenSrcVersion,
-    String sovtokenRepoUrl='https://github.com/sovrin-foundation/token-plugin.git'
+    String nodeBranchName,
+    String nodeRepoUrl='https://github.com/hyperledger/indy-node/blob/master/ci/ubuntu.dockerfile'
 ) {
     Map res = [
         libindy: [:],
-        libsovtoken: [:],
     ]
-    String sovtokenScmDir = '_plugins'
-    String ciDockerPath = 'devops/docker/ci/xenial/Dockerfile'
+    String nodeScmDir = '_nodeScmDir'
+    String ciDockerPath = 'ci/ubuntu.dockerfile'
 
-    Closure parseSovtokenCIDependency = { String depPkgName ->
+    Closure parseNodeCIDependency = { String depPkgName ->
         return _shStdout("""
             grep "${depPkgName}=" $ciDockerPath | sed 's/.*${depPkgName}=\\(.*\\) .*/\\1/g'
         """)
@@ -177,19 +162,18 @@ String resolveClientEnv(
 
     checkout([
         $class: 'GitSCM',
-        branches: [[name: sovtokenSrcVersion]],
+        branches: [[name: nodeBranchName]],
         userRemoteConfigs: [[
-            url: sovtokenRepoUrl,
+            url: nodeRepoUrl,
         ]],
         extensions: [[
             $class: 'RelativeTargetDirectory', 
-            relativeTargetDir: sovtokenScmDir
+            relativeTargetDir: nodeScmDir
         ]]
     ])
 
-    dir(sovtokenScmDir) {
-        res.libindy.ver = parseSovtokenCIDependency('libindy')
-        res.libsovtoken.ver = parseSovtokenCIDependency('libsovtoken')
+    dir(nodeScmDir) {
+        res.libindy.ver = parseNodeCIDependency('libindy')
         res.libindy.pypi = res.libindy.ver.replaceAll(/~(.*)/, "-dev-\$1")
     }
 
@@ -205,15 +189,11 @@ def systemTests(Closure body) {
             repoChannel: 'master',
             clientRepoChannel: null,
             sovrinVer: null,
-            sovtokenfeesVer: null,
-            sovtokenVer: null,
             indyNodeVer: null,
             indyPlenumVer: null,
             libindyCryptoVer: null,
-            libsovtokenVer: null,
             libindyVer: null,
             libindyPypiVer: null,
-            sovtokenRepoUrl: 'https://github.com/sovrin-foundation/token-plugin.git',
             testSchema: [['.']],
             testVersion: null,
             testVersionByTag: false,
@@ -221,12 +201,9 @@ def systemTests(Closure body) {
         ],
         body, [
             'sovrinVer',
-            'sovtokenfeesVer',
-            'sovtokenVer',
             'indyNodeVer',
             'indyPlenumVer',
             'libindyCryptoVer',
-            'libsovtokenVer',
             'libindyVer',
             'libindyPypiVer',
         ], { it, _ ->
@@ -295,14 +272,11 @@ def systemTests(Closure body) {
                     "PYTHON3_LIBINDY_CRYPTO_VERSION=${config.libindyCryptoVer}",
                     "INDY_PLENUM_VERSION=${config.indyPlenumVer}",
                     "INDY_NODE_VERSION=${config.indyNodeVer}",
-                    "TOKEN_PLUGINS_INSTALL=yes",
+                    "TOKEN_PLUGINS_INSTALL=no",
                     "SOVRIN_VERSION=${config.sovrinVer}",
-                    "SOVTOKEN_VERSION=${config.sovtokenVer}",
-                    "SOVTOKENFEES_VERSION=${config.sovtokenfeesVer}",
                     "LIBINDY_REPO_COMPONENT=${config.clientRepoChannel}",
                     "LIBINDY_VERSION=${config.libindyVer}",
-                    "LIBSOVTOKEN_INSTALL=yes",
-                    "LIBSOVTOKEN_VERSION=${config.libsovtokenVer}",
+                    "LIBSOVTOKEN_INSTALL=no",
                 ]
 
                 echo "[${testGroup}]: env variables: $envVars"

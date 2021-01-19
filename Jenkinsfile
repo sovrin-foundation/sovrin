@@ -40,7 +40,7 @@ def systemTests = { component, releaseVersion ->
             }
 
             stage("Get client env") {
-                clientEnv = localLib.resolveClientEnv(serverEnv.sovtoken.src)
+                clientEnv = localLib.resolveClientEnv(serverEnv.indyNode.src) todo?
                 echo "Client env: $clientEnv"
 
                 clientRepoChannel = (clientEnv.libindy.ver == clientEnv.libindy.src) ? 'stable' : 'master'
@@ -53,12 +53,9 @@ def systemTests = { component, releaseVersion ->
     localLib.systemTests {
         delegate.repoChannel = component
         sovrinVer = serverEnv.sovrin.ver
-        sovtokenfeesVer = serverEnv.sovtokenfees.ver
-        sovtokenVer = serverEnv.sovtoken.ver
         indyNodeVer = serverEnv.indyNode.ver
         indyPlenumVer = serverEnv.indyPlenum.ver
         libindyCryptoVer = serverEnv.libindyCrypto.ver
-        libsovtokenVer = clientEnv.libsovtoken.ver
         libindyVer = clientEnv.libindy.ver
         libindyPypiVer = clientEnv.libindy.pypi
         testSchema = [

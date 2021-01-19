@@ -31,24 +31,14 @@ try {
             serverEnv = localLib.resolveServerEnv(repoChannel)
             echo "Server env: $serverEnv"
         }
-
-        stage("Get client env") {
-            clientEnv = localLib.resolveClientEnv(serverEnv.sovtoken.src) 
-            echo "Client env: $clientEnv"
-
-            clientRepoChannel = (clientEnv.libindy.ver == clientEnv.libindy.src) ? 'stable' : 'master'
-        }
     }
 
     localLib.systemTests {
         delegate.repoChannel = repoChannel
         sovrinVer = serverEnv.sovrin.ver
-        sovtokenfeesVer = serverEnv.sovtokenfees.ver
-        sovtokenVer = serverEnv.sovtoken.ver
         indyNodeVer = serverEnv.indyNode.ver
         indyPlenumVer = serverEnv.indyPlenum.ver
         libindyCryptoVer = serverEnv.libindyCrypto.ver
-        libsovtokenVer = clientEnv.libsovtoken.ver
         libindyVer = clientEnv.libindy.ver
         libindyPypiVer = clientEnv.libindy.pypi
         testSchema = [
@@ -84,7 +74,7 @@ try {
     throw _err
 } finally {
     stage('Build result notification') {
-        String envVersions = [serverEnv.sovrin?.ver, serverEnv.sovtoken?.ver, serverEnv.indyNode?.ver].join(', ')
+        String envVersions = [serverEnv.sovrin?.ver, serverEnv.indyNode?.ver].join(', ')
         sendNotification.email {
             to = emailRecipients
             subject = "[${pkgName}][nightly] Build #${this.env.BUILD_NUMBER} ${err ? 'failed' : 'succeed'} for versions [$envVersions]"
@@ -101,14 +91,11 @@ try {
                 |   Server:
                 |       channel: $repoChannel
                 |       sovrin: ${serverEnv.sovrin}
-                |       sovtoken: ${serverEnv.sovtoken}
-                |       sovtokenfees: ${serverEnv.sovtokenfees}
                 |       indy-node: ${serverEnv.indyNode}
                 |       indy-plenum: ${serverEnv.indyPlenum}
                 |       libindy-crypto: ${serverEnv.libindyCrypto}
                 |   Client:
                 |       channel: ${clientRepoChannel}
-                |       libsovtoken: ${clientEnv.libsovtoken}
                 |       libindy: ${clientEnv.libindy}
                 |       
                 |Check console output at ${this.env.BUILD_URL}console to view the details.

@@ -121,13 +121,6 @@ if [ -z "${SOVRIN_IS_HELD}" ]; then
     sed -ie '/HOLD_EXT=/{s/=\("\?\)/=\1sovrin /1}' $GENERAL_CONFIG_DIR/node_control.conf
 fi
 
-# adding sovtoken package to packages to hold
-SOVTOKEN_IS_HELD=$(grep HOLD_EXT=.*sovtoken\ sovtokenfees.* $GENERAL_CONFIG_DIR/node_control.conf)
-if [ -z "${SOVTOKEN_IS_HELD}" ]; then
-    # remove =" or just = to ="sovrin or =sovrin
-    sed -ie '/HOLD_EXT=/{s/=\("\?\)/=\1sovtoken sovtokenfees /1}' $GENERAL_CONFIG_DIR/node_control.conf
-fi
-
 chown -R indy:indy $GENERAL_CONFIG_DIR
 chown -R indy:indy /var/log/indy
 chown -R indy:indy /var/lib/indy

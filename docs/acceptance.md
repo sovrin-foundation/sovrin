@@ -2,7 +2,7 @@
 
 ## Automated tests
 
-Automated tests cover ~95% of Indy-Node and Token functionality so it is the main step of acceptance testing. They are here: `https://github.com/hyperledger/indy-test-automation/tree/master/system` and they are integrated to Indy-Node and Sovrin CI/CD pipelines (but they also can be run locally with the same steps as described in Jenkinsfiles in both repositories) so both pipelines must be green to move artifacts from RC to stable.
+Automated tests cover ~95% of Indy-Node functionality so it is the main step of acceptance testing. They are here: `https://github.com/hyperledger/indy-test-automation/tree/master/system` and they are integrated to Indy-Node and Sovrin CI/CD pipelines (but they also can be run locally with the same steps as described in Jenkinsfiles in both repositories) so both pipelines must be green to move artifacts from RC to stable.
 
 ## Semi-automated tests
 
