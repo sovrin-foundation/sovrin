@@ -1,0 +1,22 @@
+name: sovrin-build
+# TODO: Set apropriate triggers
+on: [ workflow_dispatch ]
+
+jobs:
+  workflow-setup:
+    runs-on: ubuntu-latest
+    outputs:
+      CACHE_KEY_LINT: ${{ steps.cache.outputs.CACHE_KEY_LINT }}
+      CACHE_KEY_BUILD: ${{ steps.cache.outputs.CACHE_KEY_BUILD }}
+      # Expose the lowercase version of the GitHub repository name
+      # to all subsequent jobs that reference image repositories
+      # as the push and pull operations require the URL of the repository 
+      # to be in lowercase.
+      GITHUB_REPOSITORY_NAME: ${{ steps.cache.outputs.GITHUB_REPOSITORY_NAME }}
+    steps:
+      - name: Git checkout
+        uses: actions/checkout@v2
+      - name: Set outputs
+        id: cache
+        run: |
+          echo "::set-output name=GITHUB_REPOSITORY_NAME::$(echo ${GITHUB_REPOSITORY,,})"
