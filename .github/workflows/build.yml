@@ -20,3 +20,5 @@ jobs:
         id: cache
         run: |
           echo "::set-output name=GITHUB_REPOSITORY_NAME::$(echo ${GITHUB_REPOSITORY,,})"
+          echo ${GITHUB_REPOSITORY,,}
+          echo ${GITHUB_REPOSITORY}
