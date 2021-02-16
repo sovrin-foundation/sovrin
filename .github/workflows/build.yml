@@ -47,7 +47,7 @@ jobs:
           mkdir -p ${GITHUB_WORKSPACE}/cache
           touch ${GITHUB_WORKSPACE}/cache/${{ env.CACHE_KEY_LINT }}
   lint:
-    name: Lint
+    name: lint
     runs-on: ubuntu-latest
     container:
       image: ghcr.io/${{ needs.workflow-setup.outputs.GITHUB_REPOSITORY_NAME }}/indy-node-lint
