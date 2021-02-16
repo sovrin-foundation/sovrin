@@ -1,6 +1,6 @@
 name: sovrin-build
 # TODO: Set apropriate triggers
-on: [ workflow_dispatch ]
+on: [workflow_dispatch]
 
 jobs:
   workflow-setup:
