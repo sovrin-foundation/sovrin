@@ -3,23 +3,25 @@ name: sovrin-build
 on: [ pull_request, workflow_dispatch]
 
 jobs:
-#   workflow-setup:
-#     runs-on: ubuntu-latest
-#     outputs:
-#       CACHE_KEY_LINT: ${{ steps.cache.outputs.CACHE_KEY_LINT }}
-#       # Expose the lowercase version of the GitHub repository name
-#       # to all subsequent jobs that reference image repositories
-#       # as the push and pull operations require the URL of the repository 
-#       # to be in lowercase.
-#       GITHUB_REPOSITORY_NAME: ${{ steps.cache.outputs.GITHUB_REPOSITORY_NAME }}
-#     steps:
-#       - name: Git checkout
-#         uses: actions/checkout@v2
-#       - name: Set outputs
-#         id: cache
-#         run: |
-#           echo "::set-output name=CACHE_KEY_LINT::${{ hashFiles('.github/workflows/lint/Dockerfile') }}"
-#           echo "::set-output name=GITHUB_REPOSITORY_NAME::$(echo ${GITHUB_REPOSITORY,,})"
+  workflow-setup:
+    runs-on: ubuntu-latest
+    outputs:
+      CACHE_KEY_LINT: ${{ steps.cache.outputs.CACHE_KEY_LINT }}
+      # Expose the lowercase version of the GitHub repository name
+      # to all subsequent jobs that reference image repositories
+      # as the push and pull operations require the URL of the repository 
+      # to be in lowercase.
+      GITHUB_REPOSITORY_NAME: ${{ steps.cache.outputs.GITHUB_REPOSITORY_NAME }}
+      PACKAGE_VERSION: ${{ steps.cache.outputs.PACKAGE_VERSION }}
+    steps:
+      - name: Git checkout
+        uses: actions/checkout@v2
+      - name: Set outputs
+        id: cache
+        run: |
+          echo "::set-output name=CACHE_KEY_LINT::${{ hashFiles('.github/workflows/lint/Dockerfile') }}"
+          echo "::set-output name=GITHUB_REPOSITORY_NAME::$(echo ${GITHUB_REPOSITORY,,})"
+          echo "::set-output name=GITHUB_REPOSITORY_NAME::1.0.0"
 
 #   build-lint-image:
 #     needs: workflow-setup
@@ -59,13 +61,20 @@ jobs:
 #         run: python3 -m flake8
 
   buld-package:
-    name: build-package
+    needs: workflow-setup  
     runs-on: ubuntu-latest
+    env:
+      PACKAGE_VERSION: ${{ needs.workflow-setup.outputs.PACKAGE_VERSION }}
     steps:
       - name: Check out code
         uses: actions/checkout@v2
       - name: Build package
         run: |
           cd build-scripts/ubuntu-1604
-          ./build-sovrin-docker.sh "${PWD}/../.." 1.0.0
+          ./build-sovrin-docker.sh "${PWD}/../.." ${{ env.PACKAGE_VERSION }}
           ls sovrin-deb-u1604
+      - name: Archive package
+        uses: actions/upload-artifact@v2
+        with:
+          name: sovrin-build
+          path: sovrin-deb-u1604/sovrin_${{ env.PACKAGE_VERSION }}_amd64.deb
