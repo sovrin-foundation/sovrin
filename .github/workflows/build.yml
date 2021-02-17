@@ -77,4 +77,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: sovrin-build
-          path: sovrin-deb-u1604/sovrin_${{ env.PACKAGE_VERSION }}_amd64.deb
+          path: build-scripts/ubuntu-1604/sovrin-deb-u1604/sovrin_${{ env.PACKAGE_VERSION }}_amd64.deb
