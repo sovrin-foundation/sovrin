@@ -6,12 +6,15 @@ jobs:
   workflow-setup:
     runs-on: ubuntu-latest
     outputs:
+      # Cache keys
       CACHE_KEY_LINT: ${{ steps.cache.outputs.CACHE_KEY_LINT }}
       # Expose the lowercase version of the GitHub repository name
       # to all subsequent jobs that reference image repositories
       # as the push and pull operations require the URL of the repository 
       # to be in lowercase.
       GITHUB_REPOSITORY_NAME: ${{ steps.cache.outputs.GITHUB_REPOSITORY_NAME }}
+      # Package related values
+      PACKAGE_NAME: ${{ steps.cache.outputs.PACKAGE_VERSION }}
       PACKAGE_VERSION: ${{ steps.cache.outputs.PACKAGE_VERSION }}
     steps:
       - name: Git checkout
@@ -21,11 +24,12 @@ jobs:
         run: |
           echo "::set-output name=CACHE_KEY_LINT::${{ hashFiles('.github/workflows/lint/Dockerfile') }}"
           echo "::set-output name=GITHUB_REPOSITORY_NAME::$(echo ${GITHUB_REPOSITORY,,})"
+          echo "::set-output name=PACKAGE_NAME::sovrin"
           # TODO: Make it a parameter or compute from branch name and time
           echo "::set-output name=PACKAGE_VERSION::1.0.0"
 
 #   build-lint-image:
-#     needs: workflow-setup
+#     needs: [workflow-setup]
 #     runs-on: ubuntu-latest
 #     env:
 #       DOCKER_BUILDKIT: 1
@@ -50,21 +54,21 @@ jobs:
 #           mkdir -p ${GITHUB_WORKSPACE}/cache
 #           touch ${GITHUB_WORKSPACE}/cache/${{ env.CACHE_KEY_LINT }}
 #   lint:
-#     name: lint
 #     runs-on: ubuntu-latest
+#     needs: [build-lint-image]
 #     container:
 #       image: ghcr.io/${{ needs.workflow-setup.outputs.GITHUB_REPOSITORY_NAME }}/indy-node-lint
-#     needs: [workflow-setup, build-lint-image]
 #     steps:      
 #       - name: Check out code
 #         uses: actions/checkout@v2
 #       - name: flake8
 #         run: python3 -m flake8
 
-  buld-package:
-    needs: workflow-setup  
+  build-package:
+    needs: [workflow-setup]
     runs-on: ubuntu-latest
     env:
+      PACKAGE_NAME: ${{ needs.workflow-setup.outputs.PACKAGE_NAME }}
       PACKAGE_VERSION: ${{ needs.workflow-setup.outputs.PACKAGE_VERSION }}
     steps:
       - name: Check out code
@@ -73,9 +77,24 @@ jobs:
         run: |
           cd build-scripts/ubuntu-1604
           # TODO: Cache the image, optimize scripts, remove default versions
-          ./build-sovrin-docker.sh "${PWD}/../.." ${{ env.PACKAGE_VERSION }}
+          ./build-sovrin-docker.sh "" ${{ env.PACKAGE_VERSION }}
       - name: Archive package
         uses: actions/upload-artifact@v2
         with:
           name: sovrin-build
-          path: build-scripts/ubuntu-1604/sovrin-deb-u1604/sovrin_${{ env.PACKAGE_VERSION }}_amd64.deb
+          path: build-scripts/ubuntu-1604/sovrin-deb-u1604/${{ env.PACKAGE_NAME }}_${{ env.PACKAGE_VERSION }}_amd64.deb
+          
+  system-tests:
+    needs: [build-package]
+    runs-on: ubuntu-latest
+    env:
+      PACKAGE_VERSION: ${{ needs.workflow-setup.outputs.PACKAGE_VERSION }}
+    steps:
+      - name: Restore package
+        uses: actions/download-artifact@v2
+        with:
+          name: sovrin-build
+      - name: Say hello
+        run: |
+          ls
+          echo "Hello there!"
