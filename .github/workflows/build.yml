@@ -14,7 +14,7 @@ jobs:
       # to be in lowercase.
       GITHUB_REPOSITORY_NAME: ${{ steps.cache.outputs.GITHUB_REPOSITORY_NAME }}
       # Package related values
-      PACKAGE_NAME: ${{ steps.cache.outputs.PACKAGE_VERSION }}
+      PACKAGE_NAME: ${{ steps.cache.outputs.PACKAGE_NAME }}
       PACKAGE_VERSION: ${{ steps.cache.outputs.PACKAGE_VERSION }}
     steps:
       - name: Git checkout
