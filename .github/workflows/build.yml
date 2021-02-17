@@ -67,5 +67,5 @@ jobs:
       - name: Build package
         run: |
           cd build-scripts/ubuntu-1604
-          ./build-sovrin-docker.sh $(abspath ${PWD}/../..) 1.0.0
+          ./build-sovrin-docker.sh "${PWD}/../.." 1.0.0
           bash sovrin-deb-u1604
