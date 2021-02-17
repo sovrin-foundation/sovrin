@@ -68,4 +68,4 @@ jobs:
         run: |
           cd build-scripts/ubuntu-1604
           ./build-sovrin-docker.sh "${PWD}/../.." 1.0.0
-          bash sovrin-deb-u1604
+          ls sovrin-deb-u1604
