@@ -67,5 +67,5 @@ jobs:
       - name: Build package
         run: |
           cd build-scripts/ubuntu-1604
-          sh build-sovrin-docker.sh
+          ./build-sovrin-docker.sh
           bash sovrin-deb-u1604
