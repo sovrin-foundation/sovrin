@@ -21,7 +21,7 @@ jobs:
         run: |
           echo "::set-output name=CACHE_KEY_LINT::${{ hashFiles('.github/workflows/lint/Dockerfile') }}"
           echo "::set-output name=GITHUB_REPOSITORY_NAME::$(echo ${GITHUB_REPOSITORY,,})"
-          echo "::set-output name=GITHUB_REPOSITORY_NAME::1.0.0"
+          echo "::set-output name=PACKAGE_VERSION::1.0.0"
 
 #   build-lint-image:
 #     needs: workflow-setup
