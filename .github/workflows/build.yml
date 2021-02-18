@@ -106,8 +106,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.CR_PAT }}
         with:
-          tag_name: ${{ github.ref }}
-          # TODO: Think about name
+          # TODO: Better naming
+          tag_name: ${{ env.PACKAGE_VERSION }}-${{ env.GITHUB_RUN_NUMBER }}
           release_name: ${{ env.PACKAGE_VERSION }}-${{ env.GITHUB_RUN_NUMBER }}
           body: new version ${{ env.PACKAGE_VERSION }}-${{ env.GITHUB_RUN_NUMBER }} release
           draft: false
