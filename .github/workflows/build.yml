@@ -88,9 +88,10 @@ jobs:
   publish-to-github:
     needs: [build-package]
     runs-on: ubuntu-latest
-    outputs:
+    env:
       PACKAGE_NAME: ${{ needs.setup-workflow.outputs.PACKAGE_NAME }}
       PACKAGE_VERSION: ${{ needs.setup-workflow.outputs.PACKAGE_VERSION }}
+    outputs:
       PACKAGE_URL: ${{ steps.upload-release-asset.outputs.browser_download_url }}
     steps:
       - name: Restore package
