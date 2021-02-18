@@ -87,7 +87,7 @@ jobs:
           path: build-scripts/ubuntu-1604/sovrin-deb-u1604/${{ env.PACKAGE_NAME }}_${{ env.PACKAGE_VERSION }}_amd64.deb
   
   publish-to-github:
-    needs: [build-package]
+    needs: [setup-workflow, build-package]
     runs-on: ubuntu-latest
     env:
       BRANCH_NAME: ${{ needs.setup-workflow.outputs.BRANCH_NAME }}
@@ -107,8 +107,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.CR_PAT }}
         with:
           # TODO: Better naming
-          tag_name: ${{ env.PACKAGE_VERSION }}-${{ env.GITHUB_RUN_NUMBER }}
-          release_name: ${{ env.PACKAGE_VERSION }}-${{ env.GITHUB_RUN_NUMBER }}
+          tag_name: ${{ env.PACKAGE_VERSION }}-${{ github.run_number }}
+          release_name: ${{ env.PACKAGE_VERSION }}-${{ github.run_number }}
           body: new version ${{ env.PACKAGE_VERSION }}-${{ env.GITHUB_RUN_NUMBER }} release
           draft: false
           prerelease: false
