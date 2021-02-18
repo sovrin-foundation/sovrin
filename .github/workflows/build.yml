@@ -94,6 +94,11 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: sovrin-build
+      - name: Check out code
+        uses: actions/checkout@v2
+        with:
+          repository: https://github.com/askolesov/indy-test-automation
+          ref: master
       - name: Say hello
         run: |
           ls
