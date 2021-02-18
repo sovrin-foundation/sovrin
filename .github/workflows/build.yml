@@ -23,10 +23,11 @@ jobs:
         run: |
           echo "::set-output name=CACHE_KEY_LINT::${{ hashFiles('.github/workflows/lint/Dockerfile') }}"
           echo "::set-output name=GITHUB_REPOSITORY_NAME::$(echo ${GITHUB_REPOSITORY,,})"
+          # TODO: Unused
           echo "::set-output name=BRANCH_NAME::$(echo ${GITHUB_REF#refs/heads/})"
           echo "::set-output name=PACKAGE_NAME::sovrin"
           # TODO: Make it a parameter or compute from branch name and time
-          echo "::set-output name=PACKAGE_VERSION::1.0.0-${{ env.GITHUB_RUN_NUMBER }}"
+          echo "::set-output name=PACKAGE_VERSION::1.0.0"
 
 #   build-lint-image:
 #     needs: [setup-workflow]
@@ -107,8 +108,8 @@ jobs:
         with:
           tag_name: ${{ github.ref }}
           # TODO: Think about name
-          release_name: ${{ env.PACKAGE_VERSION }}-${{ env.BRANCH_NAME }}
-          body: new version ${{ env.PACKAGE_VERSION }}-${{ env.BRANCH_NAME }} release
+          release_name: ${{ env.PACKAGE_VERSION }}-${{ env.GITHUB_RUN_NUMBER }}
+          body: new version ${{ env.PACKAGE_VERSION }}-${{ env.GITHUB_RUN_NUMBER }} release
           draft: false
           prerelease: false
       - name: Upload Release Asset
