@@ -105,8 +105,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.CR_PAT }}
         with:
           tag_name: ${{ github.ref }}
+          # TODO: Think about name
           release_name: Release ${{ github.ref }}
-          draft: true
+          draft: false
           prerelease: false
       - name: Upload Release Asset
         id: upload-release-asset
