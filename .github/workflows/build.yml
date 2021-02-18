@@ -86,7 +86,7 @@ jobs:
           path: build-scripts/ubuntu-1604/sovrin-deb-u1604/${{ env.PACKAGE_NAME }}_${{ env.PACKAGE_VERSION }}_amd64.deb
   
   publish-to-github:
-    needs: [build-package]
+    needs: [setup-workflow, build-package]
     runs-on: ubuntu-latest
     env:
       PACKAGE_NAME: ${{ needs.setup-workflow.outputs.PACKAGE_NAME }}
