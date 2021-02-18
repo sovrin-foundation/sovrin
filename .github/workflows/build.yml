@@ -1,6 +1,6 @@
 name: sovrin-build
 # TODO: Set apropriate triggers
-on: [ pull_request, workflow_dispatch]
+on: [push, workflow_dispatch]
 
 jobs:
   workflow-setup:
@@ -47,6 +47,7 @@ jobs:
 #       - name: If NOT found in cache, build and push image.
 #         if: steps.cache-image-lint.outputs.cache-hit != 'true'
 #         run: |
+#           # TODO: Rename to GH_LOGIN and GH_PAT
 #           echo ${{ secrets.CR_PAT }} | docker login ghcr.io --username ${{ secrets.CR_USER }} --password-stdin
 #           docker build -f .github/workflows/lint/Dockerfile --no-cache -t ${{ env.GITHUB_REPOSITORY_NAME }}/indy-node-lint:${{ env.CACHE_KEY_LINT }} .
 #           docker tag ${{ env.GITHUB_REPOSITORY_NAME }}/indy-node-lint:${{ env.CACHE_KEY_LINT }} ghcr.io/${{ env.GITHUB_REPOSITORY_NAME }}/indy-node-lint:latest
@@ -83,23 +84,52 @@ jobs:
         with:
           name: sovrin-build
           path: build-scripts/ubuntu-1604/sovrin-deb-u1604/${{ env.PACKAGE_NAME }}_${{ env.PACKAGE_VERSION }}_amd64.deb
-          
-  system-tests:
+  
+  publish-to-github:
     needs: [build-package]
     runs-on: ubuntu-latest
-    env:
-      PACKAGE_VERSION: ${{ needs.workflow-setup.outputs.PACKAGE_VERSION }}
+    outputs:
+      PACKAGE_URL: ${{ steps.upload-release-asset.outputs.browser_download_url }}
     steps:
       - name: Restore package
         uses: actions/download-artifact@v2
         with:
           name: sovrin-build
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.CR_PAT }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: true
+          prerelease: false
+      - name: Upload Release Asset
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.CR_PAT }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./${{ env.PACKAGE_NAME }}_${{ env.PACKAGE_VERSION }}_amd64.deb
+          asset_name: ${{ env.PACKAGE_NAME }}_${{ env.PACKAGE_VERSION }}_amd64.deb
+          asset_content_type: application/vnd.debian.binary-package
+  
+  system-tests:
+    needs: [publish-to-github]
+    runs-on: ubuntu-latest
+    env:
+      PACKAGE_VERSION: ${{ needs.workflow-setup.outputs.PACKAGE_VERSION }}
+      PACKAGE_URL: ${{ needs.publish-to-github.outputs.PACKAGE_URL }}
+    steps:
       - name: Check out code
         uses: actions/checkout@v2
         with:
-          repository: https://github.com/askolesov/indy-test-automation
+          repository: askolesov/indy-test-automation
           ref: master
       - name: Say hello
         run: |
           ls
           echo "Hello there!"
+          echo ${{ env.PACKAGE_URL }}
