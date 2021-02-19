@@ -149,10 +149,14 @@ jobs:
         with:
           repository: askolesov/indy-test-automation
           ref: sovrin-cd
-      - name: Say hello
+      - name: Patch requirements
         run: |          
           sed -i 's/python3-indy.*/python3-indy==1.13.0-dev-1420/g' ./system/requirements.txt 
+      - name: Prepare
+        run: |          
           ./system/docker/prepare.sh indy-test-automation-network
+      - name: Run
+        run: |          
           bash -c " set -o pipefail; ./system/docker/run.sh \"system/indy-node-tests/TestAuthMapAttribSuite.py\" \"--payments -l -vv --junit-xml=system_tests_9_report.master.xml --gatherlogs --logsdir=_build/logs\" \"indy-test-automation-network\" 2>&1 | tee system_tests_9_report.master.txt; "
       - name: Archive package
         uses: actions/upload-artifact@v2
