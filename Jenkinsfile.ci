@@ -93,7 +93,8 @@ def systemTests = { component, releaseVersion ->
 
 
 options = new TestAndPublishOptions()
-options.enable([StagesEnum.PACK_RELEASE_COPY, StagesEnum.PACK_RELEASE_COPY_ST])
+options.enable([StagesEnum.TEST])
+options.skip([StagesEnum.AUTOMERGE])
 options.setCopyWithDeps(false)
 
 if (env.BRANCH_NAME == 'stable') {
