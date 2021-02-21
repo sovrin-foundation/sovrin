@@ -93,7 +93,7 @@ def systemTests = { component, releaseVersion ->
 
 
 options = new TestAndPublishOptions()
-options.enable([StagesEnum.TEST])
+options.enable([StagesEnum.IS_TESTED])
 options.skip([StagesEnum.AUTOMERGE])
 options.setCopyWithDeps(false)
 
