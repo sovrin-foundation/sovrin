@@ -1,0 +1,149 @@
+name: sovrin-cd
+
+on: [push, workflow_dispatch]
+
+jobs:
+  setup-workflow:
+    runs-on: ubuntu-latest
+    outputs:
+      CACHE_KEY_LINT: ${{ steps.init.outputs.CACHE_KEY_LINT }}
+      CACHE_KEY_BUILD: ${{ steps.init.outputs.CACHE_KEY_BUILD }}
+      CACHE_KEY_CLIENT_BUILD: ${{ steps.init.outputs.CACHE_KEY_CLIENT_BUILD }}
+      CACHE_KEY_NODE_BUILD: ${{ steps.init.outputs.CACHE_KEY_NODE_BUILD }}
+      # Expose the lowercase version of the GitHub repository name
+      # to all subsequent jobs that reference image repositories
+      # as the push and pull operations require the URL of the repository
+      # to be in lowercase.
+      GITHUB_REPOSITORY_NAME: ${{ steps.init.outputs.GITHUB_REPOSITORY_NAME }}
+      PACKAGE_NAME: ${{ steps.init.outputs.PACKAGE_NAME }}
+      PACKAGE_VERSION: ${{ steps.init.outputs.PACKAGE_VERSION }}
+    steps:
+      - name: Git checkout
+        uses: actions/checkout@v2
+      - name: Check out test automation
+        uses: actions/checkout@v2
+        with:
+          repository: devinleighsmith/indy-test-automation
+          ref: test_fix
+          path: indy-test-automation
+      - name: Set outputs
+        id: init
+        run: |
+          echo "::set-output name=GITHUB_REPOSITORY_NAME::$(echo ${GITHUB_REPOSITORY,,})"
+          echo "::set-output name=CACHE_KEY_BUILD::${{ hashFiles('**/Dockerfile', '**/*.py', '**/*.sh', '**/*.yaml') }}"
+          echo "::set-output name=CACHE_KEY_CLIENT_BUILD::${{ hashFiles('**/client/Dockerfile', '**/prepare_client.sh', '**/*.yaml') }}"
+          echo "::set-output name=CACHE_KEY_NODE_BUILD::${{ hashFiles('**/node/Dockerfile', '**/prepare_node.sh', '**/*.yaml') }}"
+          echo "::set-output name=PACKAGE_VERSION::1.0.0"
+          echo "::set-output name=PACKAGE_NAME::sovrin"
+
+  build-package:
+    needs: setup-workflow
+    runs-on: ubuntu-latest
+    env:
+      PACKAGE_NAME: ${{ needs.setup-workflow.outputs.PACKAGE_NAME }}
+      PACKAGE_VERSION: ${{ needs.setup-workflow.outputs.PACKAGE_VERSION }}
+      CACHE_KEY_BUILD: ${{ needs.setup-workflow.outputs.CACHE_KEY_BUILD }}
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+      - name: Try load from cache.
+        id: cache-artifact
+        uses: actions/cache@v2
+        with:
+          path: build-scripts/ubuntu-2004/sovrin_*.deb
+          key: ${{ env.CACHE_KEY_BUILD}}
+      - name: Build package
+        if: steps.cache-artifact.outputs.cache-hit != 'true'
+        run: |
+          cd build-scripts/ubuntu-2004
+          # TODO: Cache the image, optimize scripts, remove default versions
+          ./build-sovrin-docker.sh "${PWD}/../.." "${PACKAGE_VERSION}" "${PWD}"
+      - name: Archive package
+        uses: actions/upload-artifact@v2
+        with:
+          name: sovrin-build-cd
+          path: build-scripts/ubuntu-2004/sovrin_*.deb
+
+  run-system-tests:
+    needs: [setup-workflow, build-package]
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        test: ["test_ledger.py"]
+      #         test: ['test_ledger.py', 'TestViewChangeSuite.py', 'TestConsensusSuite.py', 'test_state_proof.py']
+      fail-fast: false
+    env:
+      PACKAGE_NAME: ${{ needs.setup-workflow.outputs.PACKAGE_NAME }}
+      PACKAGE_VERSION: ${{ needs.setup-workflow.outputs.PACKAGE_VERSION }}
+      CACHE_KEY_CLIENT_BUILD: ${{ needs.setup-workflow.outputs.CACHE_KEY_CLIENT_BUILD }}
+      CACHE_KEY_NODE_BUILD: ${{ needs.setup-workflow.outputs.CACHE_KEY_NODE_BUILD }}
+      GITHUB_REPOSITORY_NAME: ${{ needs.setup-workflow.outputs.GITHUB_REPOSITORY_NAME }}
+      #       PACKAGE_URL: ${{ needs.publish-to-github.outputs.PACKAGE_URL }}
+
+      # Client image
+      CLIENT_REPO_COMPONENT: master
+      LIBINDY_VERSION: 1.10.0~1171
+
+      # Node image
+      NODE_REPO_COMPONENT: rc
+      LIBINDY_CRYPTO_VERSION: 0.4.5
+      PYTHON3_LIBINDY_CRYPTO_VERSION: 0.4.5
+      PYTHON3_PYZMQ_VERSION: 18.1.0
+      INDY_PLENUM_VERSION: 1.12.2
+      INDY_NODE_VERSION: 1.12.2~rc1
+      SOVRIN_VERSION: ${{ needs.setup-workflow.outputs.PACKAGE_VERSION }}
+      SOVRIN_INSTALL: true
+
+    steps:
+      - name: Check out test automation
+        uses: actions/checkout@v2
+        with:
+          repository: devinleighsmith/indy-test-automation
+          ref: test_fix
+      - name: Restore package
+        uses: actions/download-artifact@v2
+        with:
+          name: sovrin-build-cd
+          path: .indy-test-automation/system/docker/node
+      - name: Try load client image from cache.
+        id: cache-image-client
+        uses: actions/cache@v2
+        with:
+          path: ${GITHUB_WORKSPACE}/cache
+          key: ${{ env.CACHE_KEY_CLIENT_BUILD}}
+      - name: Try load node image from cache.
+        id: cache-image-node
+        uses: actions/cache@v2
+        with:
+          path: ${GITHUB_WORKSPACE}/cache
+          key: ${{ env.CACHE_KEY_NODE_BUILD}}
+      - name: Prepare client
+        if: steps.cache-image.outputs.cache-hit != 'true'
+        run: |
+          echo ${{ secrets.CR_PAT }} | docker login ghcr.io --username ${{ secrets.CR_USER }} --password-stdin
+          ./system/docker/prepare_client.sh indy-test-automation-network
+          docker tag hyperledger/indy-test-automation:client ghcr.io/${{ env.GITHUB_REPOSITORY_NAME }}/indy-test-automation-client
+          docker push ghcr.io/${{ env.GITHUB_REPOSITORY_NAME }}/indy-test-automation-client
+          mkdir -p ${GITHUB_WORKSPACE}/cache
+          touch ${GITHUB_WORKSPACE}/cache/${{ env.CACHE_KEY_CLIENT_BUILD }}
+      - name: Prepare node
+        if: steps.cache-image.outputs.cache-hit != 'true'
+        run: |
+          echo ${{ secrets.CR_PAT }} | docker login ghcr.io --username ${{ secrets.CR_USER }} --password-stdin
+          ./system/docker/prepare_node.sh indy-test-automation-network
+          docker tag hyperledger/indy-test-automation:node ghcr.io/${{ env.GITHUB_REPOSITORY_NAME }}/indy-test-automation-node
+          docker push ghcr.io/${{ env.GITHUB_REPOSITORY_NAME }}/indy-test-automation-node
+          mkdir -p ${GITHUB_WORKSPACE}/cache
+          touch ${GITHUB_WORKSPACE}/cache/${{ env.CACHE_KEY_NODE_BUILD }}
+      - name: Run
+        run: |
+          docker pull ghcr.io/${{ env.GITHUB_REPOSITORY_NAME }}/indy-test-automation-node
+          docker pull ghcr.io/${{ env.GITHUB_REPOSITORY_NAME }}/indy-test-automation-client
+          bash -c " set -o pipefail; ./system/docker/run.sh \"system/indy-node-tests/${{ matrix.test }}\" \" --payments -l -vv --junit-xml=system_tests_9_report.master.xml --gatherlogs --logsdir=_build/logs\" 2>&1 | tee system_tests_9_report.master.txt; "
+
+#       - name: Archive package
+#         uses: actions/upload-artifact@v2
+#         with:
+#           name: test-report
+#           path: system_tests_9_report.master.txt
