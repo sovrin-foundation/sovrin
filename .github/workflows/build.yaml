@@ -24,7 +24,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: devinleighsmith/indy-test-automation
-          ref: test_fix
+          ref: test_fix_temp
           path: indy-test-automation
       - name: Set outputs
         id: init
@@ -64,15 +64,9 @@ jobs:
           name: sovrin-build-cd
           path: build-scripts/ubuntu-2004/sovrin_*.deb
 
-  run-system-tests:
+  prepare-test-images:
     needs: [setup-workflow, build-package]
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        test: ["test_ledger.py"]
-      #         test: ['test_ledger.py', 'TestViewChangeSuite.py', 'TestConsensusSuite.py', 'test_state_proof.py']
-      fail-fast: false
     env:
       PACKAGE_NAME: ${{ needs.setup-workflow.outputs.PACKAGE_NAME }}
       PACKAGE_VERSION: ${{ needs.setup-workflow.outputs.PACKAGE_VERSION }}
@@ -83,24 +77,27 @@ jobs:
 
       # Client image
       CLIENT_REPO_COMPONENT: master
-      LIBINDY_VERSION: 1.10.0~1171
+      LIBINDY_VERSION: 1.13.0~1420
+      LIBSOVTOKEN_INSTALL: yes
+      LIBSOVTOKEN_VERSION: 1.0.2~92
 
       # Node image
-      NODE_REPO_COMPONENT: rc
-      LIBINDY_CRYPTO_VERSION: 0.4.5
-      PYTHON3_LIBINDY_CRYPTO_VERSION: 0.4.5
+      NODE_REPO_COMPONENT: master
+      URSA_VERSION: 0.3.2-2
       PYTHON3_PYZMQ_VERSION: 18.1.0
-      INDY_PLENUM_VERSION: 1.12.2
-      INDY_NODE_VERSION: 1.12.2~rc1
+      INDY_PLENUM_VERSION: 1.13.0~dev1033
+      INDY_NODE_VERSION: 1.13.0~dev1225
+      SOVTOKEN_VERSION: 1.0.8~dev153
+      SOVTOKENFEES_VERSION: 1.0.8~dev153
       SOVRIN_VERSION: ${{ needs.setup-workflow.outputs.PACKAGE_VERSION }}
-      SOVRIN_INSTALL: true
+      SOVRIN_INSTALL: yes
 
     steps:
       - name: Check out test automation
         uses: actions/checkout@v2
         with:
           repository: devinleighsmith/indy-test-automation
-          ref: test_fix
+          ref: test_fix_temp
       - name: Restore package
         uses: actions/download-artifact@v2
         with:
@@ -136,10 +133,57 @@ jobs:
           docker push ghcr.io/${{ env.GITHUB_REPOSITORY_NAME }}/indy-test-automation-node
           mkdir -p ${GITHUB_WORKSPACE}/cache
           touch ${GITHUB_WORKSPACE}/cache/${{ env.CACHE_KEY_NODE_BUILD }}
+
+  run-tests:
+    needs: [setup-workflow, prepare-test-images]
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_REPOSITORY_NAME: ${{ needs.setup-workflow.outputs.GITHUB_REPOSITORY_NAME }}
+
+    strategy:
+      matrix:
+        test:
+          [
+            "test_ledger.py",
+            "TestViewChangeSuite.py",
+            "TestConsensusSuite.py",
+            "test_state_proof.py",
+            "TestTAASuite.py",
+            "test_off_ledger_signature.py",
+            "test_roles.py",
+            "test_freshness.py",
+            "TestMultiSigSuite.py",
+            "TestAuditSuite.py",
+            "TestCatchUpSuite.py",
+            "TestCatchUpSuiteExtended.py",
+            "TestAuthMapAttribSuite.py",
+            "TestAuthMapCredDefSuite.py",
+            "TestAuthMapMiscSuite.py",
+            "TestAuthMapNymSuite.py",
+            "TestAuthMapPluginsSuite.py",
+            "TestAuthMapRevocRegDefSuite.py",
+            "TestAuthMapSchemaSuite.py",
+            "TestAuthMapUpgradeSuite.py",
+            "test_libsovtoken.py",
+            "TestFeesSuite.py",
+            "TestAdHocSuite.py",
+            "TestProductionSuite.py",
+          ]
+      fail-fast: false
+    steps:
+      - name: Check out test automation
+        uses: actions/checkout@v2
+        with:
+          repository: devinleighsmith/indy-test-automation
+          ref: test_fix
       - name: Run
         run: |
+          echo ${{ secrets.CR_PAT }} | docker login ghcr.io --username ${{ secrets.CR_USER }} --password-stdin
           docker pull ghcr.io/${{ env.GITHUB_REPOSITORY_NAME }}/indy-test-automation-node
           docker pull ghcr.io/${{ env.GITHUB_REPOSITORY_NAME }}/indy-test-automation-client
+          docker tag ghcr.io/${{ env.GITHUB_REPOSITORY_NAME }}/indy-test-automation-node hyperledger/indy-test-automation:node 
+          docker tag ghcr.io/${{ env.GITHUB_REPOSITORY_NAME }}/indy-test-automation-client hyperledger/indy-test-automation:client
+          docker network create --subnet="10.0.0.0/24" "indy-test-automation-network"
           bash -c " set -o pipefail; ./system/docker/run.sh \"system/indy-node-tests/${{ matrix.test }}\" \" --payments -l -vv --junit-xml=system_tests_9_report.master.xml --gatherlogs --logsdir=_build/logs\" 2>&1 | tee system_tests_9_report.master.txt; "
 
 #       - name: Archive package
