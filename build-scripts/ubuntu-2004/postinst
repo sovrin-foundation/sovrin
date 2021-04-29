@@ -11,7 +11,7 @@ GENERAL_CONFIG_DIR="/etc/indy"
 GENERAL_CONFIG_NAME="indy_config.py"
 GENERAL_CONFIG_PATH=$GENERAL_CONFIG_DIR/$GENERAL_CONFIG_NAME
 
-INSTALL_DIR="/usr/local/lib/python3.5/dist-packages"
+INSTALL_DIR="/usr/local/lib/python3.8/dist-packages"
 
 LOCAL_NETWORK='local'
 SANDBOX_NETWORK='sandbox'
@@ -120,13 +120,6 @@ if [ -z "${SOVRIN_IS_HELD}" ]; then
     # remove =" or just = to ="sovrin or =sovrin
     sed -ie '/HOLD_EXT=/{s/=\("\?\)/=\1sovrin /1}' $GENERAL_CONFIG_DIR/node_control.conf
 fi
-
-# # adding sovtoken package to packages to hold
-# SOVTOKEN_IS_HELD=$(grep HOLD_EXT=.*sovtoken\ sovtokenfees.* $GENERAL_CONFIG_DIR/node_control.conf)
-# if [ -z "${SOVTOKEN_IS_HELD}" ]; then
-#     # remove =" or just = to ="sovrin or =sovrin
-#     sed -ie '/HOLD_EXT=/{s/=\("\?\)/=\1sovtoken sovtokenfees /1}' $GENERAL_CONFIG_DIR/node_control.conf
-# fi
 
 chown -R indy:indy $GENERAL_CONFIG_DIR
 chown -R indy:indy /var/log/indy

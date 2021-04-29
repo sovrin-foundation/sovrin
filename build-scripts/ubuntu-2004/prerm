@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# Automatically added from template:
+
+dpkg -L sovrin | perl -ne 's,/([^/]*)\.py$,/__pycache__/\1.*, or next; unlink $_ or die $! foreach glob($_)'
+
+# End automatically added section

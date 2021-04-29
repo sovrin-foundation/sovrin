@@ -7,7 +7,7 @@ abspath() {
 PKG_SOURCE_PATH="$1"
 VERSION="$2"
 PKG_NAME=sovrin
-IMAGE_NAME="${PKG_NAME}-build-u1604"
+IMAGE_NAME="${PKG_NAME}-build-u2004"
 OUTPUT_FOLDER="$3"
 
 
@@ -25,7 +25,7 @@ if [[ (-z "${PKG_SOURCE_PATH}") || (-z "${VERSION}") ]]; then
 fi
 
 if [ -z "${OUTPUT_FOLDER}" ] ; then
-    OUTPUT_FOLDER=$(abspath ${PWD}/${PKG_NAME}-deb-u1604)
+    OUTPUT_FOLDER=$(abspath ${PWD}/${PKG_NAME}-deb-u2004)
 fi
 
 if [ -z "$4" ]; then
