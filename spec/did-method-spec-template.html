@@ -125,60 +125,22 @@
             in that case it is assumed that the key has all authorisations.
         </p>
         <p>For example:</p>
-        <p>To create a DID, you must submit a transaction that looks like this: <br>
+        <p>To create a DID, you must submit a <a href="https://hyperledger-indy.readthedocs.io/projects/node/en/latest/requests.html#nym">"NYM"</a> transaction that looks like this: <br>
           <pre>
                 {
-                    "submitterId": &lt;Trust Anchor DID&gt;,
-                    "signature": &lt;signature over this transaction from the Trust Anchor&gt;,
-                    "reqId": &lt;A nonce for this transaction&gt;,
-                    "operation": {
-                        "type": "NYM",
-                        "did": &lt;new DID that is being registered&gt;,
-                        "document": {
-                            "publicKey": [{
-                                "id": &lt;a valid unique identifier&gt;,
-                                "type": &lt;ed25519, defined in appendix&gt;,
-                                "publicKeyBase58": &lt;Key material encoded&gt;,
-                                "authorizations": ["ALL"]
-                            }],
-                            "authentication": [{
-                                "type": &lt;type of DID authentication&gt;,
-                                "publicKey": "&lt;reference to a publicKey object&gt;",
-                            }],
-                            "service": [{
-                              "type": &lt;agentService, emailService, apiService, dnsService, etc&gt;,
-                              "serviceEndpoint": &lt;A URI for the endpoint&gt;
-                            }],
-                            "role":&lt;Optional; Enumeration for roles, an integer; if left empty then no special role is assigned&gt;
-                        }
-                    }
+                  'operation': {
+                      'type': &lt;Transaction type -- NYM &gt;,
+                      'dest': &lt;new DID that is being registered&gt;,
+                      'role': &lt;Role given to the new DID -- based on network config&gt;,
+                      'verkey': &lt;Key material encoded&gt;,
+                  },
+                  
+                  'identifier': 'L5AD5g65TDQr1PPHHRoiGf' &lt;Trust Anchor DID&gt;,
+                  'reqId': &lt;A nonce for this transaction&gt;,
+                  'protocolVersion': 2,
+                  'signature': &lt;signature over this transaction from the Trust Anchor&gt;
                 }
 
-                Example
-                {
-                    "submitterId": "did:sov:29wksjcn38djfh47ruqrtcd5",
-                    "signature": "1qaz2wsx3edc4rfv5tgb6yhn7ujm8iklop==",
-                    "reqId": "okn987yhbgFtErDsCXsw",
-                    "operation": {
-                        "type": "NYM",
-                        "did": "did:sov:mnjkl98uipsndg2hdjdjuf7",
-                        "document": {
-                            "publicKey": [{
-                                "id": "key1"
-                                "type": "ED25519SignatureVerification",
-                                "publicKeyBase58": "..."
-                            }],
-                            "authentication": [{
-                                "type": "ED25519SigningAuthentication",
-                                "publicKey": "key1"
-                            }],
-                            "service": [{
-                              "type": "agentService",
-                              "serviceEndpoint":"https://www.sovrin.org/agents"
-                            }]
-                        }
-                    }
-                }
             </pre> The transaction must be signed by a Trust Anchor and must provide an un-registered DID and a document of data
             about that DID. Possible outcomes from the create operation include:
             <ul>
