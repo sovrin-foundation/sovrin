@@ -216,7 +216,8 @@
         <pre>
           {
             "@context": [
-              "https://www.w3.org/ns/did/v1"
+              "https://www.w3.org/ns/did/v1",
+              "https://didcomm.org/messaging/contexts/v2"
             ],
             "id": "did:sov:HR6vs6GEZ8rHaVgjg2WodM",
             "verificationMethod": [
@@ -262,6 +263,10 @@
                 "id": "did:sov:HR6vs6GEZ8rHaVgjg2WodM#didcomm-1",
                 "type": "DIDComm",
                 "serviceEndpoint": "https://example.com/endpoint",
+                "accept": [
+                  "didcomm/v2",
+                  "didcomm/aip2;env=rfc19"
+                ],
                 "routingKeys": []
               }
             ]
