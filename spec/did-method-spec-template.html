@@ -157,7 +157,7 @@
 
         <h3>Read (Resolve)</h3>
         <p>A Sovrin DID record can be looked up directly by the DID using a standard Sovrin GET_NYM transaction that simply
-            takes the DID and will return the DID record. The client trusts the DID record because it either receives the
+            takes the DID and returns the DID record. The client trusts the DID record because it either receives the
             same DID record from sufficient number of validators or it receives a proof of the DID record from a single validator
             that the DID record is part of a merkle tree whose root has an aggregate signature from sufficient number of
             validators.
@@ -187,12 +187,12 @@
               "reqId": &lt;Optional; a nonce for this query&gt;,
               "identifier": &lt;Required; The DID being read/resolved&gt;,
               "operation": {
-                "raw": "endpoint" &lt;Required; the value must be endpoint&gt;
+                "raw": "{\"endpoint\":{\"endpoint\":\"https://example.com\"}}" &lt;Required; the value must be endpoint&gt;
               }
           }
         </pre>
 
-        <p>The relevant part of the response from the successful execution of such a GET_ATTRIB request is:</p>
+        <p>The result may be a "Not Found" error. If the call is successful, the relevant part of the response of such a GET_ATTRIB request is:</p>
 
         <pre>
           {
@@ -204,8 +204,37 @@
           }
         </pre>
 
-        <p>The inner value of "endpoint" ("https://example.com/endpoint" in the example above) is the service endpoint for the DID.
-          Anyone can query an ATTRIB by sending the above request. The service endpoint is used to create the service block of a DID document, as noted below.</p>
+        <p>The value of the inner "endpoint" item ("https://example.com/endpoint" in the example above) is the service endpoint for the DID.</p>
+
+        <p>Historically on the Sovrin MainNet (through June 2021), the format of the `endpoint` ATTRIB has been simply a single name ("endpoint") value (a URL) pair, as shown above.    
+        An extended version of the `endpoint` ATTRIB can be written to an Indy ledger by a DID Controller to provide additional control over the generation of the DID Document.
+        The format is as follows:</p>
+
+        ```JSON
+        <pre>
+        {
+          "endpoint": "https://example.com",
+          "types": [ "endpoint", "did-communication", "DIDComm" ],
+          "routingKeys": [ "did:key12345", "did:key12345" ]
+        }
+        </pre>
+
+        <p>This corresponds to the raw value in the "ATTRIB" transaction as:</p>
+
+        <pre>
+        "raw": "{\"endpoint\":{\"endpoint\":\"https://example.com\",\"types\":[\"endpoint\",\"did-communication\",\"DIDComm\" ],\"routingKeys\":[\"did:key12345\",\"did:key12345\"]}}"
+        </pre>
+        
+        <p>A `did:sov` resolver MUST process the `endpoint` ATTRIB (extended or not) as follows:</p>
+
+        <ul>
+        <li>If the `types` field is present it's entries MUST be `endpoint`, `did-communication` and/or `DIDComm`, generating entries in the DID Document `service` block.</li>
+        <ul><li>The three service block formats corresponding to the three types is defined in the next section of this document.</li></ul>
+        <li>If the endpoint is defined and the `types` item is NOT present, empty or contains any other values, default the `types` to `"routingKeys": [ "endpoint", "did-communication" ]`.</li>
+        <ul><li>Note that any DID wanting to include a `DIDComm` service entry MUST use the extended version of the "endpoint" ATTRIB with the `types` item included.</li></ul>
+        <li>If the `routingKeys` item is present, use its value as the array for `routingKeys` in the `did-communication` and `DIDComm` type service blocks.</li>
+        <li>If the `routingKeys` entry is not present, default to the it being an empty array (e.g. `"routingKeys": [ ]`)</li>
+        </ul>
 
         <h4>Resolver DID Document Format</h4>
 
@@ -278,13 +307,15 @@
         <p>The following are notes about the example DID Document above:
           <ul>
               <li>The DID Document text is boilerplate except for the "did:sov..." identifier, the public keys ("publicKeyBase58" values) and the references to the service endpoint ("serviceEndpoint").</li>
-              <li>The X25519 key must be derived from the ED25519 key by the resolver. The Indy "GET_NYM" call will return only the ED25519 key.</li>
-              <li>Because of conventions in the existing code bases, the "recipientKeys" in the service block entries reference the ED25519 key, even though the purpose of the key in the entry is for encryption.
+              <li>The X25519 key must be derived from the ED25519 key by the resolver. The Indy "GET_NYM" call returns only the ED25519 key.</li>
+              <ul><li>Note that although the "keyAgreement" key is included in the DID Document, because of historical conventions it is the ED25519 key referenced in the `recipientKeys` item in the `did-communication` service block.
                 The pending "did:indy" DID Method will correct such conventions and provide Indy DID Controller clients with full control over the contents of their DID Documents.
+              </li></ul>
+              <li>If there is no result from the GET_ATTRIB transaction, the "service" item is NOT included in the document.</li>
+              <li>The entries in the service block are included based on the value or absence of the `types` item in the "endpoint" ATTRIB. The three entry formats cover the three "eras" of DIDComm,
+                AIP 1.0 (type "endpoint"), AIP 2.0 (type "did-communication") and DIDComm V2 (type "DIDComm").
               </li>
-              <li>If there is no result from the GET_ATTRIB transaction, the "service" block is not included in the document.</li>
-              <li>The three entries in the service block cover the three "eras" of DIDComm, AIP 1.0 (type "endpoint"), AIP 2.0 (type "did-communication") and DIDComm V2 (type "DIDComm").</li>
-              <li>Because there is just one endpoint specified in the ATTRIB as it is used in the past, the service blocks cannot make use of the DIDComm routing capabilities for messaging based on the DIDDoc.</li>
+              <li>A DID controlled MAY use the extended form of the "endpoint" ATTRIB (see previous section of this document) to include `routingKeys` in the `did-communication` and `DIDComm` service block entries.</li>
           </ul>
       </p>
 
