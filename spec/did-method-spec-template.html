@@ -253,7 +253,8 @@
           {
             "@context": [
               "https://www.w3.org/ns/did/v1",
-              "https://didcomm.org/messaging/contexts/v2"
+              "https://w3id.org/security/suites/ed25519-2018/v1",
+              "https://w3id.org/security/suites/x25519-2019/v1"
             ],
             "id": "did:sov:HR6vs6GEZ8rHaVgjg2WodM",
             "verificationMethod": [
@@ -301,8 +302,8 @@
 
         <p>If an <tt>endpoint</tt> ATTRIB does not exist for the NYM, the <tt>service</tt> block is an empty array (e.g. <tt>"service": []</tt></p>
 
-        <p>If the <tt>endpoint</tt> has a <tt>types</tt> item and that <tt>types</tt> item contains an entry <tt>DIDComm</tt>, then the extra service block
-        would look like this:</p>
+        <p>If the <tt>endpoint</tt> has a <tt>types</tt> item and that <tt>types</tt> item contains an entry <tt>"DIDComm"</tt>,
+          then the following extra service block is included:</p>
 
         <pre>
           {
@@ -314,6 +315,12 @@
             ],
             "routingKeys": []
           }
+        </pre>
+
+        In addition the service block, the following entry needs to be added to the <tt>@context</tt> array:
+
+        <pre>
+          "https://didcomm.org/messaging/contexts/v2"
         </pre>
 
         <h4>DID Document Notes</h4>
