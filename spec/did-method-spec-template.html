@@ -120,65 +120,27 @@
             The DID method specification must specify how a client creates a DID record—the combination of a DID and its associated document—on the 
             target system, including all cryptographic operations necessary to establish proof of ownership.
             The Sovrin spec adds a new entry under <code>publicKey</code> called <code>authorizations</code>. 
-            This is used to indicate possible authorisations the public key is supposed to have. The keyword <code>ALL</code> means that the public key can make whatever change it wants to the DID doc.
+            This is used to indicate possible authorizations the public key is supposed to have. The keyword <code>ALL</code> means that the public key can make whatever change it wants to the DID doc.
             While creating a new DID doc, the field <code>authorizations</code> cannot be left empty. It has to either contain the keyword <code>ALL</code> or be ommitted, 
-            in that case it is assumed that the key has all authorisations.
+            in that case it is assumed that the key has all authorizations.
         </p>
         <p>For example:</p>
-        <p>To create a DID, you must submit a transaction that looks like this: <br>
+        <p>To create a DID, you must submit a <a href="https://hyperledger-indy.readthedocs.io/projects/node/en/latest/requests.html#nym">"NYM"</a> transaction that looks like this: <br>
           <pre>
                 {
-                    "submitterId": &lt;Trust Anchor DID&gt;,
-                    "signature": &lt;signature over this transaction from the Trust Anchor&gt;,
-                    "reqId": &lt;A nonce for this transaction&gt;,
-                    "operation": {
-                        "type": "NYM",
-                        "did": &lt;new DID that is being registered&gt;,
-                        "document": {
-                            "publicKey": [{
-                                "id": &lt;a valid unique identifier&gt;,
-                                "type": &lt;ed25519, defined in appendix&gt;,
-                                "publicKeyBase58": &lt;Key material encoded&gt;,
-                                "authorizations": ["ALL"]
-                            }],
-                            "authentication": [{
-                                "type": &lt;type of DID authentication&gt;,
-                                "publicKey": "&lt;reference to a publicKey object&gt;",
-                            }],
-                            "service": [{
-                              "type": &lt;agentService, emailService, apiService, dnsService, etc&gt;,
-                              "serviceEndpoint": &lt;A URI for the endpoint&gt;
-                            }],
-                            "role":&lt;Optional; Enumeration for roles, an integer; if left empty then no special role is assigned&gt;
-                        }
-                    }
+                  'operation': {
+                      'type': &lt;Transaction type -- NYM &gt;,
+                      'dest': &lt;new DID that is being registered&gt;,
+                      'role': &lt;Role given to the new DID -- based on network config&gt;,
+                      'verkey': &lt;Key material encoded&gt;,
+                  },
+                  
+                  'identifier': 'L5AD5g65TDQr1PPHHRoiGf' &lt;Trust Anchor DID&gt;,
+                  'reqId': &lt;A nonce for this transaction&gt;,
+                  'protocolVersion': 2,
+                  'signature': &lt;signature over this transaction from the Trust Anchor&gt;
                 }
 
-                Example
-                {
-                    "submitterId": "did:sov:29wksjcn38djfh47ruqrtcd5",
-                    "signature": "1qaz2wsx3edc4rfv5tgb6yhn7ujm8iklop==",
-                    "reqId": "okn987yhbgFtErDsCXsw",
-                    "operation": {
-                        "type": "NYM",
-                        "did": "did:sov:mnjkl98uipsndg2hdjdjuf7",
-                        "document": {
-                            "publicKey": [{
-                                "id": "key1"
-                                "type": "ED25519SignatureVerification",
-                                "publicKeyBase58": "..."
-                            }],
-                            "authentication": [{
-                                "type": "ED25519SigningAuthentication",
-                                "publicKey": "key1"
-                            }],
-                            "service": [{
-                              "type": "agentService",
-                              "serviceEndpoint":"https://www.sovrin.org/agents"
-                            }]
-                        }
-                    }
-                }
             </pre> The transaction must be signed by a Trust Anchor and must provide an un-registered DID and a document of data
             about that DID. Possible outcomes from the create operation include:
             <ul>
@@ -187,36 +149,25 @@
                 <li>SUCCESS: "Contains the sequence number of the transaction and the merkle proof"</li>
             </ul>
         </p>
-        <p>The DID document is rendered as follows. The exact data structure persisted on the ledger does not have to match the following and can vary for each node. 
-          <pre>
-            {
-              "id": "did:sov:mnjkl98uipsndg2hdjdjuf7",
-              "publicKey": [{
-                  "id": "key1"
-                  "type": "ED25519SignatureVerification",
-                  "publicKeyBase58": "...",
-                  "authorizations": ["all"]
-                }],
-              "authentication": [{
-                  "type": "ED25519SigningAuthentication",
-                  "publicKey": "key1"
-                }],
-              "service": [{
-                  "type": "agentService",
-                  "serviceEndpoint":"https://www.sovrin.org/agents"
-                }]
-            }
-          </pre>
+
+        <h4>DID Service Endpoint</h4>
+
+        <p>By convention, Indy DID Controllers often create an Indy ATTRIB object (using the <a href="https://hyperledger-indy.readthedocs.io/projects/node/en/latest/requests.html#attrib">"ATTRIB"</a>
+           transaction) related to the NYM with a raw value of "endpoint", and a URL that represents the service endpoint for the DID. As noted in the "Read" section of this specification
+           such an "endpoint" ATTRIB is read when resolving a DID and its data included in the resulting DID Document.
         </p>
 
         <h3>Read (Resolve)</h3>
+        
         <p>A Sovrin DID record can be looked up directly by the DID using a standard Sovrin GET_NYM transaction that simply
-            takes the DID and will return the DID record. The client trusts the DID record because it either receives the
+            takes the DID and returns the DID record. The client trusts the DID record because it either receives the
             same DID record from sufficient number of validators or it receives a proof of the DID record from a single validator
             that the DID record is part of a merkle tree whose root has an aggregate signature from sufficient number of
             validators.
         </p>
-        <p>This is how the DID record query looks like</p>
+        
+        <p>This is what the DID record query looks like</p>
+        
         <pre>
                 {
                     "submitterId": &lt;Optional; DID of the author of this query&gt;,
@@ -227,9 +178,167 @@
                     }
                 }
         </pre>
-        <p>Anyone can query a DID record, by sending the above request. The response contains the DID document.</p>
+        
+        <p>Anyone can query a DID record by sending the above request. The response contains the data that can be used to create a DID document, as noted below.</p>
+
+        <h4>DID Service Endpoint</h4>
+
+        <p>When reading (resolving) a Sovrin DID, in addition to querying the DID record, a query MUST be performed for a related DID Service endpoint.
+          This is done by executing the <a href="https://hyperledger-indy.readthedocs.io/projects/node/en/latest/requests.html#get_attrib">"GET_ATTRIB"</a>
+          transaction. The format of the GET_ATTRIB request looks like 
+        </p>
+
         <pre>
+          {
+              "submitterId": &lt;Optional; DID of the author of this query&gt;,
+              "reqId": &lt;Optional; a nonce for this query&gt;,
+              "identifier": &lt;Required; The DID being read/resolved&gt;,
+              "operation": {
+                "raw": "{\"endpoint\":{\"endpoint\":\"https://example.com\"}}" &lt;Required; the value must be endpoint&gt;
+              }
+          }
         </pre>
+
+        <p>The result may be a "Not Found" error, indicating the NYM does not have an optional corresponding ATTRIB <tt>endpoint</tt> record.
+          If the call is successful, the relevant part of the response of such a GET_ATTRIB request is:</p>
+
+        <pre>
+          {
+            ...
+            'data': '{"endpoint":{"endpoint":"https://example.com/endpoint"}}',
+            'dest': 'AH4RRiPR78DUrCWatnCW2w' &lt; The DID being read/resolved&gt;, 
+            'raw': 'endpoint',
+            ...
+          }
+        </pre>
+
+        <p>The value of the inner <tt>endpoint</tt> item (<tt>https://example.com/endpoint</tt> in the example above) is the service endpoint for the DID.</p>
+
+        <p>Historically on the Sovrin MainNet (through June 2021), the format of the <tt>endpoint</tt> ATTRIB has been simply a single name ("endpoint") value (a URL) pair, as shown above.    
+        An extended version of the <tt>endpoint</tt> ATTRIB MAY be written to an Indy ledger by a DID Controller to provide additional control over the generation of the DID Document.
+        The format is as follows:</p>
+
+        <pre>
+        {
+          "endpoint": "https://example.com",
+          "types": [ "endpoint", "did-communication", "DIDComm" ],
+          "routingKeys": [ "did:key12345", "did:key12345" ]
+        }
+        </pre>
+
+        <p>This corresponds to the raw value in the "ATTRIB" transaction as:</p>
+
+        <pre>
+        "raw": "{\"endpoint\":{\"endpoint\":\"https://example.com\",\"types\":[\"endpoint\",\"did-communication\",\"DIDComm\" ],\"routingKeys\":[\"did:key12345\",\"did:key12345\"]}}"
+        </pre>
+        
+        <p>A <tt>did:sov</tt> resolver MUST process the <tt>endpoint</tt> ATTRIB (extended or not) as follows:</p>
+
+        <ul>
+        <li>If the <tt>types</tt> field is present it's entries MUST be <tt>endpoint</tt>, <tt>did-communication</tt> and/or <tt>DIDComm</tt>, generating entries in the DID Document <tt>service</tt> block.</li>
+        <ul><li>The three service block formats corresponding to the three types is defined in the next section of this document.</li></ul>
+        <li>If the endpoint is defined and the <tt>types</tt> item is NOT present, empty or contains any other values, default the <tt>types</tt> to <tt>"types": [ "endpoint", "did-communication" ]</tt>.</li>
+        <ul><li>Any <tt>did:sov</tt> DID wanting to include a DIDComm V2 (<tt>DIDComm</tt>) service entry MUST use the extended version of the "endpoint" ATTRIB with the <tt>types</tt> item included.</li></ul>
+        <li>If the <tt>routingKeys</tt> item is present, use its value as the array for <tt>routingKeys</tt> in the <tt>did-communication</tt> and <tt>DIDComm</tt> type service blocks.</li>
+        <li>If the <tt>routingKeys</tt> entry is not present, default to the it being an empty array (e.g. <tt>"routingKeys": [ ]</tt>)</li>
+        </ul>
+
+        <h4>Resolver DID Document Format</h4>
+
+        <p>The DID Document is generated by a resolver (not by the Indy/Sovrin ledger) by taking the GET_NYM and optional GET_ATTRIB/endpoint data and 
+          rendering a DID Document as follows. See the notes following the rendering.
+        </p>
+
+        <pre>
+          {
+            "@context": [
+              "https://www.w3.org/ns/did/v1",
+              "https://w3id.org/security/suites/ed25519-2018/v1",
+              "https://w3id.org/security/suites/x25519-2019/v1"
+            ],
+            "id": "did:sov:HR6vs6GEZ8rHaVgjg2WodM",
+            "verificationMethod": [
+              {
+                "type": "Ed25519VerificationKey2018",
+                "id": "did:sov:HR6vs6GEZ8rHaVgjg2WodM#key-1",
+                "publicKeyBase58": "9wvq2i4xUa5umXoThe83CDgx1e5bsjZKJL4DEWvTP9qe"
+              },
+              {
+                "type": "X25519KeyAgreementKey2019",
+                "id": "did:sov:HR6vs6GEZ8rHaVgjg2WodM#key-agreement-1",
+                "publicKeyBase58": "3mHtKcQFEzqeUcnce5BAuzAgLEbqKaV542pUf9xQ5Pf8"
+              }
+            ],
+            "authentication": [
+              "did:sov:HR6vs6GEZ8rHaVgjg2WodM#key-1"
+            ],
+            "assertionMethod": [
+              "did:sov:HR6vs6GEZ8rHaVgjg2WodM#key-1"
+            ],
+            "keyAgreement": [
+              "did:sov:HR6vs6GEZ8rHaVgjg2WodM#key-agreement-1"
+            ],
+            "service": [
+              {
+                "type": "endpoint",
+                "serviceEndpoint": "https://example.com/endpoint"
+              },
+              {
+                "id": "did:sov:HR6vs6GEZ8rHaVgjg2WodM#did-communication",
+                "type": "did-communication",
+                "priority": 0,
+                "recipientKeys": [
+                  "did:sov:HR6vs6GEZ8rHaVgjg2WodM#key-agreement-1"
+                ],
+                "routingKeys": [],
+                "accept": [
+                  "didcomm/aip2;env=rfc19"
+                ],
+                "serviceEndpoint": "https://example.com/endpoint"
+              }
+            ]
+          }
+        </pre>
+
+        <p>If an <tt>endpoint</tt> ATTRIB does not exist for the NYM, the <tt>service</tt> block is an empty array (e.g. <tt>"service": []</tt></p>
+
+        <p>If the <tt>endpoint</tt> has a <tt>types</tt> item and that <tt>types</tt> item contains an entry <tt>"DIDComm"</tt>,
+          then the following extra service block is included:</p>
+
+        <pre>
+          {
+            "id": "did:sov:HR6vs6GEZ8rHaVgjg2WodM#didcomm-1",
+            "type": "DIDComm",
+            "serviceEndpoint": "https://example.com/endpoint",
+            "accept": [
+              "didcomm/v2"
+            ],
+            "routingKeys": []
+          }
+        </pre>
+
+        In addition the service block, the following entry needs to be added to the <tt>@context</tt> array:
+
+        <pre>
+          "https://didcomm.org/messaging/contexts/v2"
+        </pre>
+
+        <h4>DID Document Notes</h4>
+
+        <p>The following are notes about the example DID Document above:
+          <ul>
+              <li>The DID Document text is boilerplate except for the "did:sov..." identifier, the public keys ("publicKeyBase58" values) and the references to the service endpoint ("serviceEndpoint").</li>
+              <li>The X25519 key MUST be derived from the ED25519 key by the resolver. The Indy "GET_NYM" call returns only the ED25519 key.</li>
+              <ul><li>Note that although the "keyAgreement" key is included in the DID Document, because of historical conventions it is the ED25519 key referenced in the <tt>recipientKeys</tt> item in the <tt>did-communication</tt> service block.
+                The pending "did:indy" DID Method will correct such conventions and provide Indy DID Controller clients with full control over the contents of their DID Documents.
+              </li></ul>
+              <li>If there is no result from the GET_ATTRIB transaction, the "service" item is NOT included in the document.</li>
+              <li>The entries in the service block are included based on the value or absence of the <tt>types</tt> item in the "endpoint" ATTRIB. The three entry formats cover the three "eras" of DIDComm,
+                AIP 1.0 (type "endpoint"), AIP 2.0 (type "did-communication") and DIDComm V2 (type "DIDComm").
+              </li>
+              <li>A DID controlled MAY use the extended form of the "endpoint" ATTRIB (see previous section of this document) to include <tt>routingKeys</tt> in the <tt>did-communication</tt> and <tt>DIDComm</tt> service block entries.</li>
+          </ul>
+      </p>
 
         <h3>Update (Replace)</h3>
         <p>To replace the DID document, the owner or guardian (guardianship ends once ownership begins) of the DID should send the following
