@@ -411,7 +411,7 @@ Summary: If there are NODE txns for adding/removing nodes interleaved with View 
 | Description | Additional Information | Ticket Number |
 | --- | --- | --- |
 | As a user, I need to be able to know what was the last update time of the ledger when querying a txn via GET_TXN request | | [INDY-1954](https://jira.hyperledger.org/browse/INDY-1954) |
-| Endorser field can contian a DID with a known role only | | [INDY-2198](https://jira.hyperledger.org/browse/INDY-2198) |
+| Endorser field can contain a DID with a known role only | | [INDY-2198](https://jira.hyperledger.org/browse/INDY-2198) |
 | TokenAuthNr needs to extend LedgerBasedAuthNr, not CoreAuthNr | | [ST-618](https://sovrin.atlassian.net/browse/ST-618) |
 
 
