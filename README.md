@@ -10,7 +10,7 @@ Sovrin is a specific instantiation of Indy, using a [governance framework](https
 
 The code that's stored here operates as a thin veneer on top of Indy--just enough to provide genesis transactions for the particular machines that bootstrapp Sovrin, plus some light utilities for those who run Sovrin as stewards.
 
-To interact with the vibrant 1,000+ member Sovrin community, visit us on our [Rocket Chat forum](https://chat.sovrin.org). If you are a developer, please join the [Hyperledger Indy community forum](https://chat.hyperledger.org) to learn and build together. We're happy to have you here.
+To interact with the vibrant 1,000+ member Sovrin community, visit us on our [Sovrin's Slack Channel](https://sovrinfoundation.slack.com). If you are a developer, please join the [Hyperledger Indy community forum](https://chat.hyperledger.org) to learn and build together. We're happy to have you here.
 
 To report vulnerabilities against Sovrin, please email security@sovrin.org or visit us on
 [hackerone](https://hackerone.com/sovrin_foundation).

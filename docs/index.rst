@@ -19,8 +19,7 @@ Thus, the code that's stored here is mostly a thin veneer on top of Indy--just e
 genesis transactions for the particular machines that bootstrapped Sovrin, plus some light
 utilities for those who run Sovrin.
 
-To interact with the Sovrin community, visit us on `Sovrin's RocketChat <https://chat.sovrin.org>`_,
-or at `forum.sovrin.org <https://forum.sovrin.org>`_.
+To interact with the Sovrin community, visit us on `Sovrin's Slack Channel <https://sovrinfoundation.slack.com/>`_.
 
 To report vulnerabilities against Sovrin, email security@sovrin.org or visit us on
 `hackerone <https://hackerone.com/sovrin_foundation>`_.
