@@ -24,6 +24,14 @@ You may also want to work through Indy's
 
 If you want to contribute to Sovrin, it's likely that you'll want to do so via [indy-node](https://github.com/hyperledger/indy-node). You can view additional bugs, stories, and backlog for Indy in [Hyperledger's Jira](https://jira.hyperledger.org/projects/INDY). Use project name `INDY` (or `IS` for the Indy SDK).
 
+## Connecting to an Existing Network
+
+In order to connect to an existing network your agent needs to utilize the appropriate `pool_transactions_genesis` file.  These files define the information required to connect to the foundational nodes for the given network.
+
+- [MainNet](https://raw.githubusercontent.com/sovrin-foundation/sovrin/stable/sovrin/pool_transactions_live_genesis)
+- [StagingNet](https://raw.githubusercontent.com/sovrin-foundation/sovrin/stable/sovrin/pool_transactions_sandbox_genesis)
+- [BuilderNet](https://raw.githubusercontent.com/sovrin-foundation/sovrin/stable/sovrin/pool_transactions_builder_genesis)
+
 ## How to Add Documentation
 For new features and pull requests, maintainers should make sure that the **contributor has added an explanation for their changes in the docs folder before merging the PR.**
   
