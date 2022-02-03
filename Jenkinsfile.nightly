@@ -33,7 +33,7 @@ try {
         }
 
         stage("Get client env") {
-            clientEnv = localLib.resolveClientEnv(serverEnv.sovtoken.src) 
+            clientEnv = localLib.resolveClientEnv(serverEnv.sovtoken.src)
             echo "Client env: $clientEnv"
 
             clientRepoChannel = (clientEnv.libindy.ver == clientEnv.libindy.src) ? 'stable' : 'master'
@@ -47,7 +47,8 @@ try {
         sovtokenVer = serverEnv.sovtoken.ver
         indyNodeVer = serverEnv.indyNode.ver
         indyPlenumVer = serverEnv.indyPlenum.ver
-        libindyCryptoVer = serverEnv.libindyCrypto.ver
+        ursaVer = serverEnv.ursa.ver
+        pyzmqVer = serverEnv.pyzmq.ver
         libsovtokenVer = clientEnv.libsovtoken.ver
         libindyVer = clientEnv.libindy.ver
         libindyPypiVer = clientEnv.libindy.pypi
@@ -75,7 +76,10 @@ try {
             ['TestAdHocSuite.py'],
             ['TestProductionSuite.py']
         ]
-        testVersion = 'v0.8.40'
+
+        // Define the version of hyperledger/indy-test-automation to use
+        //  - https://github.com/hyperledger/indy-test-automation/releases
+        testVersion = 'v0.8.46'
         testVersionByTag = true
         delegate.gatherLogs = gatherLogs
     }
@@ -106,12 +110,13 @@ try {
                 |       sovtokenfees: ${serverEnv.sovtokenfees}
                 |       indy-node: ${serverEnv.indyNode}
                 |       indy-plenum: ${serverEnv.indyPlenum}
-                |       libindy-crypto: ${serverEnv.libindyCrypto}
+                |       ursa: ${serverEnv.ursa}
+                |       pyzmq: ${serverEnv.pyzmq}
                 |   Client:
                 |       channel: ${clientRepoChannel}
                 |       libsovtoken: ${clientEnv.libsovtoken}
                 |       libindy: ${clientEnv.libindy}
-                |       
+                |
                 |Check console output at ${this.env.BUILD_URL}console to view the details.
             """.stripMargin()
         }

@@ -45,8 +45,8 @@ def _nodeWrapper(label=null, body) {
     }
 }
 
-def _shStdout(script) {                                                                                                                                                                                                                                                 
-    sh(returnStdout: true, script: script).trim()                                                                                                                                                                                                                      
+def _shStdout(script) {
+    sh(returnStdout: true, script: script).trim()
 }
 
 String getDebianCandidate(String pkgName) {
@@ -101,7 +101,8 @@ String resolveServerEnv(String repoChannel, String sovrinVersion=null) {
         sovtoken: [:],
         indyNode: [:],
         indyPlenum: [:],
-        libindyCrypto: [:]
+        ursa: [:],
+        pyzmq: [:]
     ]
 
     docker.image('hyperledger/indy-core-baseci:0.0.3-master').inside('-u 0') {
@@ -135,18 +136,35 @@ String resolveServerEnv(String repoChannel, String sovrinVersion=null) {
         res.indyPlenum.ver = getPinnedDebianDependencyVersion(
             'indy-node', 'indy-plenum', res.indyNode.ver
         )
-        res.libindyCrypto.ver = getPinnedDebianDependencyVersion(
-            'indy-plenum', 'python3-indy-crypto', res.indyPlenum.ver
+
+        // The version of Ursa in this container is too old.
+        // res.ursa.ver = getPinnedDebianDependencyVersion(
+        //     'indy-plenum', 'python3-ursa', res.indyPlenum.ver
+        // )
+        res.ursa.ver = "0.3.2-2"
+
+        res.pyzmq.ver = getPinnedDebianDependencyVersion(
+            'indy-plenum', 'python3-pyzmq', res.indyPlenum.ver
         )
 
+        echo "res.sovrin.ver=${res.sovrin.ver}"
+        echo "res.sovtoken.ver=${res.sovtoken.ver}"
+        echo "res.sovtokenfees.ver=${res.sovtokenfees.ver}"
+        echo "res.indyNode.ver=${res.indyNode.ver}"
+        echo "res.indyPlenum.ver=${res.indyPlenum.ver}"
+        echo "res.ursa.ver=${res.ursa.ver}"
+        echo "res.pyzmq.ver=${res.pyzmq.ver}"
+
         sh """
+            apt-key adv --keyserver keyserver.ubuntu.com --recv-keys CE7709D068DB5E88 && \
+            apt-get update && \
             apt-get install -y \
                 sovrin=${res.sovrin.ver} \
                 sovtoken=${res.sovtoken.ver} \
                 sovtokenfees=${res.sovtokenfees.ver} \
                 indy-node=${res.indyNode.ver} \
                 indy-plenum=${res.indyPlenum.ver} \
-                python3-indy-crypto=${res.libindyCrypto.ver}
+                python3-pyzmq=${res.pyzmq.ver}
         """
 
         res.sovrin.manifest = pkgManifestData('sovrin').tokenize('\n')[1].tokenize()
@@ -182,7 +200,7 @@ String resolveClientEnv(
             url: sovtokenRepoUrl,
         ]],
         extensions: [[
-            $class: 'RelativeTargetDirectory', 
+            $class: 'RelativeTargetDirectory',
             relativeTargetDir: sovtokenScmDir
         ]]
     ])
@@ -209,7 +227,8 @@ def systemTests(Closure body) {
             sovtokenVer: null,
             indyNodeVer: null,
             indyPlenumVer: null,
-            libindyCryptoVer: null,
+            ursaVer: null,
+            pyzmqVer: null,
             libsovtokenVer: null,
             libindyVer: null,
             libindyPypiVer: null,
@@ -225,7 +244,8 @@ def systemTests(Closure body) {
             'sovtokenVer',
             'indyNodeVer',
             'indyPlenumVer',
-            'libindyCryptoVer',
+            'ursaVer',
+            'pyzmqVer',
             'libsovtokenVer',
             'libindyVer',
             'libindyPypiVer',
@@ -291,8 +311,8 @@ def systemTests(Closure body) {
                 String repoComponents = (config.repoChannel == 'rc' ? 'rc stable' : config.repoChannel)
                 List envVars = [
                     "INDY_NODE_REPO_COMPONENT=${repoComponents}",
-                    "LIBINDY_CRYPTO_VERSION=${config.libindyCryptoVer}",
-                    "PYTHON3_LIBINDY_CRYPTO_VERSION=${config.libindyCryptoVer}",
+                    "URSA_VERSION=${config.ursaVer}",
+                    "PYTHON3_PYZMQ_VERSION=${config.pyzmqVer}",
                     "INDY_PLENUM_VERSION=${config.indyPlenumVer}",
                     "INDY_NODE_VERSION=${config.indyNodeVer}",
                     "TOKEN_PLUGINS_INSTALL=yes",
@@ -303,6 +323,9 @@ def systemTests(Closure body) {
                     "LIBINDY_VERSION=${config.libindyVer}",
                     "LIBSOVTOKEN_INSTALL=yes",
                     "LIBSOVTOKEN_VERSION=${config.libsovtokenVer}",
+                    // ToDo - Make these variable
+                    "CLIENT_REPO_COMPONENT=master",
+                    "NODE_REPO_COMPONENT=master"
                 ]
 
                 echo "[${testGroup}]: env variables: $envVars"
