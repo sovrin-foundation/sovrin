@@ -85,7 +85,7 @@ def systemTests = { component, releaseVersion ->
             ['TestAdHocSuite.py'],
             ['TestProductionSuite.py']
         ]
-        testVersion = 'v0.8.38'
+        testVersion = 'v0.8-indy-crypto'
         testVersionByTag = true
         delegate.gatherLogs = gatherLogs
     }
