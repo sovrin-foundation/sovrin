@@ -45,8 +45,8 @@ def _nodeWrapper(label=null, body) {
     }
 }
 
-def _shStdout(script) {                                                                                                                                                                                                                                                 
-    sh(returnStdout: true, script: script).trim()                                                                                                                                                                                                                      
+def _shStdout(script) {
+    sh(returnStdout: true, script: script).trim()
 }
 
 String getDebianCandidate(String pkgName) {
@@ -182,7 +182,7 @@ String resolveClientEnv(
             url: sovtokenRepoUrl,
         ]],
         extensions: [[
-            $class: 'RelativeTargetDirectory', 
+            $class: 'RelativeTargetDirectory',
             relativeTargetDir: sovtokenScmDir
         ]]
     ])

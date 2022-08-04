@@ -1,6 +1,6 @@
 #!groovy
 
-@Library('SovrinHelpers@v2.2.2') _
+@Library('SovrinHelpers@v2.2') _
 
 String pkgName = 'sovrin'
 String repoChannel = 'master'
@@ -17,6 +17,10 @@ def err
 String scmRepoUrl
 String scmSha1
 
+def _shStdout(script) {
+    sh(returnStdout: true, script: script).trim()
+}
+
 try {
     nodeWrapper('ubuntu') {
         stage('Load local shared library') {
@@ -27,13 +31,21 @@ try {
             scmSha1 = gitHelper.sha1()
         }
 
+        stage("Get repo channel") {
+            String branchPrefix = _shStdout("""
+                echo "$ghprbSourceBranch" |  sed 's~-.*~~'
+            """)
+            repoChannel = (branchPrefix == 'rc' ? 'rc' : repoChannel)
+            echo "Repo Channel: $repoChannel"
+        }
+
         stage("Get server env") {
             serverEnv = localLib.resolveServerEnv(repoChannel)
             echo "Server env: $serverEnv"
         }
 
         stage("Get client env") {
-            clientEnv = localLib.resolveClientEnv(serverEnv.sovtoken.src) 
+            clientEnv = localLib.resolveClientEnv(serverEnv.sovtoken.src)
             echo "Client env: $clientEnv"
 
             clientRepoChannel = (clientEnv.libindy.ver == clientEnv.libindy.src) ? 'stable' : 'master'
@@ -75,7 +87,7 @@ try {
             ['TestAdHocSuite.py'],
             ['TestProductionSuite.py']
         ]
-        testVersion = 'v0.8.38'
+        testVersion = 'v0.8-indy-crypto'
         testVersionByTag = true
         delegate.gatherLogs = gatherLogs
     }
@@ -111,7 +123,7 @@ try {
                 |       channel: ${clientRepoChannel}
                 |       libsovtoken: ${clientEnv.libsovtoken}
                 |       libindy: ${clientEnv.libindy}
-                |       
+                |
                 |Check console output at ${this.env.BUILD_URL}console to view the details.
             """.stripMargin()
         }
