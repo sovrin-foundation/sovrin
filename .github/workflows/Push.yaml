@@ -1,0 +1,51 @@
+name: Sovrin Push 
+
+on: 
+  push:
+
+jobs:
+  # extract-information:
+  #   name: Extract needed Information for Indy-Test-Automation
+  #   runs-on: ubuntu-latest
+  #   outputs:
+
+  #   steps:
+  #     - name: Extract Indy Versions
+  #       id: indy-versions
+  #       run:  |
+  #         #bash extract here
+  #     - name: Extract sovtoken & sovtokenfees Version
+  #       id: sovtoken-versions
+  #       run: |
+  #         #bash extract here
+  build_sovrin:
+    name: Build Sovrin Deb
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Git Checkout
+        uses: actions/checkout@v3
+      - name: setup
+        run: |
+          sudo apt-get update && sudo apt-get -y install rubygems
+          sudo gem install fpm
+      - name: Build Sovrin Deb
+        run: sudo bash ./build-scripts/ubuntu-1604/build-sovrin.sh ./ "1.2.0" $PWD/sovrin.deb
+      - name: Upload sovrin.deb
+        uses: actions/upload-artifact@v3
+        with: 
+          name: sovrin.deb
+          path: ./sovrin.deb
+          retention-days: 5
+
+  call-indy-test-automation:
+    name: Indy-Test-Automation
+    needs: [build_sovrin]
+    uses: pschlarb/indy-test-automation/.github/workflows/sovrin.yaml@sovrin
+    with:
+      ubuntuVersion: "ubuntu-2004"
+      libsovtokenJSON: "{\"install\": \"yes\",  \"version\": \"1.0.5\", \"repoComponent\": \"dev\"}"
+      tokenPluginJSON: "{\"install\":\"yes\", \"sovtokenVersion\": \"1.2.0-dev1666268500\", \"sovtokenfeesVersion\":\"1.2.0-dev1666268500\", \"repoComponent\": \"dev\"}"
+      sovrinJSON: "{ \"install\": \"yes\", \"clientRepoComponent\": \"master\", \"nodeRepoComponent\": \"master\"}"
+      indyJSON: "{ \"nodeVersion\": \"1.13.2~rc3\", \"plenumVersion\" : \"1.13.1~rc2\", \"ursaVersion\": \"0.3.2-1\", \"pyzmqVersion\" : \"22.3.0\", \"nodeRepoComponent\":\"rc\"}"
+      libIndyVersion: "1.15.0~1625-bionic"
+      testAutomationBranch: "sovrin"
