@@ -8,7 +8,7 @@ FROM mcr.microsoft.com/vscode/devcontainers/base:0-${VARIANT}
 # RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
 #     && apt-get -y install --no-install-recommends <your-package-list-here>
 
-RUN apt-get install -y software-properties-common
+RUN apt-get update && apt-get install -y software-properties-common
 
 RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 3BC8C2DD662F1C45 && \
     apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 9692C00E657DDE61 && \
@@ -26,7 +26,10 @@ RUN apt-get install -y \
     indy-plenum=1.13.1~rc2 \
     python3-libnacl=1.6.1 \
     python3-sortedcontainers=1.5.7 \
-    python3-ujson=1.33
+    python3-ujson=1.33 \
+    rubygems
 
-RUN apt-get install sovtoken sovtokenfees indy-node=1.13.0~dev1654534721 -y
+RUN gem install fpm
+RUN apt-get install sovtoken sovtokenfees indy-node=1.13.2~rc3 -y
 RUN pip install /sovtoken /sovtokenfees
+RUN apt remove indy-node indy-plenum -y

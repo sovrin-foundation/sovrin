@@ -17,7 +17,9 @@ RUN sudo apt-get install -y \
     indy-plenum=1.13.1~rc2 \
     python3-libnacl=1.6.1 \
     python3-sortedcontainers=1.5.7 \
-    python3-ujson=1.33
-
-RUN sudo apt install sovtoken sovtokenfees indy-node=1.13.0~dev1654534721 -y
+    python3-ujson=1.33 \
+    rubygems
+RUN gem install fpm
+RUN sudo apt install sovtoken sovtokenfees indy-node=1.13.2~rc3 -y
 RUN sudo -H pip install /sovtoken /sovtokenfees
+RUN apt remove indy-node indy-plenum -y
