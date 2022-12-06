@@ -4,20 +4,27 @@ on:
   push:
 
 jobs:
-  # extract-information:
-  #   name: Extract needed Information for Indy-Test-Automation
-  #   runs-on: ubuntu-latest
-  #   outputs:
-
-  #   steps:
-  #     - name: Extract Indy Versions
-  #       id: indy-versions
-  #       run:  |
-  #         #bash extract here
-  #     - name: Extract sovtoken & sovtokenfees Version
-  #       id: sovtoken-versions
-  #       run: |
-  #         #bash extract here
+  extract-information:
+    name: Extract needed Information for Indy-Test-Automation
+    runs-on: ubuntu-latest
+    outputs:
+      indyVersion: ${{ steps.indy-versions.outputs.indyVersion}}
+      sovtokenVersion: ${{ steps.sovtoken-versions.outputs.sovtokenVersion}}
+      sovtokenfeesVersion: ${{ steps.sovtoken-versions.outputs.sovtokenfeesVersion}}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: prepare
+        run: ./build-scripts/ubuntu-1604/prepare-package.sh ./ "1.2.0"
+      - name: Extract Indy Versions
+        id: indy-versions
+        run:  |
+          echo "indyVersion=$(grep -oP "\d+.\d+.\d+((-|.)?rc\d+)?" <<< $(grep -oP "indy-node==\d+.\d+.\d+((-|.)?rc\d+)?" setup.py))" >>$GITHUB_OUTPUT
+      - name: Extract sovtoken & sovtokenfees Version
+        id: sovtoken-versions
+        run: |
+          echo "sovtokenVersion=$(grep -oP "\d+.\d+.\d+((-|.)?((rc)|(dev))?\d+)?" <<< $(grep -oP "sovtoken==\d+.\d+.\d+((-|.)?(rc|dev)\d+)?" setup.py))" >>$GITHUB_OUTPUT
+          echo "sovtokenfeesVersion=$(grep -oP "\d+.\d+.\d+((-|.)?((rc)|(dev))?\d+)?" <<< $(grep -oP "sovtokenfees==\d+.\d+.\d+((-|.)?(rc|dev)\d+)?" setup.py))" >>$GITHUB_OUTPUT
   build_sovrin:
     name: Build Sovrin Deb
     runs-on: ubuntu-20.04
@@ -39,13 +46,13 @@ jobs:
 
   call-indy-test-automation:
     name: Indy-Test-Automation
-    needs: [build_sovrin]
+    needs: [extract-information,build_sovrin]
     uses: pschlarb/indy-test-automation/.github/workflows/sovrin.yaml@sovrin
     with:
       ubuntuVersion: "ubuntu-2004"
       libsovtokenJSON: "{\"install\": \"yes\",  \"version\": \"1.0.5\", \"repoComponent\": \"dev\"}"
-      tokenPluginJSON: "{\"install\":\"yes\", \"sovtokenVersion\": \"1.2.0-dev1666268500\", \"sovtokenfeesVersion\":\"1.2.0-dev1666268500\", \"repoComponent\": \"dev\"}"
+      tokenPluginJSON: "{\"install\":\"yes\", \"sovtokenVersion\": \"${{ needs.extract-information.outputs.sovtokenVersion }}\", \"sovtokenfeesVersion\":\"${{ needs.extract-information.outputs.sovtokenfeesVersion }}\", \"repoComponent\": \"dev\"}"
       sovrinJSON: "{ \"install\": \"yes\", \"clientRepoComponent\": \"master\", \"nodeRepoComponent\": \"master\"}"
-      indyJSON: "{ \"nodeVersion\": \"1.13.2~rc3\", \"plenumVersion\" : \"1.13.1~rc2\", \"ursaVersion\": \"0.3.2-1\", \"pyzmqVersion\" : \"22.3.0\", \"nodeRepoComponent\":\"rc\"}"
+      indyJSON: "{ \"nodeVersion\": \"${{ needs.extract-information.outputs.indyVersion }}\", \"plenumVersion\" : \"1.13.1~rc2\", \"ursaVersion\": \"0.3.2-1\", \"pyzmqVersion\" : \"22.3.0\", \"nodeRepoComponent\":\"rc\"}"
       libIndyVersion: "1.15.0~1625-bionic"
       testAutomationBranch: "sovrin"
