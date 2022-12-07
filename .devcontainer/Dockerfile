@@ -12,8 +12,7 @@ RUN apt-get update && apt-get install -y software-properties-common
 
 RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 3BC8C2DD662F1C45 && \
     apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 9692C00E657DDE61 && \
-    apt-key adv --keyserver keyserver.ubuntu.com --recv-keys CE7709D068DB5E88 && \
-    apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 9692C00E657DDE61
+    apt-key adv --keyserver keyserver.ubuntu.com --recv-keys CE7709D068DB5E88
 
 RUN add-apt-repository "deb https://sovrin.jfrog.io/artifactory/deb focal dev"
 RUN add-apt-repository "deb https://hyperledger.jfrog.io/artifactory/indy focal dev rc"
