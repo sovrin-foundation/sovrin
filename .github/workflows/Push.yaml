@@ -50,9 +50,9 @@ jobs:
     uses: pschlarb/indy-test-automation/.github/workflows/sovrin.yaml@sovrin
     with:
       ubuntuVersion: "ubuntu-2004"
-      libsovtokenJSON: "{\"install\": \"yes\",  \"version\": \"1.0.5\", \"repoComponent\": \"dev\"}"
-      tokenPluginJSON: "{\"install\":\"yes\", \"sovtokenVersion\": \"${{ needs.extract-information.outputs.sovtokenVersion }}\", \"sovtokenfeesVersion\":\"${{ needs.extract-information.outputs.sovtokenfeesVersion }}\", \"repoComponent\": \"dev\"}"
-      sovrinJSON: "{ \"install\": \"yes\", \"clientRepoComponent\": \"master\", \"nodeRepoComponent\": \"master\"}"
-      indyJSON: "{ \"nodeVersion\": \"${{ needs.extract-information.outputs.indyVersion }}\", \"plenumVersion\" : \"1.13.1~rc2\", \"ursaVersion\": \"0.3.2-1\", \"pyzmqVersion\" : \"22.3.0\", \"nodeRepoComponent\":\"rc\"}"
+      libsovtokenJSON: "{\"install\": \"yes\",  \"version\": \"1.0.5\"}"
+      tokenPluginJSON: "{\"install\":\"yes\", \"sovtokenVersion\": \"${{ needs.extract-information.outputs.sovtokenVersion }}\", \"sovtokenfeesVersion\":\"${{ needs.extract-information.outputs.sovtokenfeesVersion }}\"}"
+      sovrinJSON: "{ \"install\": \"yes\"}"
+      indyJSON: "{ \"nodeVersion\": \"${{ needs.extract-information.outputs.indyVersion }}\", \"plenumVersion\" : \"1.13.1~rc2\", \"ursaVersion\": \"0.3.2-1\", \"pyzmqVersion\" : \"22.3.0\"}"
       libIndyVersion: "1.15.0~1625-bionic"
       testAutomationBranch: "sovrin"
