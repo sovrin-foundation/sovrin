@@ -4,8 +4,7 @@ USER gitpod
 
 RUN sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 3BC8C2DD662F1C45 && \
     sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 9692C00E657DDE61 && \
-    sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys CE7709D068DB5E88 && \
-    sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 9692C00E657DDE61
+    sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys CE7709D068DB5E88 
 
 RUN sudo add-apt-repository "deb https://sovrin.jfrog.io/artifactory/deb focal dev"
 RUN sudo add-apt-repository "deb https://hyperledger.jfrog.io/artifactory/indy focal dev rc"
