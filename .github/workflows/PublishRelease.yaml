@@ -1,0 +1,105 @@
+name: Publish Release triggered by Version Bump merged
+
+#disable all tags and enable all brannches and only version file
+on:
+  push:
+    branches-ignore:
+      - update-rc-version
+      - update-version
+    paths:
+      - '!**'
+      - "sovrin/metadata.json"
+
+
+jobs:
+  release-infos:
+    name: release-infos
+    runs-on: ubuntu-latest
+    outputs:
+      isVersionBump: ${{ steps.get-release-info.outputs.isVersionBump }}
+      isPreRelease: ${{ steps.get-release-info.outputs.isRC }}
+      versionTag: ${{ steps.get-release-info.outputs.versionTag }}
+      version: ${{ steps.get-release-info.outputs.version }}
+      component: ${{ steps.get-release-info.outputs.component}}
+      CACHE_KEY_BUILD: ${{ steps.workflow-setup.outputs.CACHE_KEY_BUILD }}
+      UBUNTU_VERSION: ${{ steps.workflow-setup.outputs.UBUNTU_VERSION }}
+      # Expose the lowercase version of the GitHub repository name
+      # to all subsequent jobs that reference image repositories
+      # as the push and pull operations require the URL of the repository
+      # to be in lowercase.
+      GITHUB_REPOSITORY_NAME: ${{ steps.workflow-setup.outputs.GITHUB_REPOSITORY_NAME }}
+      distribution: ${{ steps.workflow-setup.outputs.distribution }}
+      publish: ${{ steps.workflow-setup.outputs.publish}}
+    steps:
+      - name: checkout source code
+        uses: actions/checkout@v3
+      - name: get-release-info
+        id: get-release-info
+        uses: hyperledger/indy-shared-gha/.github/actions/get-release-info@v1
+        with:
+          versionString: "${{ github.event.head_commit.message }}"
+      - name: workflow-setup
+        id: workflow-setup
+        uses: hyperledger/indy-shared-gha/.github/actions/workflow-setup@v1
+        with:
+          ownerRepo: "sovrin-foundation"
+
+  createRelease:
+    name: Create Release
+    needs: [release-infos]
+    if: needs.release-infos.outputs.isVersionBump == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Download sovrin deb Artifacts from Github Action Artifacts
+        uses: dawidd6/action-download-artifact@v2
+        with:
+          github_token: ${{secrets.GITHUB_TOKEN}}
+          workflow: Releasepr.yaml
+          workflow_conclusion: success
+          name: sovrin.deb
+          path: artifacts/sovrin-deb
+      - name: Download sovrin python Artifacts from Github Action Artifacts
+        uses: dawidd6/action-download-artifact@v2
+        with:
+          github_token: ${{secrets.GITHUB_TOKEN}}
+          workflow: Releasepr.yaml
+          workflow_conclusion: success
+          name: sovrin-python
+          path: artifacts/sovrin-python
+      - name: Upload sovrin-deb
+        uses: actions/upload-artifact@v3
+        with:
+          name: sovrin.deb
+          path: artifacts/sovrin-deb
+      - name: Upload sovrin-python
+        uses: actions/upload-artifact@v3
+        with:
+          name: sovrin-python
+          path: artifacts/sovrin-python
+      - name: Generate Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ needs.release-infos.outputs.VERSIONTAG }}
+          files: |
+            artifacts/**
+          generate_release_notes: true
+          body: "[${{ needs.release-infos.outputs.VERSIONTAG }}] "
+          prerelease: ${{ needs.release-infos.outputs.isPreRelease }}
+          target_commitish: ${{github.event.ref}}
+          name: "${{ needs.release-infos.outputs.VERSIONTAG }}"
+          token: ${{ secrets.BOT_PR_PAT }}
+
+  publish-package:
+    name: Sovrin Publish Packages
+    needs: [release-infos, createRelease]
+    if:  needs.release-infos.outputs.publish == 'true'
+    uses: ./.github/workflows/reuseable_publish.yaml
+    with:
+      GITHUB_REPOSITORY_NAME: ${{ needs.release-infos.outputs.GITHUB_REPOSITORY_NAME }}
+      distribution: ${{ needs.release-infos.outputs.distribution }}
+      UBUNTU_VERSION: ${{ needs.release-infos.outputs.UBUNTU_VERSION }}
+      REPO_COMPONENT: ${{ needs.release-infos.outputs.component}}
+    secrets:
+      SOVRIN_ARTIFACTORY_REPO_CONFIG: ${{ secrets.SOVRIN_ARTIFACTORY_REPO_CONFIG }}

@@ -1,0 +1,66 @@
+name: "Publish Sovrin Packages"
+
+on:
+  workflow_call:
+    inputs:
+      GITHUB_REPOSITORY_NAME:
+        required: true
+        type: string
+      UBUNTU_VERSION:
+        required: true
+        type: string
+      REPO_COMPONENT:
+        required: true
+        type: string
+      distribution:
+        required: true
+        type: string
+    secrets:
+      SOVRIN_ARTIFACTORY_REPO_CONFIG:
+        required: true
+
+
+jobs:
+  publish_token_plugin_deb:
+    name: Token Plugin Publish Packages
+    runs-on: ubuntu-20.04
+    steps: 
+      - name: Setup JFrog CLI
+        uses: jfrog/setup-jfrog-cli@v2
+        env:
+          JF_ENV_1: ${{ secrets.SOVRIN_ARTIFACTORY_REPO_CONFIG }}
+
+      - name: Ping Artifactory
+        run: |
+          # Test the connection to Ping the Sovrin Artifactory server
+          # to ensure everything has been setup correctly.
+          jfrog rt ping
+
+      - name: Download sovrin-deb package from GHA
+        uses: actions/download-artifact@v3
+        with:
+          name: sovtoken.deb
+          path: /tmp/sovrin-deb/
+
+      - name: Publish sovrin-deb artifact
+        uses: hyperledger/indy-shared-gha/.github/actions/publish-deb@v1
+        with:
+          sourceDirectory: /tmp/sovrin-deb/
+          distribution: ${{ inputs.distribution }}
+          component: ${{ inputs.REPO_COMPONENT }}
+          repo: "deb"
+      
+      - name: Download sovrin Python Packages from Pipeline Artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: sovrin-python
+          path: dist
+
+      - name: Publish Python Package to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          user: __token__
+          password: ${{ secrets.PYPI_API_TOKEN }}
+          skip_existing: true
+          
+          

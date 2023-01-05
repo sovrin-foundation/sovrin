@@ -1,37 +1,42 @@
-name: Sovrin Push 
+name: Triggered by Version Bump Release PR
 
-on: 
-  push:
+on:
+  pull_request:
+    paths:
+      - '!**'
+      - "sovrin/metadata.json"
     branches:
       - master
       - DevContainers
-    paths:
-      - 'sovrin/*_genesis'
-      - '**.py'
-
 jobs:
-  workflow-setup:
-    name: Initialize Workflow
+  release-infos:
+    name: infos
     runs-on: ubuntu-latest
     outputs:
-      testsNeeded: ${{ steps.testsNeeded.outputs.testsNeeded }}
+      isVersionBump: ${{ steps.get-release-info.outputs.isVersionBump }}
+      isPreRelease: ${{ steps.get-release-info.outputs.isRC }}
+      CACHE_KEY_BUILD: ${{ steps.workflow-setup.outputs.CACHE_KEY_BUILD }}
+      UBUNTU_VERSION: ${{ steps.workflow-setup.outputs.UBUNTU_VERSION }}
+      # Expose the lowercase version of the GitHub repository name
+      # to all subsequent jobs that reference image repositories
+      # as the push and pull operations require the URL of the repository
+      # to be in lowercase.
+      GITHUB_REPOSITORY_NAME: ${{ steps.workflow-setup.outputs.GITHUB_REPOSITORY_NAME }}
+      distribution: ${{ steps.workflow-setup.outputs.distribution }}
     steps:
       - name: checkout source code
         uses: actions/checkout@v3
-      - name: setup
-        id: setup
+      - name: get-release-info
+        id: get-release-info
+        uses: hyperledger/indy-shared-gha/.github/actions/get-release-info@v1
+        with:
+          versionString: "${{ github.event.pull_request.body }}"
+      - name: workflow-setup
+        id: workflow-setup
         uses: hyperledger/indy-shared-gha/.github/actions/workflow-setup@v1
         with:
           ownerRepo: "sovrin-foundation"
-      - name: testsNeeded
-        id: testsNeeded
-        uses: dorny/paths-filter@v2
-        with:
-          filters: |
-            testsNeeded:
-              - '**.py'
-              - 'sovrin/*genesis'
-              
+
   extract-information:
     name: Extract needed Information for Indy-Test-Automation
     runs-on: ubuntu-latest
@@ -75,7 +80,7 @@ jobs:
     name: Build Sovrin Deb
     uses: ./.github/workflows/reuseable_build_package.yaml
     with:
-      isDev: true    
+      isDev: false    
 
   call-indy-test-automation:
     name: Indy-Test-Automation
@@ -91,15 +96,3 @@ jobs:
       includePaymentTests: true
       testAutomationBranch: "sovrin"
 
-  publish-package:
-    name: Sovrin Publish Packages
-    needs: [workflow-setup, extract-information, call-indy-test-automation]
-    if:  needs.workflow-setup.outputs.publish  == 'true' 
-    uses: ./.github/workflows/reuseable_publish.yaml
-    with:
-      GITHUB_REPOSITORY_NAME: ${{ needs.release-infos.outputs.GITHUB_REPOSITORY_NAME }}
-      distribution: focal
-      UBUNTU_VERSION: ubuntu-2004
-      REPO_COMPONENT: 'dev'
-    secrets:
-      SOVRIN_ARTIFACTORY_REPO_CONFIG: ${{ secrets.SOVRIN_ARTIFACTORY_REPO_CONFIG }}
