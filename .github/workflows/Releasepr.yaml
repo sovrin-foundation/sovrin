@@ -1,0 +1,56 @@
+name: Triggered by Version Bump Release PR
+
+on:
+  pull_request:
+    paths:
+      - '!**'
+      - "sovrin/metadata.json"
+jobs:
+  release-infos:
+    name: infos
+    runs-on: ubuntu-latest
+    outputs:
+      isVersionBump: ${{ steps.get-release-info.outputs.isVersionBump }}
+      isPreRelease: ${{ steps.get-release-info.outputs.isRC }}
+      CACHE_KEY_BUILD: ${{ steps.workflow-setup.outputs.CACHE_KEY_BUILD }}
+      UBUNTU_VERSION: ${{ steps.workflow-setup.outputs.UBUNTU_VERSION }}
+      # Expose the lowercase version of the GitHub repository name
+      # to all subsequent jobs that reference image repositories
+      # as the push and pull operations require the URL of the repository
+      # to be in lowercase.
+      GITHUB_REPOSITORY_NAME: ${{ steps.workflow-setup.outputs.GITHUB_REPOSITORY_NAME }}
+      distribution: ${{ steps.workflow-setup.outputs.distribution }}
+    steps:
+      - name: checkout source code
+        uses: actions/checkout@v3
+      - name: get-release-info
+        id: get-release-info
+        uses: hyperledger/indy-shared-gha/.github/actions/get-release-info@v1
+        with:
+          versionString: "${{ github.event.pull_request.body }}"
+      - name: workflow-setup
+        id: workflow-setup
+        uses: hyperledger/indy-shared-gha/.github/actions/workflow-setup@v1
+        with:
+          ownerRepo: "sovrin-foundation"
+
+  build_sovrin:
+    name: Build Sovrin Deb
+    uses: ./.github/workflows/reuseable_build_package.yaml
+    with:
+      isDev: false    
+
+  call-indy-test-automation:
+    name: Indy-Test-Automation
+    needs: [extract-information,build_sovrin]
+    uses: pschlarb/indy-test-automation/.github/workflows/sovrin.yaml@sovrin
+    with:
+      ubuntuVersion: "ubuntu-2004"
+      libsovtokenJSON: "{\"install\": \"yes\",  \"version\": \"1.0.5\"}"
+      tokenPluginJSON: "{\"install\":\"yes\", \"sovtokenVersion\": \"${{ needs.extract-information.outputs.sovtokenVersion }}\", \"sovtokenfeesVersion\":\"${{ needs.extract-information.outputs.sovtokenfeesVersion }}\"}"
+      sovrinJSON: "{ \"install\": \"yes\"}"
+      indyJSON: "{ \"nodeVersion\": \"${{ needs.extract-information.outputs.indyVersion }}\", \"plenumVersion\" : \"1.13.1~rc2\", \"ursaVersion\": \"0.3.2-1\", \"pyzmqVersion\" : \"22.3.0\"}"
+      libIndyVersion: "1.15.0~1625-bionic"
+      includePaymentTests: true
+      testAutomationBranch: "sovrin"
+

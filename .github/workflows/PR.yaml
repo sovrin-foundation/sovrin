@@ -1,7 +1,7 @@
-name: Sovrin Push 
+name: Sovrin PR 
 
 on: 
-  push:
+  pull_request:
 
 jobs:
   extract-information:
@@ -11,15 +11,11 @@ jobs:
       indyVersion: ${{ steps.indy-versions.outputs.indyVersion}}
       sovtokenVersion: ${{ steps.sovtoken-versions.outputs.sovtokenVersion}}
       sovtokenfeesVersion: ${{ steps.sovtoken-versions.outputs.sovtokenfeesVersion}}
-      GITHUB_REPOSITORY_NAME: ${{ steps.repository-name.outputs.lowercase }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Convert the GitHub repository name to lowercase
-        id: repository-name
-        uses: ASzc/change-string-case-action@v5
-        with:
-          string: ${{ github.repository }}
+      - name: prepare
+        run: ./build-scripts/ubuntu-1604/prepare-package.sh ./ "1.2.0"
       - name: Extract Indy Versions
         id: indy-versions
         run:  |
@@ -49,15 +45,4 @@ jobs:
       libIndyVersion: "1.15.0~1625-bionic"
       includePaymentTests: true
       testAutomationBranch: "sovrin"
-
-  publish-package:
-    name: Sovrin Publish Packages
-    needs: [extract-information, call-indy-test-automation]
-    uses: ./.github/workflows/reuseable_publish.yaml
-    with:
-      GITHUB_REPOSITORY_NAME: ${{ needs.release-infos.outputs.GITHUB_REPOSITORY_NAME }}
-      distribution: focal
-      UBUNTU_VERSION: ubuntu-2004
-      REPO_COMPONENT: 'dev'
-    secrets:
-      SOVRIN_ARTIFACTORY_REPO_CONFIG: ${{ secrets.SOVRIN_ARTIFACTORY_REPO_CONFIG }}
+  

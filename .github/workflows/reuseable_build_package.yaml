@@ -1,0 +1,87 @@
+name: "Build Sovrin Package"
+
+on:
+  workflow_call:
+    inputs:
+      isDev:
+        required: false
+        default: true
+        type: boolean
+
+
+jobs:
+  timestamp:
+    name: Get timestamp
+    runs-on: ubuntu-latest
+    outputs:
+      timestamp: ${{ steps.timestamp.outputs.timestamp }}
+    steps:
+      - id: timestamp
+        run: |
+          export timestamp=$(date +%s)
+          echo "timestamp=$timestamp" >> $GITHUB_OUTPUT
+          echo "::group::DEBUG"
+          echo "timestamp=$timestamp"
+          echo "::endgroup::"
+
+
+  build_sovrin:
+    name: Build Sovrin Deb
+    runs-on: ubuntu-20.04
+    needs: timestamp
+    steps:
+      - name: Git Checkout
+        uses: actions/checkout@v3
+      - name: setup
+        run: |
+          sudo apt-get update && sudo apt-get -y install rubygems
+          sudo gem install fpm
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.8'
+      - name: Set up python
+        run: |
+          pip3 install semver          
+      - name: Set Version with UX-timestamp
+        id: version
+        if: ${{ inputs.isDev }}
+        run: |
+          python3 updateVersion.py --timestamp ${{ needs.timestamp.outputs.timestamp }}
+          echo "version=$(python3 updateVersion.py --getVersion)" >> $GITHUB_OUTPUT
+      - name: prepare
+        run: ./build-scripts/ubuntu-1604/prepare-package.sh ./ ${{ steps.version.outputs.version }}
+        
+      - name: Build Sovrin Deb
+        run: sudo bash ./build-scripts/ubuntu-1604/build-sovrin.sh ./ "$(python updateVersion.py --getVersion)" $PWD/sovrin.deb
+      - name: Upload sovrin.deb
+        uses: actions/upload-artifact@v3
+        with: 
+          name: sovrin.deb
+          path: ./sovrin.deb
+          retention-days: 5
+
+  build_sovrin_pypi:
+    name: Sovrin Build Pypi
+    runs-on: ubuntu-20.04
+    needs: timestamp
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.8'
+      - name: Set up python
+        run: |
+          pip3 install semver wheel   
+      - name: Set Version with UX-timestamp
+        if: ${{ inputs.isDev }}
+        run: python3 updateVersion.py --timestamp ${{ needs.timestamp.outputs.timestamp }}
+      - name: Build python sovrin package
+        run: python3 setup.py sdist --dist-dir /tmp/dist bdist_wheel --dist-dir /tmp/dist
+      - uses: actions/upload-artifact@v3
+        with:
+          name: sovrin-python
+          path: /tmp/dist
+          retention-days: 5
