@@ -55,4 +55,5 @@ jobs:
       sovrinJSON: "{ \"install\": \"yes\"}"
       indyJSON: "{ \"nodeVersion\": \"${{ needs.extract-information.outputs.indyVersion }}\", \"plenumVersion\" : \"1.13.1~rc2\", \"ursaVersion\": \"0.3.2-1\", \"pyzmqVersion\" : \"22.3.0\"}"
       libIndyVersion: "1.15.0~1625-bionic"
+      includePaymentTests: true
       testAutomationBranch: "sovrin"
