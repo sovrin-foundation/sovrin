@@ -44,16 +44,15 @@ jobs:
         run: |
           pip3 install semver          
       - name: Set Version with UX-timestamp
-        id: version
         if: ${{ inputs.isDev }}
-        run: |
-          python3 updateVersion.py --timestamp ${{ needs.timestamp.outputs.timestamp }}
-          echo "version=$(python3 updateVersion.py --getVersion)" >> $GITHUB_OUTPUT
+        run: python3 updateVersion.py --timestamp ${{ needs.timestamp.outputs.timestamp }}
+      - name: Get current Version
+        id: version
+        run: echo "version=$(python3 updateVersion.py --getVersion)" >> $GITHUB_OUTPUT
       - name: prepare
         run: ./build-scripts/ubuntu-1604/prepare-package.sh ./ ${{ steps.version.outputs.version }}
-        
       - name: Build Sovrin Deb
-        run: sudo bash ./build-scripts/ubuntu-1604/build-sovrin.sh ./ "$(python updateVersion.py --getVersion)" $PWD/sovrin.deb
+        run: sudo bash ./build-scripts/ubuntu-1604/build-sovrin.sh ./ "${{ steps.version.outputs.version }}" $PWD/sovrin.deb
       - name: Upload sovrin.deb
         uses: actions/upload-artifact@v3
         with: 
