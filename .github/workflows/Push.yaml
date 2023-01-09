@@ -2,8 +2,35 @@ name: Sovrin Push
 
 on: 
   push:
+    branches:
+      - master
+      - DevContainers
+    paths:
+      - 'sovrin/*_genesis'
+      - '**.py'
 
 jobs:
+  workflow-setup:
+    name: Initialize Workflow
+    runs-on: ubuntu-latest
+    outputs:
+      testsNeeded: ${{ steps.testsNeeded.outputs.testsNeeded }}
+    steps:
+      - name: checkout source code
+        uses: actions/checkout@v3
+      - name: setup
+        id: setup
+        uses: hyperledger/indy-shared-gha/.github/actions/workflow-setup@v1
+        with:
+          ownerRepo: "sovrin-foundation"
+      - name: testsNeeded
+        id: testsNeeded
+        uses: dorny/paths-filter@v2
+        with:
+          filters: |
+            testsNeeded:
+              - '**.py'
+              - 'sovrin/*genesis'
   extract-information:
     name: Extract needed Information for Indy-Test-Automation
     runs-on: ubuntu-latest
@@ -65,7 +92,8 @@ jobs:
 
   publish-package:
     name: Sovrin Publish Packages
-    needs: [extract-information, call-indy-test-automation]
+    needs: [workflow-setup, extract-information, call-indy-test-automation]
+    if:  needs.workflow-setup.outputs.publish  == 'true' 
     uses: ./.github/workflows/reuseable_publish.yaml
     with:
       GITHUB_REPOSITORY_NAME: ${{ needs.release-infos.outputs.GITHUB_REPOSITORY_NAME }}

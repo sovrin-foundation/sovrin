@@ -5,6 +5,9 @@ on:
     paths:
       - '!**'
       - "sovrin/metadata.json"
+    branches:
+      - master
+      - DevContainers
 jobs:
   release-infos:
     name: infos
@@ -34,6 +37,45 @@ jobs:
         with:
           ownerRepo: "sovrin-foundation"
 
+  extract-information:
+    name: Extract needed Information for Indy-Test-Automation
+    runs-on: ubuntu-latest
+    outputs:
+      indyVersion: ${{ steps.indy-versions.outputs.indyVersion}}
+      sovtokenVersion: ${{ steps.sovtoken-versions.outputs.sovtokenVersion}}
+      sovtokenfeesVersion: ${{ steps.sovtoken-versions.outputs.sovtokenfeesVersion}}
+      GITHUB_REPOSITORY_NAME: ${{ steps.repository-name.outputs.lowercase }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Convert the GitHub repository name to lowercase
+        id: repository-name
+        uses: ASzc/change-string-case-action@v5
+        with:
+          string: ${{ github.repository }}
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.8'
+      - name: Set up python
+        run: |
+          pip3 install semver    
+      - name: Get Version with UX-timestamp
+        id: version
+        run: |
+          echo "version=$(python3 updateVersion.py --getVersion)" >> $GITHUB_OUTPUT
+      - name: prepare
+        run: ./build-scripts/ubuntu-1604/prepare-package.sh ./ ${{ steps.version.outputs.version }}
+      - name: Extract Indy Versions
+        id: indy-versions
+        run:  |
+          echo "indyVersion=$(grep -oP "\d+.\d+.\d+((-|.)?rc\d+)?" <<< $(grep -oP "indy-node==\d+.\d+.\d+((-|.)?rc\d+)?" setup.py))" >>$GITHUB_OUTPUT
+      - name: Extract sovtoken & sovtokenfees Version
+        id: sovtoken-versions
+        run: |
+          echo "sovtokenVersion=$(grep -oP "\d+.\d+.\d+((-|.)?((rc)|(dev))?\d+)?" <<< $(grep -oP "sovtoken==\d+.\d+.\d+((-|.)?(rc|dev)\d+)?" setup.py))" >>$GITHUB_OUTPUT
+          echo "sovtokenfeesVersion=$(grep -oP "\d+.\d+.\d+((-|.)?((rc)|(dev))?\d+)?" <<< $(grep -oP "sovtokenfees==\d+.\d+.\d+((-|.)?(rc|dev)\d+)?" setup.py))" >>$GITHUB_OUTPUT
+  
   build_sovrin:
     name: Build Sovrin Deb
     uses: ./.github/workflows/reuseable_build_package.yaml

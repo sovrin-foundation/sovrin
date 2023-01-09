@@ -53,7 +53,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Download sovrin deb Artifacts from Github Action Artifacts
-        uses: dawidd6/action-download-artifact@v3
+        uses: dawidd6/action-download-artifact@v2
         with:
           github_token: ${{secrets.GITHUB_TOKEN}}
           workflow: releasepr.yaml
@@ -61,7 +61,7 @@ jobs:
           name: sovrin.deb
           path: artifacts/sovrin-deb
       - name: Download sovrin python Artifacts from Github Action Artifacts
-        uses: dawidd6/action-download-artifact@v3
+        uses: dawidd6/action-download-artifact@v2
         with:
           github_token: ${{secrets.GITHUB_TOKEN}}
           workflow: releasepr.yaml
