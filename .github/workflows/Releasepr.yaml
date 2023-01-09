@@ -85,7 +85,7 @@ jobs:
   call-indy-test-automation:
     name: Indy-Test-Automation
     needs: [extract-information,build_sovrin]
-    uses: pschlarb/indy-test-automation/.github/workflows/sovrin.yaml@sovrin
+    uses: pschlarb/indy-test-automation/.github/workflows/callable_test-automation.yaml@sovrin
     with:
       ubuntuVersion: "ubuntu-2004"
       libsovtokenJSON: "{\"install\": \"yes\",  \"version\": \"1.0.5\"}"
