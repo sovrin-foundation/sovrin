@@ -9,7 +9,7 @@ group.add_argument("-t", "--tag", help="Version to be set to")
 group.add_argument("--timestamp", help="Timestamp to be set for the version")
 group.add_argument("--getVersion", help="Prints the current version", action="store_true")
 args = vars(ap.parse_args())
-
+sovrinMetadata = 'sovrin/metadata.json'
 
 def updateWithTag(ver):
     if not semver.VersionInfo.isvalid(ver):
@@ -19,7 +19,7 @@ def updateWithTag(ver):
 
 def updateWithTimestamp(timestamp):
     version = "str"
-    with open('sovrin/metadata.json', 'r') as f:
+    with open(sovrinMetadata, 'r') as f:
         data = json.load(f)
         v = semver.VersionInfo.parse(data["version"])
         v = v.replace(prerelease="dev" + timestamp)
@@ -30,7 +30,7 @@ def updateWithTimestamp(timestamp):
 version = "string"
 
 if args['getVersion']:
-    with open('sovrin/metadata.json', 'r') as f:
+    with open(sovrinMetadata, 'r') as f:
         data = json.load(f)
         v = semver.VersionInfo.parse(data["version"])
         print(v)
@@ -46,10 +46,10 @@ else:
     ap.print_help()
     quit()
 
-with open('sovrin/metadata.json', 'r') as f:
+with open(sovrinMetadata, 'r') as f:
     data = json.load(f)
     data["version"] = version
-    json.dump(data, open("sovrin/metadata.json", "w"), indent=2)
+    json.dump(data, open(sovrinMetadata, "w"), indent=2)
 
 
-print("Updated version of sovtoken and sovtokenfees metadata.json to: ", version)
+print("Updated version of sovrin metadata.json to: ", version)

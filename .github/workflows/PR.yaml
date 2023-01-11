@@ -58,7 +58,7 @@ jobs:
         run: |
           echo "version=$(python3 updateVersion.py --getVersion)" >> $GITHUB_OUTPUT
       - name: prepare
-        run: ./build-scripts/ubuntu-1604/prepare-package.sh ./ ${{ steps.version.outputs.version }}
+        run: ./build-scripts/ubuntu-2004/prepare-package.sh ./ ${{ steps.version.outputs.version }}
       - name: Extract Indy Versions
         id: indy-versions
         run:  |

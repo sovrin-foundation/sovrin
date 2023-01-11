@@ -50,9 +50,9 @@ jobs:
         id: version
         run: echo "version=$(python3 updateVersion.py --getVersion)" >> $GITHUB_OUTPUT
       - name: prepare
-        run: ./build-scripts/ubuntu-1604/prepare-package.sh ./ ${{ steps.version.outputs.version }}
+        run: ./build-scripts/ubuntu-2004/prepare-package.sh ./ ${{ steps.version.outputs.version }}
       - name: Build Sovrin Deb
-        run: sudo bash ./build-scripts/ubuntu-1604/build-sovrin.sh ./ "${{ steps.version.outputs.version }}" $PWD/sovrin.deb
+        run: sudo bash ./build-scripts/ubuntu-2004/build-sovrin.sh ./ "${{ steps.version.outputs.version }}" $PWD/sovrin.deb
       - name: Upload sovrin.deb
         uses: actions/upload-artifact@v3
         with: 
