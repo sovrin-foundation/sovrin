@@ -85,7 +85,7 @@ jobs:
   call-indy-test-automation:
     name: Indy-Test-Automation
     needs: [extract-information,build_sovrin]
-    uses: pschlarb/indy-test-automation/.github/workflows/callable_test-automation.yaml@sovrin
+    uses: hyperledger/indy-test-automation/.github/workflows/callable_test-automation.yaml@v0.9
     with:
       ubuntuVersion: "ubuntu-2004"
       libsovtokenJSON: "{\"install\": \"yes\",  \"version\": \"1.0.5\"}"
@@ -94,5 +94,5 @@ jobs:
       indyJSON: "{ \"nodeVersion\": \"${{ needs.extract-information.outputs.indyVersion }}\", \"plenumVersion\" : \"1.13.1~rc2\", \"ursaVersion\": \"0.3.2-1\", \"pyzmqVersion\" : \"22.3.0\"}"
       libIndyVersion: "1.15.0~1625-bionic"
       includePaymentTests: true
-      testAutomationBranch: "sovrin"
+      testAutomationBranch: "v0.9"
 
