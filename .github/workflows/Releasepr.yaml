@@ -1,0 +1,98 @@
+name: Triggered by Version Bump Release PR
+
+on:
+  pull_request:
+    paths:
+      - '!**'
+      - "sovrin/metadata.json"
+    branches:
+      - master
+      - DevContainers
+jobs:
+  release-infos:
+    name: infos
+    runs-on: ubuntu-latest
+    outputs:
+      isVersionBump: ${{ steps.get-release-info.outputs.isVersionBump }}
+      isPreRelease: ${{ steps.get-release-info.outputs.isRC }}
+      CACHE_KEY_BUILD: ${{ steps.workflow-setup.outputs.CACHE_KEY_BUILD }}
+      UBUNTU_VERSION: ${{ steps.workflow-setup.outputs.UBUNTU_VERSION }}
+      # Expose the lowercase version of the GitHub repository name
+      # to all subsequent jobs that reference image repositories
+      # as the push and pull operations require the URL of the repository
+      # to be in lowercase.
+      GITHUB_REPOSITORY_NAME: ${{ steps.workflow-setup.outputs.GITHUB_REPOSITORY_NAME }}
+      distribution: ${{ steps.workflow-setup.outputs.distribution }}
+    steps:
+      - name: checkout source code
+        uses: actions/checkout@v3
+      - name: get-release-info
+        id: get-release-info
+        uses: hyperledger/indy-shared-gha/.github/actions/get-release-info@v1
+        with:
+          versionString: "${{ github.event.pull_request.body }}"
+      - name: workflow-setup
+        id: workflow-setup
+        uses: hyperledger/indy-shared-gha/.github/actions/workflow-setup@v1
+        with:
+          ownerRepo: "sovrin-foundation"
+
+  extract-information:
+    name: Extract needed Information for Indy-Test-Automation
+    runs-on: ubuntu-latest
+    outputs:
+      indyVersion: ${{ steps.indy-versions.outputs.indyVersion}}
+      sovtokenVersion: ${{ steps.sovtoken-versions.outputs.sovtokenVersion}}
+      sovtokenfeesVersion: ${{ steps.sovtoken-versions.outputs.sovtokenfeesVersion}}
+      GITHUB_REPOSITORY_NAME: ${{ steps.repository-name.outputs.lowercase }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Convert the GitHub repository name to lowercase
+        id: repository-name
+        uses: ASzc/change-string-case-action@v5
+        with:
+          string: ${{ github.repository }}
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.8'
+      - name: Set up python
+        run: |
+          pip3 install semver    
+      - name: Get Version with UX-timestamp
+        id: version
+        run: |
+          echo "version=$(python3 updateVersion.py --getVersion)" >> $GITHUB_OUTPUT
+      - name: prepare
+        run: ./build-scripts/ubuntu-2004/prepare-package.sh ./ ${{ steps.version.outputs.version }}
+      - name: Extract Indy Versions
+        id: indy-versions
+        run:  |
+          echo "indyVersion=$(grep -oP "\d+.\d+.\d+((-|.)?rc\d+)?" <<< $(grep -oP "indy-node==\d+.\d+.\d+((-|.)?rc\d+)?" setup.py))" >>$GITHUB_OUTPUT
+      - name: Extract sovtoken & sovtokenfees Version
+        id: sovtoken-versions
+        run: |
+          echo "sovtokenVersion=$(grep -oP "\d+.\d+.\d+((-|.)?((rc)|(dev))?\d+)?" <<< $(grep -oP "sovtoken==\d+.\d+.\d+((-|.)?(rc|dev)\d+)?" setup.py))" >>$GITHUB_OUTPUT
+          echo "sovtokenfeesVersion=$(grep -oP "\d+.\d+.\d+((-|.)?((rc)|(dev))?\d+)?" <<< $(grep -oP "sovtokenfees==\d+.\d+.\d+((-|.)?(rc|dev)\d+)?" setup.py))" >>$GITHUB_OUTPUT
+  
+  build_sovrin:
+    name: Build Sovrin Deb
+    uses: ./.github/workflows/reuseable_build_package.yaml
+    with:
+      isDev: false    
+
+  call-indy-test-automation:
+    name: Indy-Test-Automation
+    needs: [extract-information,build_sovrin]
+    uses: hyperledger/indy-test-automation/.github/workflows/callable_test-automation.yaml@v0.9
+    with:
+      ubuntuVersion: "ubuntu-2004"
+      libsovtokenJSON: "{\"install\": \"yes\",  \"version\": \"1.0.5\"}"
+      tokenPluginJSON: "{\"install\":\"yes\", \"sovtokenVersion\": \"${{ needs.extract-information.outputs.sovtokenVersion }}\", \"sovtokenfeesVersion\":\"${{ needs.extract-information.outputs.sovtokenfeesVersion }}\"}"
+      sovrinJSON: "{ \"install\": \"yes\"}"
+      indyJSON: "{ \"nodeVersion\": \"${{ needs.extract-information.outputs.indyVersion }}\", \"plenumVersion\" : \"1.13.1~rc2\", \"ursaVersion\": \"0.3.2-1\", \"pyzmqVersion\" : \"22.3.0\"}"
+      libIndyVersion: "1.15.0~1625-bionic"
+      includePaymentTests: true
+      testAutomationBranch: "v0.9"
+

@@ -1,0 +1,107 @@
+name: Sovrin Push 
+
+on: 
+  push:
+    branches:
+      - master
+      - DevContainers
+    paths:
+      - 'sovrin/*_genesis'
+      - '.github/**'
+      - '**.py'
+
+jobs:
+  workflow-setup:
+    name: Initialize Workflow
+    runs-on: ubuntu-latest
+    outputs:
+      testsNeeded: ${{ steps.testsNeeded.outputs.testsNeeded }}
+    steps:
+      - name: checkout source code
+        uses: actions/checkout@v3
+      - name: setup
+        id: setup
+        uses: hyperledger/indy-shared-gha/.github/actions/workflow-setup@v1
+        with:
+          ownerRepo: "sovrin-foundation"
+      - name: testsNeeded
+        id: testsNeeded
+        uses: dorny/paths-filter@v2
+        with:
+          filters: |
+            testsNeeded:
+              - '**.py'
+              - 'sovrin/*genesis'
+              - '.github/**'
+              
+  extract-information:
+    name: Extract needed Information for Indy-Test-Automation
+    runs-on: ubuntu-latest
+    outputs:
+      indyVersion: ${{ steps.indy-versions.outputs.indyVersion}}
+      sovtokenVersion: ${{ steps.sovtoken-versions.outputs.sovtokenVersion}}
+      sovtokenfeesVersion: ${{ steps.sovtoken-versions.outputs.sovtokenfeesVersion}}
+      GITHUB_REPOSITORY_NAME: ${{ steps.repository-name.outputs.lowercase }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Convert the GitHub repository name to lowercase
+        id: repository-name
+        uses: ASzc/change-string-case-action@v5
+        with:
+          string: ${{ github.repository }}
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.8'
+      - name: Set up python
+        run: |
+          pip3 install semver    
+      - name: Get Version with UX-timestamp
+        id: version
+        run: |
+          echo "version=$(python3 updateVersion.py --getVersion)" >> $GITHUB_OUTPUT
+      - name: prepare
+        run: ./build-scripts/ubuntu-2004/prepare-package.sh ./ ${{ steps.version.outputs.version }}
+      - name: Extract Indy Versions
+        id: indy-versions
+        run:  |
+          echo "indyVersion=$(grep -oP "\d+.\d+.\d+((-|.)?rc\d+)?" <<< $(grep -oP "indy-node==\d+.\d+.\d+((-|.)?rc\d+)?" setup.py))" >>$GITHUB_OUTPUT
+      - name: Extract sovtoken & sovtokenfees Version
+        id: sovtoken-versions
+        run: |
+          echo "sovtokenVersion=$(grep -oP "\d+.\d+.\d+((-|.)?((rc)|(dev))?\d+)?" <<< $(grep -oP "sovtoken==\d+.\d+.\d+((-|.)?(rc|dev)\d+)?" setup.py))" >>$GITHUB_OUTPUT
+          echo "sovtokenfeesVersion=$(grep -oP "\d+.\d+.\d+((-|.)?((rc)|(dev))?\d+)?" <<< $(grep -oP "sovtokenfees==\d+.\d+.\d+((-|.)?(rc|dev)\d+)?" setup.py))" >>$GITHUB_OUTPUT
+  
+  build_sovrin:
+    name: Build Sovrin Deb
+    uses: ./.github/workflows/reuseable_build_package.yaml
+    with:
+      isDev: true    
+
+  call-indy-test-automation:
+    name: Indy-Test-Automation
+    needs: [extract-information,build_sovrin]
+    uses: hyperledger/indy-test-automation/.github/workflows/callable_test-automation.yaml@v0.9
+    with:
+      ubuntuVersion: "ubuntu-2004"
+      libsovtokenJSON: "{\"install\": \"yes\",  \"version\": \"1.0.5\"}"
+      tokenPluginJSON: "{\"install\":\"yes\", \"sovtokenVersion\": \"${{ needs.extract-information.outputs.sovtokenVersion }}\", \"sovtokenfeesVersion\":\"${{ needs.extract-information.outputs.sovtokenfeesVersion }}\"}"
+      sovrinJSON: "{ \"install\": \"yes\"}"
+      indyJSON: "{ \"nodeVersion\": \"${{ needs.extract-information.outputs.indyVersion }}\", \"plenumVersion\" : \"1.13.1~rc2\", \"ursaVersion\": \"0.3.2-1\", \"pyzmqVersion\" : \"22.3.0\"}"
+      libIndyVersion: "1.15.0~1625-bionic"
+      includePaymentTests: true
+      testAutomationBranch: "v0.9"
+
+  publish-package:
+    name: Sovrin Publish Packages
+    needs: [workflow-setup, extract-information, call-indy-test-automation]
+    if:  needs.workflow-setup.outputs.publish  == 'true' 
+    uses: ./.github/workflows/reuseable_publish.yaml
+    with:
+      GITHUB_REPOSITORY_NAME: ${{ needs.release-infos.outputs.GITHUB_REPOSITORY_NAME }}
+      distribution: focal
+      UBUNTU_VERSION: ubuntu-2004
+      REPO_COMPONENT: 'dev'
+    secrets:
+      SOVRIN_ARTIFACTORY_REPO_CONFIG: ${{ secrets.SOVRIN_ARTIFACTORY_REPO_CONFIG }}

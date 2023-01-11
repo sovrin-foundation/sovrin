@@ -1,0 +1,103 @@
+name: Sovrin PR 
+
+on: 
+  pull_request:
+    paths:
+      - '**'
+      - '.github/**'
+      - "!sovrin/metadata.json"
+    branches:
+      - master
+      - DevContainers
+
+jobs:
+  workflow-setup:
+    name: Initialize Workflow
+    runs-on: ubuntu-latest
+    outputs:
+      GITHUB_REPOSITORY_NAME: ${{ steps.setup.outputs.GITHUB_REPOSITORY_NAME }}
+      distribution: ${{ steps.setup.outputs.distribution }}
+      publish: ${{ steps.setup.outputs.publish }}
+      testsNeeded: ${{ steps.testsNeeded.outputs.testsNeeded }}
+    steps:
+      - name: checkout source code
+        uses: actions/checkout@v3
+      - name: setup
+        id: setup
+        uses: hyperledger/indy-shared-gha/.github/actions/workflow-setup@v1
+        with:
+          ownerRepo: "sovrin-foundation"
+      - name: testsNeeded
+        id: testsNeeded
+        uses: dorny/paths-filter@v2
+        with:
+          filters: |
+            testsNeeded:
+              - '**.py'
+              - 'sovrin/*genesis'
+              - '.github/**'
+  extract-information:
+    name: Extract needed Information for Indy-Test-Automation
+    needs: [workflow-setup]
+    if: ${{ needs.workflow-setup.outputs.testsNeeded == 'true' }}
+    runs-on: ubuntu-latest
+    outputs:
+      indyVersion: ${{ steps.indy-versions.outputs.indyVersion}}
+      sovtokenVersion: ${{ steps.sovtoken-versions.outputs.sovtokenVersion}}
+      sovtokenfeesVersion: ${{ steps.sovtoken-versions.outputs.sovtokenfeesVersion}}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.8'
+      - name: Set up python
+        run: |
+          pip3 install semver    
+      - name: Get Version with UX-timestamp
+        id: version
+        run: |
+          echo "version=$(python3 updateVersion.py --getVersion)" >> $GITHUB_OUTPUT
+      - name: prepare
+        run: ./build-scripts/ubuntu-2004/prepare-package.sh ./ ${{ steps.version.outputs.version }}
+      - name: Extract Indy Versions
+        id: indy-versions
+        run:  |
+          echo "indyVersion=$(grep -oP "\d+.\d+.\d+((-|.)?rc\d+)?" <<< $(grep -oP "indy-node==\d+.\d+.\d+((-|.)?rc\d+)?" setup.py))" >>$GITHUB_OUTPUT
+      - name: Extract sovtoken & sovtokenfees Version
+        id: sovtoken-versions
+        run: |
+          echo "sovtokenVersion=$(grep -oP "\d+.\d+.\d+((-|.)?((rc)|(dev))?\d+)?" <<< $(grep -oP "sovtoken==\d+.\d+.\d+((-|.)?(rc|dev)\d+)?" setup.py))" >>$GITHUB_OUTPUT
+          echo "sovtokenfeesVersion=$(grep -oP "\d+.\d+.\d+((-|.)?((rc)|(dev))?\d+)?" <<< $(grep -oP "sovtokenfees==\d+.\d+.\d+((-|.)?(rc|dev)\d+)?" setup.py))" >>$GITHUB_OUTPUT
+  
+  build_sovrin:
+    name: Build Sovrin Deb
+    needs: [workflow-setup]
+    if: ${{ needs.workflow-setup.outputs.testsNeeded == 'true' }}
+    uses: ./.github/workflows/reuseable_build_package.yaml
+    with:
+      isDev: true    
+
+  call-indy-test-automation:
+    name: Indy-Test-Automation
+    needs: [workflow-setup, extract-information, build_sovrin]
+    if: ${{ needs.workflow-setup.outputs.testsNeeded == 'true' }}    
+    uses: hyperledger/indy-test-automation/.github/workflows/callable_test-automation.yaml@v0.9
+    with:
+      ubuntuVersion: "ubuntu-2004"
+      libsovtokenJSON: "{\"install\": \"yes\",  \"version\": \"1.0.5\"}"
+      tokenPluginJSON: "{\"install\":\"yes\", \"sovtokenVersion\": \"${{ needs.extract-information.outputs.sovtokenVersion }}\", \"sovtokenfeesVersion\":\"${{ needs.extract-information.outputs.sovtokenfeesVersion }}\"}"
+      sovrinJSON: "{ \"install\": \"yes\"}"
+      indyJSON: "{ \"nodeVersion\": \"${{ needs.extract-information.outputs.indyVersion }}\", \"plenumVersion\" : \"1.13.1~rc2\", \"ursaVersion\": \"0.3.2-1\", \"pyzmqVersion\" : \"22.3.0\"}"
+      libIndyVersion: "1.15.0~1625-bionic"
+      includePaymentTests: true
+      testAutomationBranch: "v0.9"
+  
+  statusCheck:
+    name: statusCheck
+    runs-on: ubuntu-latest
+    needs: [workflow-setup, call-indy-test-automation]
+    if: ${{ needs.workflow-setup.outputs.testsNeeded == 'false' || success() }}
+    steps:
+      - run: 'echo "Just a status Check (Always true, when executed) for branch protection rules(blocks merging while test are running and if tests fail)." '
