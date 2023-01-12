@@ -21,7 +21,7 @@ on:
 
 
 jobs:
-  publish_token_plugin_deb:
+  publish_sovrin:
     name: Token Plugin Publish Packages
     runs-on: ubuntu-20.04
     steps: 
@@ -39,7 +39,7 @@ jobs:
       - name: Download sovrin-deb package from GHA
         uses: actions/download-artifact@v3
         with:
-          name: sovtoken.deb
+          name: sovrin.deb
           path: /tmp/sovrin-deb/
 
       - name: Publish sovrin-deb artifact
