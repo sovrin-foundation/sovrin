@@ -16,6 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       testsNeeded: ${{ steps.testsNeeded.outputs.testsNeeded }}
+      publish: ${{ steps.setup.outputs.publish}}
     steps:
       - name: checkout source code
         uses: actions/checkout@v3
