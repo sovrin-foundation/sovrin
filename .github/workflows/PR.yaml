@@ -1,11 +1,12 @@
-name: Sovrin PR 
+name: Sovrin PR
 
-on: 
+on:
   pull_request:
     paths:
       - '**'
       - '.github/**'
       - "!sovrin/metadata.json"
+
     branches:
       - master
       - DevContainers
@@ -54,7 +55,7 @@ jobs:
           python-version: '3.8'
       - name: Set up python
         run: |
-          pip3 install semver    
+          pip3 install semver
       - name: Get Version with UX-timestamp
         id: version
         run: |
@@ -70,19 +71,19 @@ jobs:
         run: |
           echo "sovtokenVersion=$(grep -oP "\d+.\d+.\d+((-|.)?((rc)|(dev))?\d+)?" <<< $(grep -oP "sovtoken==\d+.\d+.\d+((-|.)?(rc|dev)\d+)?" setup.py))" >>$GITHUB_OUTPUT
           echo "sovtokenfeesVersion=$(grep -oP "\d+.\d+.\d+((-|.)?((rc)|(dev))?\d+)?" <<< $(grep -oP "sovtokenfees==\d+.\d+.\d+((-|.)?(rc|dev)\d+)?" setup.py))" >>$GITHUB_OUTPUT
-  
+
   build_sovrin:
     name: Build Sovrin Deb
     needs: [workflow-setup]
     if: ${{ needs.workflow-setup.outputs.testsNeeded == 'true' }}
     uses: ./.github/workflows/reuseable_build_package.yaml
     with:
-      isDev: true    
+      isDev: true
 
   call-indy-test-automation:
     name: Indy-Test-Automation
     needs: [workflow-setup, extract-information, build_sovrin]
-    if: ${{ needs.workflow-setup.outputs.testsNeeded == 'true' }}    
+    if: ${{ needs.workflow-setup.outputs.testsNeeded == 'true' }}
     uses: hyperledger/indy-test-automation/.github/workflows/callable_test-automation.yaml@v0.9
     with:
       ubuntuVersion: "ubuntu-2004"
@@ -93,7 +94,7 @@ jobs:
       libIndyVersion: "1.15.0~1625-bionic"
       includePaymentTests: true
       testAutomationBranch: "v0.9"
-  
+
   statusCheck:
     name: statusCheck
     runs-on: ubuntu-latest
