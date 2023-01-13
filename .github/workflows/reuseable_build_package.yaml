@@ -42,7 +42,7 @@ jobs:
           python-version: '3.8'
       - name: Set up python
         run: |
-          pip3 install semver          
+          pip3 install semver
       - name: Set Version with UX-timestamp
         if: ${{ inputs.isDev }}
         run: python3 updateVersion.py --timestamp ${{ needs.timestamp.outputs.timestamp }}
@@ -52,12 +52,12 @@ jobs:
       - name: prepare
         run: ./build-scripts/ubuntu-2004/prepare-package.sh ./ ${{ steps.version.outputs.version }}
       - name: Build Sovrin Deb
-        run: sudo bash ./build-scripts/ubuntu-2004/build-sovrin.sh ./ "${{ steps.version.outputs.version }}" $PWD/sovrin.deb
+        run: sudo bash ./build-scripts/ubuntu-2004/build-sovrin.sh "./" "${{ steps.version.outputs.version }}" "$PWD"
       - name: Upload sovrin.deb
         uses: actions/upload-artifact@v3
-        with: 
-          name: sovrin.deb
-          path: ./sovrin.deb
+        with:
+          name: sovrin-deb
+          path: ./sovrin_*.deb
           retention-days: 5
 
   build_sovrin_pypi:
@@ -73,7 +73,7 @@ jobs:
           python-version: '3.8'
       - name: Set up python
         run: |
-          pip3 install semver wheel   
+          pip3 install semver wheel
       - name: Set Version with UX-timestamp
         if: ${{ inputs.isDev }}
         run: python3 updateVersion.py --timestamp ${{ needs.timestamp.outputs.timestamp }}
