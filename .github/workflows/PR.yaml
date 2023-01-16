@@ -8,7 +8,6 @@ on:
       - "!sovrin/metadata.json"
     branches:
       - master
-      - DevContainers
 
 jobs:
   workflow-setup:
