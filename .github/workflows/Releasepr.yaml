@@ -7,34 +7,6 @@ on:
       - "sovrin/metadata.json"
 
 jobs:
-  release-infos:
-    name: infos
-    runs-on: ubuntu-latest
-    outputs:
-      isVersionBump: ${{ steps.get-release-info.outputs.isVersionBump }}
-      isPreRelease: ${{ steps.get-release-info.outputs.isRC }}
-      CACHE_KEY_BUILD: ${{ steps.workflow-setup.outputs.CACHE_KEY_BUILD }}
-      UBUNTU_VERSION: ${{ steps.workflow-setup.outputs.UBUNTU_VERSION }}
-      # Expose the lowercase version of the GitHub repository name
-      # to all subsequent jobs that reference image repositories
-      # as the push and pull operations require the URL of the repository
-      # to be in lowercase.
-      GITHUB_REPOSITORY_NAME: ${{ steps.workflow-setup.outputs.GITHUB_REPOSITORY_NAME }}
-      distribution: ${{ steps.workflow-setup.outputs.distribution }}
-    steps:
-      - name: checkout source code
-        uses: actions/checkout@v3
-      - name: get-release-info
-        id: get-release-info
-        uses: hyperledger/indy-shared-gha/.github/actions/get-release-info@v1
-        with:
-          versionString: "${{ github.event.pull_request.body }}"
-      - name: workflow-setup
-        id: workflow-setup
-        uses: hyperledger/indy-shared-gha/.github/actions/workflow-setup@v1
-        with:
-          ownerRepo: "sovrin-foundation"
-
   extract-information:
     name: Extract needed Information for Indy-Test-Automation
     runs-on: ubuntu-latest
