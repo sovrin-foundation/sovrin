@@ -39,7 +39,7 @@ jobs:
       - name: Download sovrin-deb package from GHA
         uses: actions/download-artifact@v3
         with:
-          name: sovrin.deb
+          name: sovrin-deb
           path: /tmp/sovrin-deb/
 
       - name: Publish sovrin-deb artifact

@@ -20,20 +20,12 @@ if [ -z $metadata ] ; then
   exit $ret
 fi
 
-version=$(sed -r "s/\./, /g" <<< $version_dotted)
-
-echo -e "\n\nUpdating version in $metadata with $version"
-sed -i -r "s~(__version_info__ = \()[0-9, ]+~\1$version~" "$metadata"
-ret=$?
-if [ $ret -ne 0 ] ; then
-  echo "FAILED ret: $ret"
-  exit $ret
-fi
 
 echo -e "\n\nReplace postfixes"
 sed -i -r "s~sovrin-dev~sovrin~" "$repo/setup.py"
 
 echo -e "\n\nPrepare debian package versions"
+sed -i -r "s~\"version\": \"([0-9\.]+)-([a-z]+[0-9]+)\"~\"version\": \"\1\~\2\"~" "$repo/sovrin/metadata.json"
 sed -i -r "s~indy-node==([0-9\.]+[0-9])(\.)?([a-z]+)~indy-node==\1\~\3~" "$repo/setup.py"
 sed -i -r "s~sovtoken==([0-9\.]+[0-9])(\.)?([a-z]+)~sovtoken==\1\~\3~" "$repo/setup.py"
 sed -i -r "s~sovtokenfees==([0-9\.]+[0-9])(\.)?([a-z]+)~sovtokenfees==\1\~\3~" "$repo/setup.py"

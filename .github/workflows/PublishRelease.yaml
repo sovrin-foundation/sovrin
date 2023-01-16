@@ -58,7 +58,7 @@ jobs:
           github_token: ${{secrets.GITHUB_TOKEN}}
           workflow: Releasepr.yaml
           workflow_conclusion: success
-          name: sovrin.deb
+          name: sovrin-deb
           path: artifacts/sovrin-deb
       - name: Download sovrin python Artifacts from Github Action Artifacts
         uses: dawidd6/action-download-artifact@v2
@@ -71,7 +71,7 @@ jobs:
       - name: Upload sovrin-deb
         uses: actions/upload-artifact@v3
         with:
-          name: sovrin.deb
+          name: sovrin-deb
           path: artifacts/sovrin-deb
       - name: Upload sovrin-python
         uses: actions/upload-artifact@v3
