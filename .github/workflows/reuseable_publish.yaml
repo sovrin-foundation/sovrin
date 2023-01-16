@@ -18,13 +18,14 @@ on:
     secrets:
       SOVRIN_ARTIFACTORY_REPO_CONFIG:
         required: true
-
+      PYPI_API_TOKEN:
+        required: true
 
 jobs:
   publish_sovrin:
-    name: Token Plugin Publish Packages
+    name: Publish Packages
     runs-on: ubuntu-20.04
-    steps: 
+    steps:
       - name: Setup JFrog CLI
         uses: jfrog/setup-jfrog-cli@v2
         env:
@@ -49,7 +50,7 @@ jobs:
           distribution: ${{ inputs.distribution }}
           component: ${{ inputs.REPO_COMPONENT }}
           repo: "deb"
-      
+
       - name: Download sovrin Python Packages from Pipeline Artifacts
         uses: actions/download-artifact@v3
         with:
@@ -62,5 +63,3 @@ jobs:
           user: __token__
           password: ${{ secrets.PYPI_API_TOKEN }}
           skip_existing: true
-          
-          
