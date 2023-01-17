@@ -106,3 +106,5 @@ jobs:
       REPO_COMPONENT: 'dev'
     secrets:
       SOVRIN_ARTIFACTORY_REPO_CONFIG: ${{ secrets.SOVRIN_ARTIFACTORY_REPO_CONFIG }}
+      PYPI_API_TOKEN: ${{ secrets.PYPI_API_TOKEN }}
+
