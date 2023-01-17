@@ -103,3 +103,4 @@ jobs:
       REPO_COMPONENT: ${{ needs.release-infos.outputs.component}}
     secrets:
       SOVRIN_ARTIFACTORY_REPO_CONFIG: ${{ secrets.SOVRIN_ARTIFACTORY_REPO_CONFIG }}
+      PYPI_API_TOKEN: ${{ secrets.PYPI_API_TOKEN }}
