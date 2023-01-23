@@ -2,7 +2,7 @@ name: Tag Workflow Triggered by set Version Tag
 
 on:
   push:
-    tags:        
+    tags:
       - setRelease-v**
 
 jobs:
@@ -19,7 +19,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: extract branch 
+      - name: extract branch
         id: get-branch
         uses: hyperledger/indy-shared-gha/.github/actions/branch-from-tag@v1
         with:
@@ -43,7 +43,7 @@ jobs:
           python-version: '3.8'
       - name: Set up python
         run: |
-          pip3 install semver          
+          pip3 install semver
       - name: Prepare package and set version
         run: |
           python3 updateVersion.py -t ${{ needs.taginfos.outputs.VERSION }}
@@ -61,4 +61,3 @@ jobs:
           body: "[${{ needs.taginfos.outputs.versionTag }}] - Update Version number for Release"
           delete-branch: true
           token: ${{ secrets.BOT_PR_PAT }}
-    
