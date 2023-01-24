@@ -29,7 +29,7 @@ setup(
     description='Sovrin node',
     url='https://github.com/sovrin-foundation/sovrin',
     author=__author__,
-    author_email='dev@evernym.us',
+    author_email='support@sovrin.org',
     license=__license__,
     keywords='Sovrin Genesis Transactions',
     packages=find_packages(exclude=['docs', 'docs*']),
@@ -38,5 +38,5 @@ setup(
              '*.css', '*.ico', '*.png', 'LICENSE', 'LEGAL', '*.indy']},
     include_package_data=True,
 
-    install_requires=['indy-node==1.13.2.rc5', 'sovtoken==1.2.0~dev1674499579', 'sovtokenfees==1.2.0~dev1674499579'],
+    install_requires=['indy-node==1.13.2.rc5', 'sovtoken==1.1.0.rc0', 'sovtokenfees==1.1.0.rc0'],
 )

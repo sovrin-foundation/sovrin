@@ -1684,7 +1684,7 @@ The genesis files are now located in their own directory based off the network n
 | **A new CLI command was added to ease the process of rotating a verification key (verkey).** The command is `change current key` or `change current key with seed xxxxx`. |   |   |
 | **Improvements to log messages.** |   |   |
 | **Publishing only to repo.sovrin.org** |   |   |
-|  In your sources.list you only need the entry &quot;deb https://repo.evernym.com/deb xenial stable&quot;. |   |   |
+|  In your sources.list you only need the entry &quot;deb https://repo.sovrin.org/deb xenial stable&quot;. |   |   |
 | **Implemented a command line tool to provide validator status.** |   | [INDY-715](https://jira.hyperledger.org/browse/INDY-715) |
 | **&quot;Debug&quot; mode for tests was moved to parameter.** |   | [INDY-716](https://jira.hyperledger.org/browse/INDY-716) |
 | **Log levels were changed on some debug level messages to an info level.** |   | [INDY-800](https://jira.hyperledger.org/browse/INDY-800) |
