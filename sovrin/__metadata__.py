@@ -5,7 +5,7 @@ sovrin package metadata
 import os
 import json
 
-METADATA_FILENAME = 'sovrin/metadata.json'
+METADATA_FILENAME = 'metadata.json'
 METADATA_FILE = os.path.join(
     os.path.abspath(os.path.dirname(__file__)), METADATA_FILENAME)
 
