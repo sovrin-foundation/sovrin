@@ -7,30 +7,30 @@ from setuptools import setup, find_packages, __version__
 
 
 try:
-    SETUP_DIRNAME = os.path.dirname(__file__)
+    SETUP_DIRNAME = os.path.abspath(os.path.dirname(__file__))
 except NameError:
     # We're probably being frozen, and __file__ triggered this NameError
     # Work around this
-    SETUP_DIRNAME = os.path.dirname(sys.argv[0])
+    SETUP_DIRNAME = os.path.abspath(os.path.dirname(sys.argv[0]))
 
-if SETUP_DIRNAME != '':
-    os.chdir(SETUP_DIRNAME)
+# if SETUP_DIRNAME != '':
+#     os.chdir(SETUP_DIRNAME)
 
-SETUP_DIRNAME = os.path.abspath(SETUP_DIRNAME)
+# SETUP_DIRNAME = os.path.abspath(SETUP_DIRNAME)
 
-METADATA = os.path.join(SETUP_DIRNAME, 'sovrin', '__metadata__.py')
-# Load the metadata using exec()
-# so we don't trigger an import of ioflo.__init__
-exec(compile(open(METADATA).read(), METADATA, 'exec'))
+METADATA = {'__file__': os.path.join(SETUP_DIRNAME, 'sovrin', '__metadata__.py')}
+
+with open(METADATA['__file__'], 'r') as f:
+    exec(f.read(), METADATA)
 
 setup(
     name='sovrin',
-    version=__version__,
+    version=METADATA['__version__'],
     description='Sovrin node',
     url='https://github.com/sovrin-foundation/sovrin',
-    author=__author__,
+    author=METADATA['__author__'],
     author_email='support@sovrin.org',
-    license=__license__,
+    license=METADATA['__license__'],
     keywords='Sovrin Genesis Transactions',
     packages=find_packages(exclude=['docs', 'docs*']),
     package_data={
