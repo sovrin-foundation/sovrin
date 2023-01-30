@@ -12,7 +12,7 @@ Here is Python sample code for computing the digest: `sha256('{}{}'.format(versi
   - Hash: `"8cee5d7a573e4893b08ff53a0761a22a1607df3b3fcd7e75b98696c92879641f"`
 
   - Added to MainNet :
-  - Added to StagingNet :
+  - Added to TestNet :
   - Added to BuilderNet : February 4, 2020
 
 - Version 1
@@ -20,5 +20,5 @@ Here is Python sample code for computing the digest: `sha256('{}{}'.format(versi
   - Hash: `"920e68ff43bf157d657e35fca291baa00f8b14c395cddf6e4b4e156391baf7cd"`
 
   - Added to MainNet : Not added.
-  - Added to StagingNet : Not added.
+  - Added to TestNet : Not added.
   - Added to BuilderNet : June 2019.
