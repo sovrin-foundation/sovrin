@@ -29,7 +29,7 @@ If you want to contribute to Sovrin, it's likely that you'll want to do so via [
 In order to connect to an existing network your agent needs to utilize the appropriate `pool_transactions_genesis` file.  These files define the information required to connect to the foundational nodes for the given network.
 
 - [MainNet](https://raw.githubusercontent.com/sovrin-foundation/sovrin/stable/sovrin/pool_transactions_live_genesis)
-- [StagingNet](https://raw.githubusercontent.com/sovrin-foundation/sovrin/stable/sovrin/pool_transactions_sandbox_genesis)
+- [TestNet](https://raw.githubusercontent.com/sovrin-foundation/sovrin/stable/sovrin/pool_transactions_sandbox_genesis)
 - [BuilderNet](https://raw.githubusercontent.com/sovrin-foundation/sovrin/stable/sovrin/pool_transactions_builder_genesis)
 
 ## How to Add Documentation
