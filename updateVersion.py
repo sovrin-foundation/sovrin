@@ -16,7 +16,6 @@ def updateWithTag(ver):
         raise ValueError('No Valid Semver in Tag')
     return ver
 
-
 def updateWithTimestamp(timestamp):
     version = "str"
     with open(sovrinMetadata, 'r') as f:
@@ -50,6 +49,5 @@ with open(sovrinMetadata, 'r') as f:
     data = json.load(f)
     data["version"] = version
     json.dump(data, open(sovrinMetadata, "w"), indent=2)
-
 
 print("Updated version of sovrin metadata.json to: ", version)

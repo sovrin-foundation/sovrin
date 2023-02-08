@@ -14,8 +14,8 @@ RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 3BC8C2DD662F1C45 &&
     apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 9692C00E657DDE61 && \
     apt-key adv --keyserver keyserver.ubuntu.com --recv-keys CE7709D068DB5E88
 
-RUN add-apt-repository "deb https://sovrin.jfrog.io/artifactory/deb focal dev"
-RUN add-apt-repository "deb https://hyperledger.jfrog.io/artifactory/indy focal dev rc"
+RUN add-apt-repository "deb https://sovrin.jfrog.io/artifactory/deb focal dev rc master"
+RUN add-apt-repository "deb https://hyperledger.jfrog.io/artifactory/indy focal dev rc master"
 
 RUN apt-get update
 
