@@ -55,13 +55,13 @@ jobs:
   call-indy-test-automation:
     name: Indy-Test-Automation
     needs: [extract-information,build_sovrin]
-    uses: hyperledger/indy-test-automation/.github/workflows/callable_test-automation-extention.yaml@main
+    uses: hyperledger/indy-test-automation/.github/workflows/callable_test-automation-extention.yaml@v0.10.0
     with:
       ubuntuVersion: "ubuntu-2004"
       libsovtokenJSON: "{\"install\": \"yes\",  \"version\": \"1.0.5\"}"
       libIndyVersion: "1.15.0~1625-bionic"
       includePaymentTests: true
-      testAutomationBranch: "main"
+      testAutomationBranch: "v0.10.0"
       debName: "sovrin_*.deb"
       packageName: "sovrin-deb"
 
