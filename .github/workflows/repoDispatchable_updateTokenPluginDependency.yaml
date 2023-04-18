@@ -1,0 +1,28 @@
+name: Repo Dispatched Update Node Dependecy
+
+on:
+  repository_dispatch:
+    types: [update-sovrin-token]
+
+jobs:
+  update-setup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Update indy-node to ${{ github.event.client_payload.pyVersion }}
+        run: |
+          sed -i "s/\(sovtoken==\)[^ ]*/\1${{ github.event.client_payload.pyVersion }}',/g" setup.py
+          sed -i "s/\(sovtokenfees==\)[^ ]*/\1${{ github.event.client_payload.pyVersion }}',/g" setup.py
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          author: ${{ github.actor }} <${{ github.event.client_payload.email }}>
+          signoff: true
+          committer: ${{ github.actor }} <${{ github.event.client_payload.email }}>
+          commit-message: "Automated Update to indy-node==${{ github.event.client_payload.pyVersion }}"
+          title: "Automated Update to indy-node==${{ github.event.client_payload.pyVersion }}"
+          body: "This PR updates the indy-node version in `setup.py` to use `indy-node==${{ github.event.client_payload.pyVersion }}`."
+          branch: "Token-Pluging-Updates"
+          delete-branch: true
+          base: "master"
