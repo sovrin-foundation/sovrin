@@ -32,7 +32,7 @@ jobs:
       publish: ${{ steps.workflow-setup.outputs.publish}}
     steps:
       - name: checkout source code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: get-release-info
         id: get-release-info
         uses: hyperledger/indy-shared-gha/.github/actions/get-release-info@v1
@@ -51,9 +51,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Download sovrin deb Artifacts from Github Action Artifacts
-        uses: dawidd6/action-download-artifact@v2
+        uses: dawidd6/action-download-artifact@v3
         with:
           github_token: ${{secrets.GITHUB_TOKEN}}
           workflow: Releasepr.yaml
@@ -61,7 +61,7 @@ jobs:
           name: sovrin-deb
           path: artifacts/sovrin-deb
       - name: Download sovrin python Artifacts from Github Action Artifacts
-        uses: dawidd6/action-download-artifact@v2
+        uses: dawidd6/action-download-artifact@v3
         with:
           github_token: ${{secrets.GITHUB_TOKEN}}
           workflow: Releasepr.yaml
@@ -69,12 +69,12 @@ jobs:
           name: sovrin-python
           path: artifacts/sovrin-python
       - name: Upload sovrin-deb
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: sovrin-deb
           path: artifacts/sovrin-deb
       - name: Upload sovrin-python
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: sovrin-python
           path: artifacts/sovrin-python

@@ -31,13 +31,13 @@ jobs:
     needs: timestamp
     steps:
       - name: Git Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: setup
         run: |
           sudo apt-get update && sudo apt-get -y install rubygems
           sudo gem install fpm
       - name: Set up Python
-        uses: actions/setup-python@v3
+        uses: actions/setup-python@v5
         with:
           python-version: '3.8'
       - name: Set up python
@@ -55,7 +55,7 @@ jobs:
       - name: Build Sovrin Deb
         run: sudo bash ./build-scripts/ubuntu-2004/build-sovrin.sh "./" "${{ steps.version.outputs.debVersion }}" "$PWD"
       - name: Upload sovrin.deb
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: sovrin-deb
           path: ./sovrin_*.deb
@@ -67,9 +67,9 @@ jobs:
     needs: timestamp
     steps:
       - name: Check out code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Set up Python
-        uses: actions/setup-python@v3
+        uses: actions/setup-python@v5
         with:
           python-version: '3.8'
       - name: Set up python
@@ -80,7 +80,7 @@ jobs:
         run: python3 updateVersion.py --timestamp ${{ needs.timestamp.outputs.timestamp }}
       - name: Build python sovrin package
         run: python3 setup.py sdist --dist-dir /tmp/dist bdist_wheel --dist-dir /tmp/dist
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: sovrin-python
           path: /tmp/dist

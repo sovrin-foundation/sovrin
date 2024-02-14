@@ -16,7 +16,7 @@ jobs:
       BASE: ${{ steps.get-branch.outputs.branch }}
     steps:
       - name: checkout source code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - name: extract branch
@@ -36,9 +36,9 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - name: Check out code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Set up Python
-        uses: actions/setup-python@v3
+        uses: actions/setup-python@v5
         with:
           python-version: '3.8'
       - name: Set up python
@@ -49,7 +49,7 @@ jobs:
           python3 updateVersion.py -t ${{ needs.taginfos.outputs.VERSION }}
 
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v3
+        uses: peter-evans/create-pull-request@v6
         with:
           author: ${{ github.actor }} <${{ github.event.pusher.email }}>
           committer: ${{ github.actor }} <${{ github.event.pusher.email }}>
