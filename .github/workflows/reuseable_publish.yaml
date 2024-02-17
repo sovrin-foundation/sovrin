@@ -27,7 +27,7 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - name: Setup JFrog CLI
-        uses: jfrog/setup-jfrog-cli@v2
+        uses: jfrog/setup-jfrog-cli@v4
         env:
           JF_ENV_1: ${{ secrets.SOVRIN_ARTIFACTORY_REPO_CONFIG }}
 
@@ -38,7 +38,7 @@ jobs:
           jfrog rt ping
 
       - name: Download sovrin-deb package from GHA
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: sovrin-deb
           path: /tmp/sovrin-deb/
@@ -52,7 +52,7 @@ jobs:
           repo: "deb"
 
       - name: Download sovrin Python Packages from Pipeline Artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: sovrin-python
           path: dist

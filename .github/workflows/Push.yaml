@@ -20,7 +20,7 @@ jobs:
       publish: ${{ steps.setup.outputs.publish}}
     steps:
       - name: checkout source code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: setup
         id: setup
         uses: hyperledger/indy-shared-gha/.github/actions/workflow-setup@v1
@@ -28,7 +28,7 @@ jobs:
           ownerRepo: "sovrin-foundation"
       - name: testsNeeded
         id: testsNeeded
-        uses: dorny/paths-filter@v2
+        uses: dorny/paths-filter@v3
         with:
           filters: |
             testsNeeded:
@@ -46,14 +46,14 @@ jobs:
       GITHUB_REPOSITORY_NAME: ${{ steps.repository-name.outputs.lowercase }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Convert the GitHub repository name to lowercase
         id: repository-name
-        uses: ASzc/change-string-case-action@v5
+        uses: ASzc/change-string-case-action@v6
         with:
           string: ${{ github.repository }}
       - name: Set up Python
-        uses: actions/setup-python@v3
+        uses: actions/setup-python@v5
         with:
           python-version: '3.8'
       - name: Set up python
