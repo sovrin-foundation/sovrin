@@ -12,7 +12,7 @@ args = vars(ap.parse_args())
 sovrinMetadata = 'sovrin/metadata.json'
 
 def updateWithTag(ver):
-    if not semver.VersionInfo.isvalid(ver):
+    if not semver.Version.is_valid(ver):
         raise ValueError('No Valid Semver in Tag')
     return ver
 
@@ -20,7 +20,7 @@ def updateWithTimestamp(timestamp):
     version = "str"
     with open(sovrinMetadata, 'r') as f:
         data = json.load(f)
-        v = semver.VersionInfo.parse(data["version"])
+        v = semver.Version.parse(data["version"])
         v = v.replace(prerelease="dev" + timestamp)
         version = str(v)
     return version
@@ -31,7 +31,7 @@ version = "string"
 if args['getVersion']:
     with open(sovrinMetadata, 'r') as f:
         data = json.load(f)
-        v = semver.VersionInfo.parse(data["version"])
+        v = semver.Version.parse(data["version"])
         print(v)
     quit()
 
