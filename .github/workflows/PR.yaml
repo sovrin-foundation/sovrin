@@ -23,7 +23,7 @@ jobs:
         uses: actions/checkout@v4
       - name: setup
         id: setup
-        uses: hyperledger/indy-shared-gha/.github/actions/workflow-setup@v1
+        uses: hyperledger/indy-shared-gha/.github/actions/workflow-setup@v2
         with:
           ownerRepo: "sovrin-foundation"
       - name: testsNeeded

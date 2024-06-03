@@ -44,7 +44,7 @@ jobs:
           path: /tmp/sovrin-deb/
 
       - name: Publish sovrin-deb artifact
-        uses: hyperledger/indy-shared-gha/.github/actions/publish-deb@v1
+        uses: hyperledger/indy-shared-gha/.github/actions/publish-deb@v2
         with:
           sourceDirectory: /tmp/sovrin-deb/
           distribution: ${{ inputs.distribution }}
